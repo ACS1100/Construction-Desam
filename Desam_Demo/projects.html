@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+    <title>Kathir's Developers - Brick by brick, we build trust</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&amp;display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/animate.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /*
+        * Enhanced styles for better alignment and responsiveness
+        */
+        .d-inline-flex {
+            display: inline-flex !important;
+        }
+
+        /* Use flexbox for the ongoing filters row to manage alignment easily */
+        #ongoing-filters {
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            /* Center the dropdowns */
+            align-items: center;
+        }
+
+        .ongoing-filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow wrapping on smaller screens */
+            gap: 1rem;
+            /* Space between dropdowns */
+            justify-content: center;
+        }
+        
+        /* Ensures dropdowns take up less space on small screens */
+        .ongoing-filters-container .form-control {
+            max-width: 200px;
+            width: 100%; /* Ensures it fills max-width */
+        }
+
+        /* Hides the hidden items for JavaScript filtering */
+        .gallery-item-project.hidden {
+            display: none !important;
+        }
+
+        /* Apply smooth scroll to the entire page */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 🚀 NEW STYLES: Matching Dropdown to Button Color/Style */
+        #location-filter,
+        #area-filter {
+            /* Apply border and text color of btn-outline-primary */
+            color: #007bff; /* Bootstrap Primary Blue */
+            background-color: transparent;
+            border: 1px solid #007bff; /* Primary Blue Border */
+            font-weight: 500;
+            box-shadow: none; /* Remove default inner shadow */
+            
+            /* Ensure consistent height with buttons */
+            padding: .375rem 1.75rem .375rem .75rem; 
+            height: calc(1.5em + .75rem + 2px); 
+        }
+
+        /* Style the dropdown when it is focused (active state) to match button hover */
+        #location-filter:focus,
+        #area-filter:focus {
+            color: #fff; /* White text on focus */
+            background-color: #007bff; /* Primary Blue background on focus */
+            border-color: #007bff;
+            outline: 0;
+        }
+        
+        /* Ensure the options inside the dropdown use a standard color */
+        #location-filter option,
+        #area-filter option {
+            color: #1a1a1a; 
+            background-color: #fff;
+        }
+        
+        /* Styling for the custom pagination container (block-27 is often used in this theme) */
+        .block-27 ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: inline-block;
+        }
+        .block-27 ul li {
+            display: inline-block;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+        .block-27 ul li a,
+        .block-27 ul li span {
+            text-align: center;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            border: 1px solid #e6e6e6;
+            color: #007bff; /* Primary Blue for inactive links */
+        }
+        .block-27 ul li.active a {
+            background: #007bff; /* Primary Blue for active page */
+            color: #fff;
+            border: 1px solid transparent;
+        }
+        .block-27 ul li.disabled a {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
+                Kathir's <span>Developers</span> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item active"><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');"
+        data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end">
+                <div class="col-md-9 ftco-animate pb-5">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
+                                    class="ion-ios-arrow-forward"></i></a></span> <span>Services <i
+                                class="ion-ios-arrow-forward"></i></span></p>
+                    <h1 class="mb-0 bread">Project</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-intro bg-light">
+        <div class="container">
+            <div class="row justify-content-center pb-5 mb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2>Services We Offer</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-cleaning"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Construction Services</h3>
+                            <p>We redefine full-service and bring customized, innovative solutions to all project types.
+                            </p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-joist"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Constructability and Budget Control</h3>
+                            <p>We optimize the design process to align with means and methods of construction & provide
+                                best value.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-road"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Emergency Response</h3>
+                            <p>We're here when you need us most, from fire remediation to flood mitigation and
+                                compliance upgrades.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-pipe"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Preconstruction Services</h3>
+                            <p>Early engagement during the design process enhances value when the most critical
+                                decisions are made.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-kitchen"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Prefabrication and Modular Construction</h3>
+                            <p>Our offsite modular construction services combine design for manufacture, assembly and
+                                procurement.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-brickwall"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Delivery Methods</h3>
+                            <p>From design-build to P3s, we deliver projects under all procurement methods.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-wall"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Self-Perform Capabilities</h3>
+                            <p>Our workforce can self-perform scopes of work to drive value and schedule and reduce
+                                costs.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-self-stretch ftco-animate">
+                    <div class="d-block services">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-rajpath"></span>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading">Sustainable Construction Services</h3>
+                            <p>Our integrated sustainable construction services provide cost-effective solutions for
+                                your needs.</p>
+                            <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                                    class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section" id="project-gallery-section">
+        <div class="container-fluid px-md-4">
+            <div class="row justify-content-center pb-5">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2>Our Work Projects</h2>
+                    <p>Explore our projects across different locations</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mb-4">
+                <div class="col-12">
+                    <div class="text-center">
+                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project active"
+                            data-category="all">All
+                            (8)</button>
+                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project"
+                            data-category="ongoing">Ongoing
+                            Projects (5)</button>
+                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project"
+                            data-category="completed">Completed Projects (3)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ongoing-filters" class="row mb-4">
+                <div class="col-12 text-center">
+                    <div class="ongoing-filters-container">
+                        <select id="location-filter" class="form-control">
+                            <option value="">-- Select Location --</option>
+                            <option value="chennai">Chennai</option>
+                            <option value="madurai">Madurai</option>
+                        </select>
+
+                        <select id="area-filter" class="form-control" disabled>
+                            <option value="">-- Select Area --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="ongoing"
+                    data-location="chennai" data-area="omr">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-1.jpg);">
+                        <a href="images/gallery-1.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">OMR Vista</a></h4>
+                        <p style="color: #666; font-size: 14px;">Chennai (OMR) - Building tomorrow's skyline.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="ongoing"
+                    data-location="madurai" data-area="ayyankottai">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-2.jpg);">
+                        <a href="fair-land.html" class="icon d-flex justify-content-center align-items-center"
+                            title="View Details">
+                            <span class="fa fa-link"></span> </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="fair-land.html" style="color: #1a1a1a; text-decoration: none;">Fair Land</a></h4>
+                        <p style="color: #666; font-size: 14px;">Madurai (Ayyankottai) - Contemporary commercial space.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="ongoing"
+                    data-location="chennai" data-area="ecr">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-3.jpg);">
+                        <a href="images/gallery-3.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">ECR Heights</a></h4>
+                        <p style="color: #666; font-size: 14px;">Chennai (ECR) - Classic brick architecture.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="completed">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-4.jpg);">
+                        <a href="images/gallery-4.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Velachery Square</a>
+                        </h4>
+                        <p style="color: #666; font-size: 14px;">Coastal living with serene ocean views.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="ongoing"
+                    data-location="madurai" data-area="gomatipuram">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-5.jpg);">
+                        <a href="images/gallery-5.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Gomatipuram Plaza</a>
+                        </h4>
+                        <p style="color: #666; font-size: 14px;">Madurai (Gomatipuram) - Spacious industrial facility.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="ongoing"
+                    data-location="chennai" data-area="omr">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-6.jpg);">
+                        <a href="images/gallery-6.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Anna Nagar</a></h4>
+                        <p style="color: #666; font-size: 14px;">Chennai (OMR) - Bright educational spaces.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="completed">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-7.jpg);">
+                        <a href="images/gallery-7.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">KK Nagar</a></h4>
+                        <p style="color: #666; font-size: 14px;">Elegant residential complex with lush gardens.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-categories="completed">
+                    <div class="work mb-2 img d-flex align-items-end"
+                        style="background-image: url(images/gallery-8.jpg);">
+                        <a href="images/gallery-8.jpg"
+                            class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="fa fa-expand"></span>
+                        </a>
+                        
+                    </div>
+                    <div class="text-center mt-2">
+                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Pasumalai Heights</a>
+                        </h4>
+                        <p style="color: #666; font-size: 14px;">Sophisticated gallery space.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <div class="block-27" id="pagination-container">
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Kathir's Developers</h2>
+                    <p>
+                        Your Vision, Our Foundation
+                        Kathir's Developers
+                        Brick by brick, we build trust
+                    </p>
+                    <ul class="ftco-footer-social p-0">
+                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                                title="Twitter"><span class="fa fa-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                                title="Facebook"><span class="fa fa-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                                title="Instagram"><span class="fa fa-instagram"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6 col-lg-3 pl-lg-5 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Quick Links</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="py-2 d-block">Home</a></li>
+                        <li><a href="about.html" class="py-2 d-block">About</a></li>
+                        <li><a href="projects.html" class="py-2 d-block">Projects</a></li>
+                        <li><a href="contact.html" class="py-2 d-block">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Have a Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon fa fa-map"></span><span class="text">
+                                    Hanuman Kovil Padithurai, Simmakkal, Madurai, Tamilnadu 625002</span></li>
+                            <li><a href="tel://+918807344264"><span class="icon fa fa-phone"></span><span
+                                        class="text">+91-88073 44264</span></a></li>
+                            <li><a href="mailto:sales@kathirdevelopers.com"><span
+                                        class="icon fa fa-paper-plane"></span><span
+                                        class="text">sales@kathirdevelopers.com</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+
+                    <p class="copyright">
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by SKG
+                        Consulting Pvt Ltd
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00" />
+        </svg></div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&amp;sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // --- CONFIGURATION & DATA ---
+        const PROJECTS_PER_PAGE = 8; // CHANGED FROM 4 TO 8
+        
+        const locationAreaMap = {
+            "chennai": ["omr", "ecr"],
+            "madurai": ["ayyankottai", "gomatipuram"]
+        };
+
+        // --- DOM Elements & State ---
+        const locationDropdown = document.getElementById('location-filter');
+        const areaDropdown = document.getElementById('area-filter');
+        const ongoingFiltersDiv = document.getElementById('ongoing-filters');
+        const galleryTabs = document.querySelectorAll('.gallery-tab-project');
+        const galleryItems = document.querySelectorAll('.gallery-item-project');
+        const paginationContainer = document.getElementById('pagination-container');
+
+        let currentSelectedLocation = "";
+        let currentSelectedArea = "";
+        let currentCategory = 'all'; // Tracks the active tab
+
+        // --- FUNCTION 1: Updates Area dropdown and triggers re-filter (on location change) ---
+        function updateAreaFilterAndGallery() {
+            const selectedLocation = locationDropdown.value;
+
+            // 1. Reset Area options
+            areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
+            areaDropdown.disabled = true;
+
+            // 2. Populate new Area options
+            if (selectedLocation) {
+                const areas = locationAreaMap[selectedLocation] || [];
+                areaDropdown.disabled = areas.length === 0;
+
+                areas.forEach(area => {
+                    const option = document.createElement('option');
+                    option.value = area;
+                    option.textContent = area.charAt(0).toUpperCase() + area.slice(1); // Capitalize first letter
+                    areaDropdown.appendChild(option);
+                });
+            }
+
+            // 3. Update state and re-filter gallery (always start at page 1)
+            areaDropdown.value = "";
+            currentSelectedLocation = selectedLocation;
+            currentSelectedArea = "";
+
+            filterGalleryItems(currentCategory, 1);
+        }
+
+        // --- FUNCTION 2: Creates the Pagination HTML ---
+        function createPaginationLinks(totalPages, currentPage, currentCategory) {
+            paginationContainer.innerHTML = '';
+            
+            if (totalPages <= 1) {
+                return; // No pagination needed
+            }
+
+            const ul = document.createElement('ul');
+            
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.innerHTML = `<a href="#">&lt;</a>`;
+            if (currentPage === 1) {
+                prevLi.classList.add('disabled');
+            } else {
+                prevLi.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterGalleryItems(currentCategory, currentPage - 1);
+                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+            ul.appendChild(prevLi);
+
+            // Page links
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#">${i}</a>`;
+                if (i === currentPage) {
+                    li.classList.add('active');
+                } else {
+                    li.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        filterGalleryItems(currentCategory, i);
+                        document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
+                ul.appendChild(li);
+            }
+
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.innerHTML = `<a href="#">&gt;</a>`;
+            if (currentPage === totalPages) {
+                nextLi.classList.add('disabled');
+            } else {
+                nextLi.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterGalleryItems(currentCategory, currentPage + 1);
+                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+            ul.appendChild(nextLi);
+
+            paginationContainer.appendChild(ul);
+        }
+
+
+        // --- FUNCTION 3: Filters the Project Gallery, applies Pagination, and generates links ---
+        function filterGalleryItems(category, page = 1) {
+            currentCategory = category; // Update global state
+            
+            // 1. Hide/Show the dependent filters and reset sub-filters if category changes
+            if (category === 'ongoing') {
+                ongoingFiltersDiv.style.display = 'flex';
+            } else {
+                ongoingFiltersDiv.style.display = 'none'; 
+                // Reset location/area selections when switching away from 'ongoing'
+                currentSelectedLocation = "";
+                currentSelectedArea = "";
+                locationDropdown.value = "";
+                areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
+                areaDropdown.disabled = true;
+            }
+
+            // 2. Identify and collect all items that match the current filter criteria
+            const matchingItems = [];
+
+            galleryItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-categories');
+                const itemLocation = item.getAttribute('data-location');
+                const itemArea = item.getAttribute('data-area');
+
+                const matchesCategory = (category === 'all' || (itemCategory && itemCategory.includes(category)));
+
+                let matchesSubFilter = true;
+
+                if (category === 'ongoing') {
+                    // Filter by Location
+                    if (currentSelectedLocation && itemLocation !== currentSelectedLocation) {
+                        matchesSubFilter = false;
+                    }
+                    // Filter by Area (only check if location matched)
+                    if (matchesSubFilter && currentSelectedArea && itemArea !== currentSelectedArea) {
+                        matchesSubFilter = false;
+                    }
+                }
+
+                // Push matching items to the array
+                if (matchesCategory && matchesSubFilter) {
+                    matchingItems.push(item);
+                }
+                
+                // Initially hide all items
+                item.style.display = 'none';
+                item.classList.add('hidden');
+            });
+
+            // 3. Apply Pagination Logic
+            const totalItems = matchingItems.length;
+            const totalPages = Math.ceil(totalItems / PROJECTS_PER_PAGE);
+            
+            // Ensure the requested page is within valid bounds (defaulting to 1 if empty)
+            let currentPage = Math.min(Math.max(1, page), totalPages || 1); 
+            
+            const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
+            const endIndex = startIndex + PROJECTS_PER_PAGE;
+
+            // Show only the items for the current page
+            for (let i = 0; i < matchingItems.length; i++) {
+                if (i >= startIndex && i < endIndex) {
+                    matchingItems[i].classList.remove('hidden');
+                    matchingItems[i].style.display = 'block'; 
+                }
+            }
+
+            // 4. Generate Pagination Links
+            createPaginationLinks(totalPages, currentPage, category);
+        }
+
+
+        // --- MAIN INITIALIZATION & EVENT LISTENERS ---
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- Tab Click Listener (Primary filter) ---
+            galleryTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const category = this.getAttribute('data-category');
+
+                    galleryTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter gallery items, always starting at page 1 for a new category
+                    filterGalleryItems(category, 1);
+
+                    // Smooth scroll to the gallery section after filtering/tab change
+                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+            
+            // --- Location Dropdown Listener ---
+            locationDropdown.addEventListener('change', updateAreaFilterAndGallery);
+            
+            // --- Area Dropdown Listener ---
+            areaDropdown.addEventListener('change', function () {
+                currentSelectedArea = this.value;
+                // Only re-filter if the 'Ongoing Projects' tab is active
+                if (document.querySelector('.gallery-tab-project.active').getAttribute('data-category') === 'ongoing') {
+                    // Filter, always starting at page 1 for a new sub-filter selection
+                    filterGalleryItems(currentCategory, 1); 
+                }
+            });
+
+            // Initialize gallery (show 'all' items, page 1)
+            filterGalleryItems('all', 1);
+            
+            // Re-initialize magnific popup on project items
+            if (typeof jQuery !== 'undefined' && typeof jQuery.fn.magnificPopup !== 'undefined') {
+                $('.image-popup').magnificPopup({
+                    type: 'image',
+                    closeOnContentClick: true,
+                    closeBtnInside: false,
+                    fixedContentPos: true,
+                    mainClass: 'mfp-no-margins mfp-with-zoom', 
+                    image: {
+                        verticalFit: true
+                    },
+                    zoom: {
+                        enabled: true,
+                        duration: 300 
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+
+</html>
