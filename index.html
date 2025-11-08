@@ -28,7 +28,110 @@
 	<link rel="stylesheet" href="css/style.css">
 	<!-- New styles for hero slider START -->
 	<style>
-		
+		  /*
+        * Enhanced styles for better alignment and responsiveness
+        */
+        .d-inline-flex {
+            display: inline-flex !important;
+        }
+
+        /* Use flexbox for the ongoing filters row to manage alignment easily */
+        #ongoing-filters {
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            /* Center the dropdowns */
+            align-items: center;
+        }
+
+        .ongoing-filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow wrapping on smaller screens */
+            gap: 1rem;
+            /* Space between dropdowns */
+            justify-content: center;
+        }
+        
+        /* Ensures dropdowns take up less space on small screens */
+        .ongoing-filters-container .form-control {
+            max-width: 200px;
+            width: 100%; /* Ensures it fills max-width */
+        }
+
+        /* Hides the hidden items for JavaScript filtering */
+        .gallery-item-project.hidden {
+            display: none !important;
+        }
+
+        /* Apply smooth scroll to the entire page */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 🚀 NEW STYLES: Matching Dropdown to Button Color/Style */
+        #location-filter,
+        #area-filter {
+            /* Apply border and text color of btn-outline-primary */
+            color: #007bff; /* Bootstrap Primary Blue */
+            background-color: transparent;
+            border: 1px solid #007bff; /* Primary Blue Border */
+            font-weight: 500;
+            box-shadow: none; /* Remove default inner shadow */
+            
+            /* Ensure consistent height with buttons */
+            padding: .375rem 1.75rem .375rem .75rem; 
+            height: calc(1.5em + .75rem + 2px); 
+        }
+
+        /* Style the dropdown when it is focused (active state) to match button hover */
+        #location-filter:focus,
+        #area-filter:focus {
+            color: #fff; /* White text on focus */
+            background-color: #007bff; /* Primary Blue background on focus */
+            border-color: #007bff;
+            outline: 0;
+        }
+        
+        /* Ensure the options inside the dropdown use a standard color */
+        #location-filter option,
+        #area-filter option {
+            color: #1a1a1a; 
+            background-color: #fff;
+        }
+        
+        /* Styling for the custom pagination container (block-27 is often used in this theme) */
+        .block-27 ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: inline-block;
+        }
+        .block-27 ul li {
+            display: inline-block;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+        .block-27 ul li a,
+        .block-27 ul li span {
+            text-align: center;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            border: 1px solid #e6e6e6;
+            color: #007bff; /* Primary Blue for inactive links */
+        }
+        .block-27 ul li.active a {
+            background: #007bff; /* Primary Blue for active page */
+            color: #fff;
+            border: 1px solid transparent;
+        }
+        .block-27 ul li.disabled a {
+            color: #ccc;
+            cursor: not-allowed;
+        }
 	</style>
 	<!-- New styles for hero slider END -->
 </head>
@@ -558,166 +661,204 @@
 		</div>
 	</section>
 
-    <section class="ftco-section">
-        <div class="container-fluid px-md-4">
-            <div class="row justify-content-center pb-5">
-                <div class="col-md-7 heading-section text-center ftco-animate">
-                    <h2>Our Work Projects</h2>
-                    <p>Explore our projects across different locations</p>
+    <section class="ftco-section" id="project-gallery-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section ftco-animate text-center">
+                    <h2 class="mb-4">Our Projects</h2>
                 </div>
             </div>
 
-            <div class="row justify-content-center mb-4">
-                <div class="col-12">
-                    <div class="text-center">
-                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project active"
-                            data-category="all">All
-                            (8)</button>
-                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project"
-                            data-category="ongoing">Ongoing
-                            Projects (5)</button>
-                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project"
-                            data-category="completed">Completed Projects (3)</button>
+            <div class="row d-flex">
+                <div class="col-md-12 text-center d-flex justify-content-center ftco-animate">
+                    <div class="gallery-filters mb-5">
+                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project active" data-category="all">
+                            All Projects (<span id="count-all">12</span>)
+                        </button>
+                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project" data-category="ongoing">
+                            Ongoing Projects (<span id="count-ongoing">7</span>)
+                        </button>
+                        <button class="btn btn-outline-primary mb-2 gallery-tab-project" data-category="completed">
+                            Completed Projects (<span id="count-completed">5</span>)
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-12 text-center mb-5 pb-3 ftco-animate" id="ongoing-filters" style="display: none;">
+                    <div class="d-flex justify-content-center">
+                        <div class="dropdown mr-4">
+                            <select id="location-filter" class="form-control">
+                                <option value="">-- Select Location --</option>
+                                </select>
+                        </div>
+                        <div class="dropdown">
+                            <select id="area-filter" class="form-control" disabled>
+                                <option value="">-- Select Area --</option>
+                                </select>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="ongoing-filters" class="row justify-content-center mb-4">
-                <div class="col-12 text-center">
-                    <div class="d-inline-flex gap-3">
-                        <select id="location-filter" class="form-control" style="width: 200px;"
-                            onchange="updateAreaFilter()">
-                            <option value="">-- Select Location --</option>
-                            <option value="chennai">Chennai</option>
-                            <option value="madurai">Madurai</option>
-                        </select>
-
-                        <select id="area-filter" class="form-control" style="width: 200px;" disabled>
-                            <option value="">-- Select Area --</option>
-                        </select>
-                    </div>
+            <div class="row" id="project-gallery-row">
+                </div> 
+            
+            <div class="row mt-5" id="pagination-container">
+                <div class="col text-center">
+                    <div class="block-27">
+                        </div>
                 </div>
             </div>
-            <div class="row">
 
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="ongoing"
-                    data-location="chennai" data-area="omr">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-1.jpg);">
-                        <a href="images/gallery-1.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">OMR Vista</a></h4>
-                        <p style="color: #666; font-size: 14px;">Building tomorrow's skyline with precision and dedication.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="ongoing"
-                    data-location="madurai" data-area="ayyankottai">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-2.jpg);">
-                        <a href="fair-land.html" class="icon d-flex justify-content-center align-items-center"
-                            title="View Details">
-                            <span class="fa fa-link"></span> </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="fair-land.html" style="color: #1a1a1a; text-decoration: none;">Fair Land</a></h4>
-                        <p style="color: #666; font-size: 14px;">Contemporary commercial space for modern business growth.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="ongoing"
-                    data-location="chennai" data-area="ecr">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-3.jpg);">
-                        <a href="images/gallery-3.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">ECR Heights</a></h4>
-                        <p style="color: #666; font-size: 14px;">Classic brick architecture with modern residential comfort.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="completed">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-4.jpg);">
-                        <a href="images/gallery-4.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Velachery Square</a></h4>
-                        <p style="color: #666; font-size: 14px;">Coastal living with serene ocean views and relaxation.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="ongoing"
-                    data-location="madurai" data-area="gomatipuram">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-5.jpg);">
-                        <a href="images/gallery-5.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Gomatipuram Plaza</a></h4>
-                        <p style="color: #666; font-size: 14px;">Spacious industrial facility designed for seamless operations.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="ongoing"
-                    data-location="chennai" data-area="omr">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-6.jpg);">
-                        <a href="images/gallery-6.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Anna Nagar</a></h4>
-                        <p style="color: #666; font-size: 14px;">Bright educational spaces that inspire learning and growth.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="completed">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-7.jpg);">
-                        <a href="images/gallery-7.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">KK Nagar</a></h4>
-                        <p style="color: #666; font-size: 14px;">Elegant residential complex with lush gardens and living spaces.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 ftco-animate gallery-item-project" data-categories="completed">
-                    <div class="work mb-2 img d-flex align-items-end"
-                        style="background-image: url(images/gallery-8.jpg);">
-                        <a href="images/gallery-8.jpg"
-                            class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="fa fa-expand"></span>
-                        </a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <h4><a href="work-single.html" style="color: #1a1a1a; text-decoration: none;">Pasumalai Heights</a></h4>
-                        <p style="color: #666; font-size: 14px;">Sophisticated gallery space in a refined cultural atmosphere.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
+
+    <div id="project-templates" style="display: none;">
+        
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-1">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-1.jpg);">
+                <a href="images/gallery-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-2">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-2.jpg);">
+                <a href="fair-land.html" class="icon d-flex justify-content-center align-items-center">
+                    <span class="fa fa-link"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-3">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-3.jpg);">
+                <a href="images/gallery-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-4">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-4.jpg);">
+                <a href="images/gallery-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-5">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-5.jpg);">
+                <a href="images/gallery-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-6">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-6.jpg);">
+                <a href="images/gallery-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-7">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-7.jpg);">
+                <a href="images/gallery-7.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-8">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-8.jpg);">
+                <a href="images/gallery-8.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-9">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-9.jpg);">
+                <a href="images/gallery-9.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-10">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-10.jpg);">
+                <a href="images/gallery-10.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-11">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-11.jpg);">
+                <a href="images/gallery-11.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-12">
+            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-12.jpg);">
+                <a href="images/gallery-12.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                    <span class="fa fa-expand"></span>
+                </a>
+            </div>
+            <div class="text-center mt-2 project-info">
+                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+    </div> 
 
 	<!-- <section class="ftco-section bg-light">
 		<div class="container">
@@ -779,7 +920,7 @@
 		</div>
 	</section> -->
 
-	<section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
+	<!-- <section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
 		style="background-image: url(images/bg_3.jpg);">
 		<div class="overlay"></div>
 		<div class="container">
@@ -788,26 +929,6 @@
 					<h2 class="mb-4">Free Consultation</h2>
 					<form action="#" class="appointment">
 						<div class="row">
-							<!-- <div class="col-md-12">
-								<div class="form-group">
-									<div class="form-field">
-										<div class="select-wrap">
-											<div class="icon"><span class="fa fa-chevron-down"></span></div>
-											<select name="" id="" class="form-control">
-												<option value="">Select services</option>
-												<option value="">House Washing</option>
-												<option value="">Roof Cleaning</option>
-												<option value="">Driveway Cleaning</option>
-												<option value="">Gutter Cleaning</option>
-												<option value="">Patio Cleaning</option>
-												<option value="">Building Cleaning</option>
-												<option value="">Concrete Cleaning</option>
-												<option value="">Sidewal Cleaning</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div> -->
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="input-wrap">
@@ -856,7 +977,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 	<footer class="footer">
 		<div class="container">
@@ -964,9 +1085,9 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/scrollax.min.js"></script>
-	<script
+	<!-- <script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&amp;sensor=false"></script>
-	<script src="js/google-map.js"></script>
+	<script src="js/google-map.js"></script> -->
 	<script src="js/main.js"></script>
 
 	<!-- New JS for hero slider START -->
@@ -1018,182 +1139,292 @@
 		document.getElementById('heroSlider').addEventListener('mouseenter', () => clearInterval(timer)); // NEW
 		document.getElementById('heroSlider').addEventListener('mouseleave', resetAutoplay); // NEW
 		// --- HERO SLIDER SCRIPT END ---
-
-		// --- TABBED GALLERY SCRIPT START ---
-		document.addEventListener('DOMContentLoaded', function() {
-			const galleryTabs = document.querySelectorAll('.gallery-tab');
-			const galleryItems = document.querySelectorAll('.gallery-item');
-			
-			// Add click event listeners to tabs
-			galleryTabs.forEach(tab => {
-				tab.addEventListener('click', function() {
-					const category = this.getAttribute('data-category');
-					
-					// Remove active class from all tabs
-					galleryTabs.forEach(t => t.classList.remove('active'));
-					
-					// Add active class to clicked tab
-					this.classList.add('active');
-					
-					// Filter gallery items
-					filterGalleryItems(category);
-				});
-			});
-			
-			// Function to filter gallery items based on category
-			function filterGalleryItems(category) {
-				galleryItems.forEach(item => {
-					const itemCategories = item.getAttribute('data-categories');
-					
-					if (category === 'all' || (itemCategories && itemCategories.includes(category))) {
-						// Show item
-						item.classList.remove('hidden');
-					} else {
-						// Hide item
-						item.classList.add('hidden');
-					}
-				});
-			}
-			
-			// Initialize gallery (show all items by default)
-			filterGalleryItems('all');
-		});
-		// --- TABBED GALLERY SCRIPT END ---
 	</script>
 	<!-- New JS for hero slider END -->
 
 	    <script>
-        // --- DATA STRUCTURE FOR DEPENDENT FILTERS ---
+        // --- CONFIGURATION & DATA ---
+        const PROJECTS_PER_PAGE = 8; 
+        
+        // Maps locations to their respective areas (used for dropdown population)
         const locationAreaMap = {
-            "chennai": ["omr", "ecr"],
-            "madurai": ["ayyankottai", "gomatipuram"]
+            "chennai": ["omr", "ecr", "tambaram"],
+            "madurai": ["ayyankottai", "gomatipuram", "tirupalai"]
         };
 
-        // --- DOM Elements ---
+        // Project Data Array (Expanded to 12 projects)
+        // IMPORTANT: The 'id' field MUST match the 'data-id' attribute in the HTML templates above.
+        const projectData = [
+            // Original 8 Projects
+            { "id": "proj-1", "project": "OMR Vista", "category": "ongoing", "location": "chennai", "area": "omr", "link": "work-single.html", "description": "Chennai (OMR) - Building tomorrow's skyline." },
+            { "id": "proj-2", "project": "Fair Land", "category": "ongoing", "location": "madurai", "area": "ayyankottai", "link": "fair-land.html", "description": "Madurai (Ayyankottai) - Contemporary commercial space.", "is_link": true },
+            { "id": "proj-3", "project": "ECR Heights", "category": "ongoing", "location": "chennai", "area": "ecr", "link": "work-single.html", "description": "Chennai (ECR) - Classic brick architecture." },
+            { "id": "proj-4", "project": "Velachery Square", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Coastal living with serene ocean views." },
+            { "id": "proj-5", "project": "Gomatipuram Plaza", "category": "ongoing", "location": "madurai", "area": "gomatipuram", "link": "work-single.html", "description": "Madurai (Gomatipuram) - Spacious industrial facility." },
+            { "id": "proj-6", "project": "Anna Nagar", "category": "ongoing", "location": "chennai", "area": "omr", "link": "work-single.html", "description": "Chennai (OMR) - Bright educational spaces." },
+            { "id": "proj-7", "project": "KK Nagar", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Elegant residential complex with lush gardens." },
+            { "id": "proj-8", "project": "Pasumalai Heights", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Sophisticated gallery space." },
+            // 4 New Placeholder Projects
+            { "id": "proj-9", "project": "Tambaram Gardens", "category": "ongoing", "location": "chennai", "area": "tambaram", "link": "work-single.html", "description": "Chennai (Tambaram) - Luxurious residential villas." },
+            { "id": "proj-10", "project": "Tirupalai Towers", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Madurai (Tirupalai) - Modern IT park infrastructure." },
+            { "id": "proj-11", "project": "Ambattur Logistics", "category": "ongoing", "location": "chennai", "area": "omr", "link": "work-single.html", "description": "Chennai (OMR) - High-capacity warehouse and logistics center." },
+            { "id": "proj-12", "project": "Kovai Residency", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "A successful residential project in Coimbatore." }
+        ];
+
+
+        // --- DOM Elements & State ---
         const locationDropdown = document.getElementById('location-filter');
         const areaDropdown = document.getElementById('area-filter');
         const ongoingFiltersDiv = document.getElementById('ongoing-filters');
-        const galleryTabs = document.querySelectorAll('.gallery-tab-project');
-        const galleryItems = document.querySelectorAll('.gallery-item-project');
+        // Selects all filter buttons
+        const galleryTabs = document.querySelectorAll('.gallery-tab-project'); 
+        const projectGalleryRow = document.getElementById('project-gallery-row'); 
+        const paginationContainer = document.getElementById('pagination-container');
+        const projectTemplates = document.getElementById('project-templates'); 
 
         let currentSelectedLocation = "";
         let currentSelectedArea = "";
+        let currentCategory = 'all'; 
 
 
-        // --- FUNCTION 1: Updates the Area dropdown based on Location selection ---
-        function updateAreaFilter() {
+        // --- FUNCTION 0: Renders the filtered and paginated items to the DOM ---
+        function renderGalleryItems(itemsToDisplay) {
+            projectGalleryRow.innerHTML = '';
+            
+            itemsToDisplay.forEach(project => {
+                // 1. Find the static HTML template using the project's ID
+                const template = projectTemplates.querySelector(`[data-id="${project.id}"]`);
+                
+                if (template) {
+                    // 2. Clone the template (true for deep clone)
+                    const projectCard = template.cloneNode(true);
+                    
+                    // 3. Inject dynamic data from the JS array into the cloned HTML
+                    const nameLink = projectCard.querySelector('.project-name-placeholder a');
+                    nameLink.textContent = project.project;
+                    nameLink.setAttribute('href', project.link);
+
+                    projectCard.querySelector('.project-description-placeholder').textContent = project.description;
+
+                    // 4. Update the main image link for details/popup
+                    const imageLink = projectCard.querySelector('.work a');
+                    // Check if it's a direct link or an image popup (using the template's existing href attribute for the image popup)
+                    if(project.is_link) {
+                        imageLink.setAttribute('href', project.link);
+                    } else {
+                         // For image-popup links, use the existing image-popup href
+                         const currentImageLink = imageLink.getAttribute('href');
+                         imageLink.setAttribute('href', currentImageLink); 
+                    }
+                    
+                    // 5. Append the finalized card to the visible row
+                    projectGalleryRow.appendChild(projectCard);
+                }
+            });
+
+            // 6. Re-initialize Magnific Popup for newly added elements
+            if (typeof jQuery !== 'undefined' && typeof jQuery.fn.magnificPopup !== 'undefined') {
+                $('.image-popup').magnificPopup({
+                    type: 'image',
+                    closeOnContentClick: true,
+                    closeBtnInside: false,
+                    fixedContentPos: true,
+                    mainClass: 'mfp-no-margins mfp-with-zoom', 
+                    image: { verticalFit: true },
+                    zoom: { enabled: true, duration: 300 }
+                });
+            }
+        }
+        
+        // --- FUNCTION 1: Populates the Location dropdown ---
+        function populateLocationFilter() {
+            const locations = Object.keys(locationAreaMap);
+            locationDropdown.innerHTML = '<option value="">-- Select Location --</option>';
+            locations.forEach(locationKey => {
+                const option = document.createElement('option');
+                option.value = locationKey;
+                // Capitalize first letter for display
+                option.textContent = locationKey.charAt(0).toUpperCase() + locationKey.slice(1); 
+                locationDropdown.appendChild(option);
+            });
+        }
+
+
+        // --- FUNCTION 2: Updates Area dropdown and triggers re-filter (on location change) ---
+        function updateAreaFilterAndGallery() {
             const selectedLocation = locationDropdown.value;
-
-            // 1. Reset Area options
             areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
             areaDropdown.disabled = true;
 
-            // 2. Populate new Area options
-            if (selectedLocation && locationAreaMap[selectedLocation]) {
-                const areas = locationAreaMap[selectedLocation];
-                areaDropdown.disabled = false;
+            if (selectedLocation) {
+                const areas = locationAreaMap[selectedLocation] || [];
+                areaDropdown.disabled = areas.length === 0;
 
                 areas.forEach(area => {
                     const option = document.createElement('option');
                     option.value = area;
-                    option.textContent = area.toUpperCase();
+                    option.textContent = area.charAt(0).toUpperCase() + area.slice(1); 
                     areaDropdown.appendChild(option);
                 });
             }
 
-            // 3. Clear existing Area filter and re-filter projects
             areaDropdown.value = "";
             currentSelectedLocation = selectedLocation;
             currentSelectedArea = "";
-
-            // Only re-filter if the 'Ongoing Projects' tab is active
-            if (document.querySelector('.gallery-tab-project.active').getAttribute('data-category') === 'ongoing') {
-                filterGalleryItems('ongoing');
-            }
+            filterGalleryItems(currentCategory, 1);
         }
 
-        // Add listener for Area selection
-        areaDropdown.addEventListener('change', function () {
-            currentSelectedArea = this.value;
-            // Only re-filter if the 'Ongoing Projects' tab is active
-            if (document.querySelector('.gallery-tab-project.active').getAttribute('data-category') === 'ongoing') {
-                filterGalleryItems('ongoing');
+        // --- FUNCTION 3: Creates the Pagination HTML ---
+        function createPaginationLinks(totalPages, currentPage, category) {
+            paginationContainer.innerHTML = '<div class="col text-center"><div class="block-27"></div></div>'; // Reset container
+            
+            if (totalPages <= 1) return;
+
+            const ul = document.createElement('ul');
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.innerHTML = `<a href="#">&lt;</a>`;
+            if (currentPage === 1) {
+                prevLi.classList.add('disabled');
+            } else {
+                prevLi.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterGalleryItems(category, currentPage - 1);
+                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             }
-        });
+            ul.appendChild(prevLi);
+
+            // Page links
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#">${i}</a>`;
+                if (i === currentPage) {
+                    li.classList.add('active');
+                } else {
+                    li.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        filterGalleryItems(category, i);
+                        document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
+                ul.appendChild(li);
+            }
+
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.innerHTML = `<a href="#">&gt;</a>`;
+            if (currentPage === totalPages) {
+                nextLi.classList.add('disabled');
+            } else {
+                nextLi.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterGalleryItems(category, currentPage + 1);
+                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+            ul.appendChild(nextLi);
+
+            // Append list to block-27 container
+            const block27 = paginationContainer.querySelector('.block-27');
+            if (block27) block27.appendChild(ul);
+        }
 
 
-        // --- FUNCTION 2: Filters the Project Gallery (Modified) ---
-        function filterGalleryItems(category) {
-            // 1. Hide/Show the dependent filters
+        // --- FUNCTION 4: The main filtering and rendering logic ---
+        function filterGalleryItems(category, page = 1) {
+            currentCategory = category;
+            
+            // 1. Calculate All Counts and Update Buttons
+            const ongoingCount = projectData.filter(item => item.category === 'ongoing').length;
+            const completedCount = projectData.filter(item => item.category === 'completed').length;
+            const allCount = projectData.length;
+
+            document.getElementById('count-all').textContent = allCount;
+            document.getElementById('count-ongoing').textContent = ongoingCount;
+            document.getElementById('count-completed').textContent = completedCount;
+
+
+            // 2. Handle visibility of sub-filters and state reset
             if (category === 'ongoing') {
-                // Use flex to display the row and keep filters inline
                 ongoingFiltersDiv.style.display = 'flex';
             } else {
-                ongoingFiltersDiv.style.display = 'none'; // Hide filters for 'all'/'completed'
-                // Reset location/area selections when switching away
-                currentSelectedLocation = "";
-                currentSelectedArea = "";
-                locationDropdown.value = "";
-                updateAreaFilter();
+                ongoingFiltersDiv.style.display = 'none';
+                if (currentCategory !== 'ongoing') {
+                    // Reset sub-filter state when switching away from 'ongoing'
+                    currentSelectedLocation = "";
+                    currentSelectedArea = "";
+                    locationDropdown.value = "";
+                    areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
+                    areaDropdown.disabled = true;
+                }
             }
 
-            // 2. Filter gallery items based on tab AND location/area (if ongoing)
-            galleryItems.forEach(item => {
-                const itemCategories = item.getAttribute('data-categories');
-
-                // Get item location and area
-                const itemLocation = item.getAttribute('data-location');
-                const itemArea = item.getAttribute('data-area');
-
-                // Check if item belongs to the main selected tab category
-                const matchesCategory = (category === 'all' || (itemCategories && itemCategories.includes(category)));
-
-                let matchesSubFilter = true; // Assume true until proven false
-
+            // 3. Filter the DATA array
+            let filteredData = projectData.filter(item => {
+                const matchesCategory = (category === 'all' || item.category === category);
+                let matchesSubFilter = true;
+                
                 if (category === 'ongoing') {
-                    // If Ongoing Projects is selected, apply Location/Area filters
-
-                    // Filter by Location if one is selected
-                    if (currentSelectedLocation && itemLocation !== currentSelectedLocation) {
-                        matchesSubFilter = false;
-                    }
-
-                    // Filter by Area if one is selected (only applies if Location matched or was not selected)
-                    if (matchesSubFilter && currentSelectedArea && itemArea !== currentSelectedArea) {
-                        matchesSubFilter = false;
-                    }
+                    if (currentSelectedLocation && item.location !== currentSelectedLocation) matchesSubFilter = false;
+                    if (matchesSubFilter && currentSelectedArea && item.area !== currentSelectedArea) matchesSubFilter = false;
                 }
 
-                if (matchesCategory && matchesSubFilter) {
-                    item.style.display = 'block'; // Show item
-                } else {
-                    item.style.display = 'none'; // Hide item
-                }
+                return matchesCategory && matchesSubFilter;
             });
+
+            // 4. Apply Pagination Logic
+            const totalItems = filteredData.length;
+            const totalPages = Math.ceil(totalItems / PROJECTS_PER_PAGE);
+            let currentPage = Math.min(Math.max(1, page), totalPages || 1);
+            const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
+            const endIndex = startIndex + PROJECTS_PER_PAGE;
+            const itemsToDisplay = filteredData.slice(startIndex, endIndex);
+
+            // 5. Render the items dynamically (using HTML templates)
+            renderGalleryItems(itemsToDisplay);
+
+            // 6. Generate Pagination Links
+            createPaginationLinks(totalPages, currentPage, category);
         }
 
 
         // --- MAIN INITIALIZATION & EVENT LISTENERS ---
         document.addEventListener('DOMContentLoaded', function () {
-            // Add click event listeners to tabs
+            
+            populateLocationFilter();
+
+            // --- Tab Click Listener (Primary filter) ---
             galleryTabs.forEach(tab => {
                 tab.addEventListener('click', function () {
                     const category = this.getAttribute('data-category');
 
-                    // Remove active class from all tabs
                     galleryTabs.forEach(t => t.classList.remove('active'));
-
-                    // Add active class to clicked tab
                     this.classList.add('active');
 
-                    // Filter gallery items
-                    filterGalleryItems(category);
+                    // Filter gallery items, always starting at page 1 for a new category
+                    filterGalleryItems(category, 1);
+                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
+            
+            // --- Location Dropdown Listener ---
+            locationDropdown.addEventListener('change', updateAreaFilterAndGallery);
+            
+            // --- Area Dropdown Listener ---
+            areaDropdown.addEventListener('change', function () {
+                currentSelectedArea = this.value;
+                // Only re-filter if the 'Ongoing Projects' tab is active
+                if (document.querySelector('.gallery-tab-project.active').getAttribute('data-category') === 'ongoing') {
+                    // Filter, always starting at page 1 for a new sub-filter selection
+                    filterGalleryItems(currentCategory, 1); 
+                }
+            });
 
-            // Initialize gallery (show all items by default)
-            filterGalleryItems('all');
+            // Initialize gallery (show 'all' items, page 1 and set counts)
+            filterGalleryItems('all', 1);
         });
+        
     </script>
 
 </body>
