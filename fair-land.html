@@ -2,538 +2,563 @@
 <html>
 
 <head>
-    <title>Kathir's Developers - Fair Land Project</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Kathir's Developers - Fair Land Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&amp;display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/fair-land-project.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&amp;display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/jquery.timepicker.css">
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fair-land-project.css">
 
-    <style>
-      /* Style for the professional amenity card */
-.amenity-card {
-    /* Subtle box shadow to lift the card */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    /* Clean rounded corners */
-    border-radius: 10px; 
-    /* Padding is already handled by Bootstrap's p-4 */
-    
-    /* Ensure all cards are the same height for a clean grid */
-    min-height: 50px; 
-    
-    /* Use Flexbox for robust centering of content */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    /* Smooth transition for hover effects */
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth animation curve */
-}
+  <style>
+    /* Style for the professional amenity card */
+    .amenity-card {
+      /* Subtle box shadow to lift the card */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      /* Clean rounded corners */
+      border-radius: 10px;
+      /* Padding is already handled by Bootstrap's p-4 */
 
-/* Optional: Add a primary color border and stronger shadow on hover */
-.amenity-card:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    border: 1px solid #F96D00; /* Use your brand color for the border */
-}
+      /* Ensure all cards are the same height for a clean grid */
+      min-height: 50px;
 
-/* Style for the text title */
-.amenity-card h4 {
-    font-size: 16px;
-    font-weight: 600; /* Make the text slightly bolder */
-    line-height: 1.4;
-    color: #333; /* Darker text for better contrast */
-    margin-bottom: 0;
-}
-        /* --- UPI Payment Toggle (Pure CSS) --- */
-        /* Set a large screen threshold (e.g., 768px for tablets/desktops) */
+      /* Use Flexbox for robust centering of content */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-        /* By default, hide the desktop QR code (mobile-first approach) */
-        #upi-desktop-qr {
-            display: none;
-        }
+      /* Smooth transition for hover effects */
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      /* Smooth animation curve */
+    }
 
-        /* Rule for DESKTOP (Min width 768px) */
-        @media (min-width: 768px) {
-            #upi-mobile-link {
-                display: none !important;
-                /* Hide the UPI Link on desktop */
-            }
+    /* Optional: Add a primary color border and stronger shadow on hover */
+    .amenity-card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border: 1px solid #F96D00;
+      /* Use your brand color for the border */
+    }
 
-            #upi-desktop-qr {
-                display: block !important;
-                /* Show the QR Code on desktop */
-            }
-        }
+    /* Style for the text title */
+    .amenity-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      /* Make the text slightly bolder */
+      line-height: 1.4;
+      color: #333;
+      /* Darker text for better contrast */
+      margin-bottom: 0;
+    }
 
-        /* Rule for MOBILE (Max width 767px) */
-        @media (max-width: 767px) {
-            #upi-mobile-link {
-                display: block !important;
-                /* Show the UPI Link on mobile */
-            }
+    /* --- UPI Payment Toggle (Pure CSS) --- */
+    /* Set a large screen threshold (e.g., 768px for tablets/desktops) */
 
-            #desktop-qr-container {
-                display: none !important;
-                /* Hide the QR Code on mobile */
-            }
-        }
+    /* By default, hide the desktop QR code (mobile-first approach) */
+    #upi-desktop-qr {
+      display: none;
+    }
 
-        .upi-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #5d50c6;
-            /* UPI-like color */
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+    /* Rule for DESKTOP (Min width 768px) */
+    @media (min-width: 768px) {
+      #upi-mobile-link {
+        display: none !important;
+        /* Hide the UPI Link on desktop */
+      }
 
-        /* --- RESPONSIVE VIDEO STYLES --- */
-        .video-responsive {
-            overflow: hidden;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
-            position: relative;
-            height: 0;
-            width: 100%;
-            max-width: 750px; /* Optional: limit max width for large screens */
-            margin: 0 auto; /* Center the video horizontally */
-        }
+      #upi-desktop-qr {
+        display: block !important;
+        /* Show the QR Code on desktop */
+      }
+    }
 
-        .video-responsive iframe {
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-        }
+    /* Rule for MOBILE (Max width 767px) */
+    @media (max-width: 767px) {
+      #upi-mobile-link {
+        display: block !important;
+        /* Show the UPI Link on mobile */
+      }
 
-        /* --- IMAGE HEIGHT ADJUSTMENT ADDED HERE --- */
-        #project-media-carousel .item img {
-            height: 250px; /* **Increased Height** - Change this value to adjust */
-            width: 100%;
-            object-fit: cover; /* Ensures images fill the box without distortion */
-        }
-        /* ------------------------------------------- */
-    </style>
+      #desktop-qr-container {
+        display: none !important;
+        /* Hide the QR Code on mobile */
+      }
+    }
+
+    .upi-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #5d50c6;
+      /* UPI-like color */
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    /* --- RESPONSIVE VIDEO STYLES --- */
+    .video-responsive {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      /* 16:9 aspect ratio */
+      position: relative;
+      height: 0;
+      width: 100%;
+      max-width: 750px;
+      /* Optional: limit max width for large screens */
+      margin: 0 auto;
+      /* Center the video horizontally */
+    }
+
+    .video-responsive iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+
+    /* --- IMAGE HEIGHT ADJUSTMENT ADDED HERE --- */
+    #project-media-carousel .item img {
+      height: 250px;
+      /* **Increased Height** - Change this value to adjust */
+      width: 100%;
+      object-fit: cover;
+      /* Ensures images fill the box without distortion */
+    }
+
+    /* ------------------------------------------- */
+  </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
-                Kathir's <span>Developers</span> </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span> Menu
-            </button>
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                    <li class="nav-item active"><a href="projects.html" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <section class="hero-wrap hero-wrap-slider" id="hero-slider">
-        <div class="owl-carousel owl-theme" id="project-hero-carousel">
-            <div class="slider-item" style="background-image: url('images/bg_1.jpg');">
-                <div class="overlay"></div>
-            </div>
-            <div class="slider-item" style="background-image: url('images/bg_2.jpg');">
-                <div class="overlay"></div>
-            </div>
-            <div class="slider-item" style="background-image: url('images/bg_3.jpg');">
-                <div class="overlay"></div>
-            </div>
-        </div>
-        <div class="container d-flex align-items-center justify-content-center h-100 position-absolute"
-            style="top:0; left:0; right:0;">
-            <div class="row no-gutters slider-text align-items-center justify-content-center w-100">
-                <div class="col-md-9 ftco-animate text-center">
-                    <h1 class="mb-2 bread" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">Fair Land
-                    </h1>
-                    <p class="breadcrumbs">
-                        <span class="mr-2"><a href="index.html" style="color: rgba(255,255,255,0.8);">Home <i
-                                        class="fa fa-chevron-right"></i></a></span>
-                        <span class="mr-2"><a href="projects.html" style="color: rgba(255,255,255,0.8);">Projects <i
-                                        class="fa fa-chevron-right"></i></a></span>
-                        <span style="color: #F96D00;">Fair Land <i class="fa fa-chevron-right"></i></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-lg-8 order-lg-1 order-1 ftco-animate">
-                    <h2 class="mb-3">Fair Land - Coastal Residential Development</h2>
-
-                    <div class="ftco-animate mb-5">
-                        <h3 class="mb-3">Project Gallery & Walkthrough</h3>
-
-                        <div id="project-media-carousel" class="owl-carousel owl-theme mb-4 gallery-popup">
-                            <div class="item">
-                                <a href="images/gallery-2.jpg" class="img-zoom" title="Fair Land Image 1">
-                                    <img src="images/gallery-2.jpg" alt="Fair Land Image 1" class="img-fluid rounded">
-                                    <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="images/gallery-3.jpg" class="img-zoom" title="Fair Land Image 2">
-                                    <img src="images/gallery-3.jpg" alt="Fair Land Image 2" class="img-fluid rounded">
-                                    <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="images/gallery-4.jpg" class="img-zoom" title="Fair Land Image 3">
-                                    <img src="images/gallery-4.jpg" alt="Fair Land Image 3" class="img-fluid rounded">
-                                    <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="images/gallery-5.jpg" class="img-zoom" title="Fair Land Image 4">
-                                    <img src="images/gallery-5.jpg" alt="Fair Land Image 4" class="img-fluid rounded">
-                                    <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Fair Land is a prestigious residential project located on the ECR coast in Chennai. Our team
-                        handled the complete lifecycle of this project, from architectural design and structural
-                        engineering to interior finishing.</p>
-                    <p>The goal was to create a modern, sustainable community that maximized natural light and coastal
-                        views. This involved using locally sourced, eco-friendly materials and incorporating rainwater
-                        harvesting systems.</p>
-                    
-                    <div class="ftco-animate mb-4">
-    <h3 class="mb-4 text-center">Project Amenities</h3>
-    <div class="row amenities-grid">
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-shield fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>1. 24/7 Security and Gated Community</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-road fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>2. Blacktop Roads and Street Lights</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-wrench fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>3. Underground Drainage and Sewage System</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-tree fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>4. Lush Green Parks and Children's Play Area</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-tint fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>5. Access to Potable Water (Borewell)</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-bolt fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>6. Dedicated Transformer and Electricity Access</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-phone-square fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>7. High-Speed Internet and Communication Lines</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-recycle fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>8. Rainwater Harvesting System</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-bell-o fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>9. Clear Legal Documents and Title Deeds</h4>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
-            <div class="amenity-card p-3 mb-3">
-                <span class="fa fa-users fa-3x mb-2" style="color: #F96D00;"></span>
-                <h4>10. Community Gathering Space</h4>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-6 col-lg-4 d-none d-sm-block"></div>
-        <div class="col-12 col-sm-6 col-lg-4 d-none d-lg-block"></div>
-        
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
+        Kathir's <span>Developers</span> </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars"></span> Menu
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item active"><a href="projects.html" class="nav-link">Projects</a></li>
+          <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
     </div>
-</div>
+  </nav>
 
-
-                    </div>
-                <div class="col-lg-4 sidebar order-lg-2 order-2 ftco-animate">
-                    <div class="sidebar-box ftco-animate">
-                        <h3>Project Information</h3>
-                        <ul class="project-info list-unstyled">
-                            <li><strong>Client:</strong> Kathir's Developer</li>
-                            <li><strong>Location:</strong> Ayyankottai, Madurai</li>
-                            <li><strong>Status:</strong> Ongoing</li>
-                            <li><strong>Category:</strong> Residential & Commercial Development</li>
-                            <li><strong>Area:</strong> 25,000 sq ft</li>
-                        </ul>
-                    </div>
-                    <div class="sidebar-box ftco-animate">
-                        <div class="video-responsive">
-                            <iframe 
-                                src="https://www.youtube.com/embed/VIDEO_ID" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-
-                    <div class="sidebar-box ftco-animate">
-                        <h3>Download Brochure (PDF)</h3>
-                        <p>Get the complete details, floor plans, and pricing for the Fair Land project instantly.</p>
-                        <p><a href="FairLand_Brochure.pdf" target="_blank" class="btn btn-warning py-2 px-3"><span
-                                        class="fa fa-download"></span> Download Now</a></p>
-                    </div>
-                    <div class="sidebar-box ftco-animate">
-                        <h3>Contact for Bookings</h3>
-                        <p>Interested in learning more about available units in the Fair Land project? Get in touch with
-                            our sales team.</p>
-                        <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
-                    </div>
-                     <div class="sidebar-box ftco-animate">
-                        <h3 class="mb-3">Secure Your Plot Now</h3>
-                        <p>Instantly pay the booking fee of **₹25,000.00** via UPI.</p>
-
-                        <div id="upi-mobile-link" class="text-center">
-                            <h4>📱 Tap to Pay</h4>
-                            <a href="upi://pay?pa=kathirdevelopers@upi&pn=Kathir%20Developers&am=25000.00&cu=INR"
-                                class="upi-button">
-                                <i class="fa fa-money"></i> Pay ₹25,000.00
-                            </a>
-                            <small class="d-block mt-2">Opens GPay, PhonePe, Paytm, etc.</small>
-                        </div>
-
-                        <div id="upi-desktop-qr" class="text-center">
-                            <h4>🖥️ Scan to Pay</h4>
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3Dkathirdevelopers%40upi%26pn%3DKathir%2520Developers%26am%3D25000.00%26cu%3DINR"
-                                alt="UPI QR Code" style="width: 180px; height: 180px; padding: 5px; margin: 10px auto;">
-                            <small class="d-block mt-2">Scan with any UPI app.</small>
-                            <small class="d-block">UPI ID: **kathirdevelopers@upi**</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 order-lg-3 order-3 ftco-animate">
-                    <div class="ftco-animate mt-5">
-                        <h3 class="mb-4">Fair Land Plot Inventory</h3>
-                        <p>A total of **750 Plots** are available. Use the filters below to find your perfect plot.</p>
-
-                        <div class="row mb-4">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="plot-no-filter">Filter by Plot No:</label>
-                                <input type="number" id="plot-no-filter" class="form-control"
-                                    placeholder="Enter plot number">
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <label for="plot-facing-filter">Filter by Facing:</label>
-                                <select id="plot-facing-filter" class="form-control">
-                                    <option value="all">All Facings</option>
-                                    <option value="North">North</option>
-                                    <option value="East">East</option>
-                                    <option value="West">West</option>
-                                    <option value="South">South</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <label for="plot-status-filter">Filter by Status:</label>
-                                <select id="plot-status-filter" class="form-control">
-                                    <option value="all">All Statuses</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Sold">Sold</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 col-sm-6 d-flex align-items-end">
-                                <button id="reset-filters" class="btn btn-primary w-100">Reset Filters</button>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover plot-inventory-table-custom"
-                                id="plot-inventory-table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Plot No.</th>
-                                        <th scope="col">Facing</th>
-                                        <th scope="col">Sqft Size</th>
-                                        <th scope="col">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <p class="text-center mt-3"><small>Showing plots <span id="plot-count"></span> of <span
-                                        id="total-filtered-plots"></span> plots. (Total <span id="total-initial-plots"></span> plots)</small></p>
-
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <ul class="pagination justify-content-center" id="plot-pagination">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <section class="hero-wrap hero-wrap-slider" id="hero-slider">
+    <div class="owl-carousel owl-theme" id="project-hero-carousel">
+      <div class="slider-item" style="background-image: url('images/bg_1.jpg');">
+        <div class="overlay"></div>
+      </div>
+      <div class="slider-item" style="background-image: url('images/bg_2.jpg');">
+        <div class="overlay"></div>
+      </div>
+      <div class="slider-item" style="background-image: url('images/bg_3.jpg');">
+        <div class="overlay"></div>
+      </div>
+    </div>
+    <div class="container d-flex align-items-center justify-content-center h-100 position-absolute"
+      style="top:0; left:0; right:0;">
+      <div class="row no-gutters slider-text align-items-center justify-content-center w-100">
+        <div class="col-md-9 ftco-animate text-center">
+          <h1 class="mb-2 bread" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">Fair Land
+          </h1>
+          <p class="breadcrumbs">
+            <span class="mr-2"><a href="index.html" style="color: rgba(255,255,255,0.8);">Home <i
+                  class="fa fa-chevron-right"></i></a></span>
+            <span class="mr-2"><a href="projects.html" style="color: rgba(255,255,255,0.8);">Projects <i
+                  class="fa fa-chevron-right"></i></a></span>
+            <span style="color: #F96D00;">Fair Land <i class="fa fa-chevron-right"></i></span>
+          </p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row">
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Kathir's Developers</h2>
-                    <p>Your Vision, Our Foundation
-                        Kathir's Developers
-                        Brick by brick, we build trust
-                    </p>
-                    <ul class="ftco-footer-social p-0">
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
-                                title="Twitter"><span class="fa fa-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
-                                title="Facebook"><span class="fa fa-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
-                                title="Instagram"><span class="fa fa-instagram"></span></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6 col-lg-3 pl-lg-5 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Quick Links</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="index.html" class="py-2 d-block">Home</a></li>
-                        <li><a href="about.html" class="py-2 d-block">About</a></li>
-                        <li><a href="projects.html" class="py-2 d-block">Projects</a></li>
-                        <li><a href="contact.html" class="py-2 d-block">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
-                    <h2 class="footer-heading">Have a Questions?</h2>
-                    <div class="block-23 mb-3">
-                        <ul>
-                            <li><span class="icon fa fa-map"></span><span class="text">Hanuman Kovil Padithurai, Simmakkal, Madurai, Tamilnadu 625002</span></li>
-                            <li><a href="tel://+918807344264"><span class="icon fa fa-phone"></span><span class="text">+91-88073 44264</span></a></li>
-                            <li><a href="mailto:sales@kathirdevelopers.com"><span class="icon fa fa-paper-plane"></span><span
-                                            class="text">sales@kathirdevelopers.com</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-12 text-center">
+        <div class="col-lg-8 order-lg-1 order-1 ftco-animate">
+          <h2 class="mb-3">Fair Land - Coastal Residential Development</h2>
 
-                    <p class="copyright">
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by SKG Consulting Pvt Ltd 
-                    </p>
-                </div>
+          <div class="ftco-animate mb-5">
+            <h3 class="mb-3">Project Gallery & Walkthrough</h3>
+
+            <div id="project-media-carousel" class="owl-carousel owl-theme mb-4 gallery-popup">
+              <div class="item">
+                <a href="images/gallery-2.jpg" class="img-zoom" title="Fair Land Image 1">
+                  <img src="images/gallery-2.jpg" alt="Fair Land Image 1" class="img-fluid rounded">
+                  <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
+                </a>
+              </div>
+              <div class="item">
+                <a href="images/gallery-3.jpg" class="img-zoom" title="Fair Land Image 2">
+                  <img src="images/gallery-3.jpg" alt="Fair Land Image 2" class="img-fluid rounded">
+                  <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
+                </a>
+              </div>
+              <div class="item">
+                <a href="images/gallery-4.jpg" class="img-zoom" title="Fair Land Image 3">
+                  <img src="images/gallery-4.jpg" alt="Fair Land Image 3" class="img-fluid rounded">
+                  <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
+                </a>
+              </div>
+              <div class="item">
+                <a href="images/gallery-5.jpg" class="img-zoom" title="Fair Land Image 4">
+                  <img src="images/gallery-5.jpg" alt="Fair Land Image 4" class="img-fluid rounded">
+                  <div class="zoom-icon"><i class="fa fa-search-plus"></i></div>
+                </a>
+              </div>
             </div>
+          </div>
+          <p>Fair Land is a prestigious residential project located on the ECR coast in Chennai. Our team
+            handled the complete lifecycle of this project, from architectural design and structural
+            engineering to interior finishing.</p>
+          <p>The goal was to create a modern, sustainable community that maximized natural light and coastal
+            views. This involved using locally sourced, eco-friendly materials and incorporating rainwater
+            harvesting systems.</p>
+
+          <div class="ftco-animate mb-4">
+            <h3 class="mb-4 text-center">Project Amenities</h3>
+            <div class="row amenities-grid">
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-shield fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>1. 24/7 Security and Gated Community</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-road fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>2. Blacktop Roads and Street Lights</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-wrench fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>3. Underground Drainage and Sewage System</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-tree fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>4. Lush Green Parks and Children's Play Area</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-tint fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>5. Access to Potable Water (Borewell)</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-bolt fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>6. Dedicated Transformer and Electricity Access</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-phone-square fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>7. High-Speed Internet and Communication Lines</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-recycle fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>8. Rainwater Harvesting System</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-bell-o fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>9. Clear Legal Documents and Title Deeds</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate">
+                <div class="amenity-card p-3 mb-3">
+                  <span class="fa fa-users fa-3x mb-2" style="color: #F96D00;"></span>
+                  <h4>10. Community Gathering Space</h4>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-4 d-none d-sm-block"></div>
+              <div class="col-12 col-sm-6 col-lg-4 d-none d-lg-block"></div>
+
+            </div>
+          </div>
+
+
         </div>
-    </footer>
+        <div class="col-lg-4 sidebar order-lg-2 order-2 ftco-animate">
+          <div class="sidebar-box ftco-animate">
+            <h3>Project Information</h3>
+            <ul class="project-info list-unstyled">
+              <li><strong>Client:</strong> Kathir's Developer</li>
+              <li><strong>Location:</strong> Ayyankottai, Madurai</li>
+              <li><strong>Status:</strong> Ongoing</li>
+              <li><strong>Category:</strong> Residential & Commercial Development</li>
+              <li><strong>Area:</strong> 25,000 sq ft</li>
+            </ul>
+          </div>
+          <div class="sidebar-box ftco-animate">
+            <div class="video-responsive">
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
 
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#F96D00" />
-        </svg></div>
+          <div class="sidebar-box ftco-animate">
+            <h3>Download Brochure (PDF)</h3>
+            <p>Get the complete details, floor plans, and pricing for the Fair Land project instantly.</p>
+            <p><a href="FairLand_Brochure.pdf" target="_blank" class="btn btn-warning py-2 px-3"><span
+                  class="fa fa-download"></span> Download Now</a></p>
+          </div>
+          <div class="sidebar-box ftco-animate">
+            <h3>Contact for Bookings</h3>
+            <p>Interested in learning more about available units in the Fair Land project? Get in touch with
+              our sales team.</p>
+            <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
+          </div>
+          <div class="sidebar-box ftco-animate">
+            <h3 class="mb-3">Secure Your Plot Now</h3>
+            <p>Instantly pay the booking fee of **₹25,000.00** via UPI.</p>
+
+            <div id="upi-mobile-link" class="text-center">
+              <h4>📱 Tap to Pay</h4>
+              <a href="upi://pay?pa=kathirdevelopers@upi&pn=Kathir%20Developers&am=25000.00&cu=INR" class="upi-button">
+                <i class="fa fa-money"></i> Pay ₹25,000.00
+              </a>
+              <small class="d-block mt-2">Opens GPay, PhonePe, Paytm, etc.</small>
+            </div>
+
+            <div id="upi-desktop-qr" class="text-center">
+              <h4>🖥️ Scan to Pay</h4>
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3Dkathirdevelopers%40upi%26pn%3DKathir%2520Developers%26am%3D25000.00%26cu%3DINR"
+                alt="UPI QR Code" style="width: 180px; height: 180px; padding: 5px; margin: 10px auto;">
+              <small class="d-block mt-2">Scan with any UPI app.</small>
+              <small class="d-block">UPI ID: **kathirdevelopers@upi**</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 order-lg-3 order-3 ftco-animate">
+          <div class="ftco-animate mt-5">
+            <h3 class="mb-4">Fair Land Plot Inventory</h3>
+            <p>A total of **750 Plots** are available. Use the filters below to find your perfect plot.</p>
+
+            <div class="row mb-4">
+              <div class="col-md-3 col-sm-6">
+                <label for="plot-no-filter">Filter by Plot No:</label>
+                <input type="number" id="plot-no-filter" class="form-control" placeholder="Enter plot number">
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <label for="plot-facing-filter">Filter by Facing:</label>
+                <select id="plot-facing-filter" class="form-control">
+                  <option value="all">All Facings</option>
+                  <option value="North">North</option>
+                  <option value="East">East</option>
+                  <option value="West">West</option>
+                  <option value="South">South</option>
+                </select>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <label for="plot-status-filter">Filter by Status:</label>
+                <select id="plot-status-filter" class="form-control">
+                  <option value="all">All Statuses</option>
+                  <option value="Active">Active</option>
+                  <option value="Sold">Sold</option>
+                </select>
+              </div>
+              <div class="col-md-3 col-sm-6 d-flex align-items-end">
+                <button id="reset-filters" class="btn btn-primary w-100">Reset Filters</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover plot-inventory-table-custom"
+                id="plot-inventory-table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Plot No.</th>
+                    <th scope="col">Facing</th>
+                    <th scope="col">Sqft Size</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-center mt-3"><small>Showing plots <span id="plot-count"></span> of <span
+                  id="total-filtered-plots"></span> plots. (Total <span id="total-initial-plots"></span> plots)</small>
+            </p>
+
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <ul class="pagination justify-content-center" id="plot-pagination">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Kathir's Developers</h2>
+          <p>Your Vision, Our Foundation
+            Kathir's Developers
+            Brick by brick, we build trust
+          </p>
+          <ul class="ftco-footer-social p-0">
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span
+                  class="fa fa-twitter"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span
+                  class="fa fa-facebook"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span
+                  class="fa fa-instagram"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3 pl-lg-5 mb-4 mb-md-0">
+          <h2 class="footer-heading">Quick Links</h2>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="py-2 d-block">Home</a></li>
+            <li><a href="about.html" class="py-2 d-block">About</a></li>
+            <li><a href="projects.html" class="py-2 d-block">Projects</a></li>
+            <li><a href="contact.html" class="py-2 d-block">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Have a Questions?</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><span class="icon fa fa-map"></span><span class="text">Hanuman Kovil Padithurai, Simmakkal, Madurai,
+                  Tamilnadu 625002</span></li>
+              <li><a href="tel://+918807344264"><span class="icon fa fa-phone"></span><span class="text">+91-88073
+                    44264</span></a></li>
+              <li><a href="mailto:sales@kathirdevelopers.com"><span class="icon fa fa-paper-plane"></span><span
+                    class="text">sales@kathirdevelopers.com</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-12 text-center">
+
+          <p class="copyright">
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by SKG Consulting
+            Pvt Ltd
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
+    </svg></div>
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script src="js/main.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="js/main.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            // --- CAROUSEL & POPUP INITIALIZATION ---
-            // (Existing carousel code remains the same)
-            $('#project-hero-carousel').owlCarousel({
-                loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, autoplayTimeout: 5000,
-                autoplayHoverPause: true, animateOut: 'fadeOut', animateIn: 'fadeIn',
-            });
+  <script>
+    $(document).ready(function () {
+      // --- CAROUSEL & POPUP INITIALIZATION ---
+      // (Existing carousel code remains the same)
+      $('#project-hero-carousel').owlCarousel({
+        loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, autoplayTimeout: 5000,
+        autoplayHoverPause: true, animateOut: 'fadeOut', animateIn: 'fadeIn',
+      });
 
-            $('#project-media-carousel').owlCarousel({
-                loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 }
-                }
-            });
+      $('#project-media-carousel').owlCarousel({
+        loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+          0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 }
+        }
+      });
 
-            $('.gallery-popup').magnificPopup({
-                delegate: 'a.img-zoom', type: 'image',
-                gallery: { enabled: true },
-                zoom: { enabled: true, duration: 300, easing: 'ease-in-out',
-                    opener: function (openerElement) {
-                        return openerElement.is('img') ? openerElement : openerElement.find('img');
-                    }
-                }
-            });
-            // ------------------------------------
+      $('.gallery-popup').magnificPopup({
+        delegate: 'a.img-zoom', type: 'image',
+        gallery: { enabled: true },
+        zoom: {
+          enabled: true, duration: 300, easing: 'ease-in-out',
+          opener: function (openerElement) {
+            return openerElement.is('img') ? openerElement : openerElement.find('img');
+          }
+        }
+      });
+      // ------------------------------------
 
-           
-        });
-    </script>
-    <script src="js/fair-land.js"></script>
+
+    });
+  </script>
+  <script src="js/fair-land.js"></script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/690f46e31c1717195b840d4d/1j9hqpqq8';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
 </body>
 
 </html>

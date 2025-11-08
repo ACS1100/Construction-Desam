@@ -28,110 +28,122 @@
 	<link rel="stylesheet" href="css/style.css">
 	<!-- New styles for hero slider START -->
 	<style>
-		  /*
+		/*
         * Enhanced styles for better alignment and responsiveness
         */
-        .d-inline-flex {
-            display: inline-flex !important;
-        }
+		.d-inline-flex {
+			display: inline-flex !important;
+		}
 
-        /* Use flexbox for the ongoing filters row to manage alignment easily */
-        #ongoing-filters {
-            display: none;
-            /* Hidden by default */
-            justify-content: center;
-            /* Center the dropdowns */
-            align-items: center;
-        }
+		/* Use flexbox for the ongoing filters row to manage alignment easily */
+		#ongoing-filters {
+			display: none;
+			/* Hidden by default */
+			justify-content: center;
+			/* Center the dropdowns */
+			align-items: center;
+		}
 
-        .ongoing-filters-container {
-            display: flex;
-            flex-wrap: wrap;
-            /* Allow wrapping on smaller screens */
-            gap: 1rem;
-            /* Space between dropdowns */
-            justify-content: center;
-        }
-        
-        /* Ensures dropdowns take up less space on small screens */
-        .ongoing-filters-container .form-control {
-            max-width: 200px;
-            width: 100%; /* Ensures it fills max-width */
-        }
+		.ongoing-filters-container {
+			display: flex;
+			flex-wrap: wrap;
+			/* Allow wrapping on smaller screens */
+			gap: 1rem;
+			/* Space between dropdowns */
+			justify-content: center;
+		}
 
-        /* Hides the hidden items for JavaScript filtering */
-        .gallery-item-project.hidden {
-            display: none !important;
-        }
+		/* Ensures dropdowns take up less space on small screens */
+		.ongoing-filters-container .form-control {
+			max-width: 200px;
+			width: 100%;
+			/* Ensures it fills max-width */
+		}
 
-        /* Apply smooth scroll to the entire page */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* 🚀 NEW STYLES: Matching Dropdown to Button Color/Style */
-        #location-filter,
-        #area-filter {
-            /* Apply border and text color of btn-outline-primary */
-            color: #007bff; /* Bootstrap Primary Blue */
-            background-color: transparent;
-            border: 1px solid #007bff; /* Primary Blue Border */
-            font-weight: 500;
-            box-shadow: none; /* Remove default inner shadow */
-            
-            /* Ensure consistent height with buttons */
-            padding: .375rem 1.75rem .375rem .75rem; 
-            height: calc(1.5em + .75rem + 2px); 
-        }
+		/* Hides the hidden items for JavaScript filtering */
+		.gallery-item-project.hidden {
+			display: none !important;
+		}
 
-        /* Style the dropdown when it is focused (active state) to match button hover */
-        #location-filter:focus,
-        #area-filter:focus {
-            color: #fff; /* White text on focus */
-            background-color: #007bff; /* Primary Blue background on focus */
-            border-color: #007bff;
-            outline: 0;
-        }
-        
-        /* Ensure the options inside the dropdown use a standard color */
-        #location-filter option,
-        #area-filter option {
-            color: #1a1a1a; 
-            background-color: #fff;
-        }
-        
-        /* Styling for the custom pagination container (block-27 is often used in this theme) */
-        .block-27 ul {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            display: inline-block;
-        }
-        .block-27 ul li {
-            display: inline-block;
-            margin-bottom: 4px;
-            font-weight: 400;
-        }
-        .block-27 ul li a,
-        .block-27 ul li span {
-            text-align: center;
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            border-radius: 50%;
-            border: 1px solid #e6e6e6;
-            color: #007bff; /* Primary Blue for inactive links */
-        }
-        .block-27 ul li.active a {
-            background: #007bff; /* Primary Blue for active page */
-            color: #fff;
-            border: 1px solid transparent;
-        }
-        .block-27 ul li.disabled a {
-            color: #ccc;
-            cursor: not-allowed;
-        }
+		/* Apply smooth scroll to the entire page */
+		html {
+			scroll-behavior: smooth;
+		}
+
+		/* 🚀 NEW STYLES: Matching Dropdown to Button Color/Style */
+		#location-filter,
+		#area-filter {
+			/* Apply border and text color of btn-outline-primary */
+			color: #007bff;
+			/* Bootstrap Primary Blue */
+			background-color: transparent;
+			border: 1px solid #007bff;
+			/* Primary Blue Border */
+			font-weight: 500;
+			box-shadow: none;
+			/* Remove default inner shadow */
+
+			/* Ensure consistent height with buttons */
+			padding: .375rem 1.75rem .375rem .75rem;
+			height: calc(1.5em + .75rem + 2px);
+		}
+
+		/* Style the dropdown when it is focused (active state) to match button hover */
+		#location-filter:focus,
+		#area-filter:focus {
+			color: #fff;
+			/* White text on focus */
+			background-color: #007bff;
+			/* Primary Blue background on focus */
+			border-color: #007bff;
+			outline: 0;
+		}
+
+		/* Ensure the options inside the dropdown use a standard color */
+		#location-filter option,
+		#area-filter option {
+			color: #1a1a1a;
+			background-color: #fff;
+		}
+
+		/* Styling for the custom pagination container (block-27 is often used in this theme) */
+		.block-27 ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			display: inline-block;
+		}
+
+		.block-27 ul li {
+			display: inline-block;
+			margin-bottom: 4px;
+			font-weight: 400;
+		}
+
+		.block-27 ul li a,
+		.block-27 ul li span {
+			text-align: center;
+			display: inline-block;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			border-radius: 50%;
+			border: 1px solid #e6e6e6;
+			color: #007bff;
+			/* Primary Blue for inactive links */
+		}
+
+		.block-27 ul li.active a {
+			background: #007bff;
+			/* Primary Blue for active page */
+			color: #fff;
+			border: 1px solid transparent;
+		}
+
+		.block-27 ul li.disabled a {
+			color: #ccc;
+			cursor: not-allowed;
+		}
 	</style>
 	<!-- New styles for hero slider END -->
 </head>
@@ -203,7 +215,8 @@
 			<div class="hero-content"> <!-- NEW -->
 				<h1 class="hero-title">Professional <span style="color:#ffd600">Construction</span></h1>
 				<!-- NEW -->
-				<div class="hero-subtitle">Delivering integrated construction services to build lasting success</div> <!-- NEW -->
+				<div class="hero-subtitle">Delivering integrated construction services to build lasting success</div>
+				<!-- NEW -->
 				<a href="contact.html" class="hero-btn">Contact Us</a> <!-- NEW -->
 			</div> <!-- NEW -->
 		</div> <!-- NEW -->
@@ -661,204 +674,216 @@
 		</div>
 	</section>
 
-    <section class="ftco-section" id="project-gallery-section">
-        <div class="container">
-            <div class="row justify-content-center mb-5 pb-3">
-                <div class="col-md-7 heading-section ftco-animate text-center">
-                    <h2 class="mb-4">Our Projects</h2>
-                </div>
-            </div>
+	<section class="ftco-section" id="project-gallery-section">
+		<div class="container">
+			<div class="row justify-content-center mb-5 pb-3">
+				<div class="col-md-7 heading-section ftco-animate text-center">
+					<h2 class="mb-4">Our Projects</h2>
+				</div>
+			</div>
 
-            <div class="row d-flex">
-                <div class="col-md-12 text-center d-flex justify-content-center ftco-animate">
-                    <div class="gallery-filters mb-5">
-                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project active" data-category="all">
-                            All Projects (<span id="count-all">12</span>)
-                        </button>
-                        <button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project" data-category="ongoing">
-                            Ongoing Projects (<span id="count-ongoing">7</span>)
-                        </button>
-                        <button class="btn btn-outline-primary mb-2 gallery-tab-project" data-category="completed">
-                            Completed Projects (<span id="count-completed">5</span>)
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="col-md-12 text-center mb-5 pb-3 ftco-animate" id="ongoing-filters" style="display: none;">
-                    <div class="d-flex justify-content-center">
-                        <div class="dropdown mr-4">
-                            <select id="location-filter" class="form-control">
-                                <option value="">-- Select Location --</option>
-                                </select>
-                        </div>
-                        <div class="dropdown">
-                            <select id="area-filter" class="form-control" disabled>
-                                <option value="">-- Select Area --</option>
-                                </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<div class="row d-flex">
+				<div class="col-md-12 text-center d-flex justify-content-center ftco-animate">
+					<div class="gallery-filters mb-5">
+						<button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project active"
+							data-category="all">
+							All Projects (<span id="count-all">12</span>)
+						</button>
+						<button class="btn btn-outline-primary mr-2 mb-2 gallery-tab-project" data-category="ongoing">
+							Ongoing Projects (<span id="count-ongoing">7</span>)
+						</button>
+						<button class="btn btn-outline-primary mb-2 gallery-tab-project" data-category="completed">
+							Completed Projects (<span id="count-completed">5</span>)
+						</button>
+					</div>
+				</div>
 
-            <div class="row" id="project-gallery-row">
-                </div> 
-            
-            <div class="row mt-5" id="pagination-container">
-                <div class="col text-center">
-                    <div class="block-27">
-                        </div>
-                </div>
-            </div>
+				<div class="col-md-12 text-center mb-5 pb-3 ftco-animate" id="ongoing-filters" style="display: none;">
+					<div class="d-flex justify-content-center">
+						<div class="dropdown mr-4">
+							<select id="location-filter" class="form-control">
+								<option value="">-- Select Location --</option>
+							</select>
+						</div>
+						<div class="dropdown">
+							<select id="area-filter" class="form-control" disabled>
+								<option value="">-- Select Area --</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 
-        </div>
-    </section>
+			<div class="row" id="project-gallery-row">
+			</div>
 
-    <div id="project-templates" style="display: none;">
-        
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-1">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-1.jpg);">
-                <a href="images/gallery-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-2">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-2.jpg);">
-                <a href="fair-land.html" class="icon d-flex justify-content-center align-items-center">
-                    <span class="fa fa-link"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+			<div class="row mt-5" id="pagination-container">
+				<div class="col text-center">
+					<div class="block-27">
+					</div>
+				</div>
+			</div>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-3">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-3.jpg);">
-                <a href="images/gallery-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-4">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-4.jpg);">
-                <a href="images/gallery-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+		</div>
+	</section>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-5">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-5.jpg);">
-                <a href="images/gallery-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+	<div id="project-templates" style="display: none;">
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-6">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-6.jpg);">
-                <a href="images/gallery-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-1">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-1.jpg);">
+				<a href="images/gallery-1.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-7">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-7.jpg);">
-                <a href="images/gallery-7.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-2">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-2.jpg);">
+				<a href="fair-land.html" class="icon d-flex justify-content-center align-items-center">
+					<span class="fa fa-link"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-8">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-8.jpg);">
-                <a href="images/gallery-8.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-3">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-3.jpg);">
+				<a href="images/gallery-3.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-9">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-9.jpg);">
-                <a href="images/gallery-9.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-10">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-10.jpg);">
-                <a href="images/gallery-10.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-4">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-4.jpg);">
+				<a href="images/gallery-4.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-11">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-11.jpg);">
-                <a href="images/gallery-11.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-5">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-5.jpg);">
+				<a href="images/gallery-5.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
 
-        <div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-12">
-            <div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-12.jpg);">
-                <a href="images/gallery-12.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                    <span class="fa fa-expand"></span>
-                </a>
-            </div>
-            <div class="text-center mt-2 project-info">
-                <h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
-                <p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
-            </div>
-        </div>
-    </div> 
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-6">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-6.jpg);">
+				<a href="images/gallery-6.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-7">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-7.jpg);">
+				<a href="images/gallery-7.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-8">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-8.jpg);">
+				<a href="images/gallery-8.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-9">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-9.jpg);">
+				<a href="images/gallery-9.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-10">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-10.jpg);">
+				<a href="images/gallery-10.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-11">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-11.jpg);">
+				<a href="images/gallery-11.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-md-4 ftco-animate gallery-item-project" data-id="proj-12">
+			<div class="work mb-2 img d-flex align-items-end" style="background-image: url(images/gallery-12.jpg);">
+				<a href="images/gallery-12.jpg"
+					class="icon image-popup d-flex justify-content-center align-items-center">
+					<span class="fa fa-expand"></span>
+				</a>
+			</div>
+			<div class="text-center mt-2 project-info">
+				<h4 class="project-name-placeholder"><a href="" style="color: #1a1a1a; text-decoration: none;"></a></h4>
+				<p class="project-description-placeholder" style="color: #666; font-size: 14px;"></p>
+			</div>
+		</div>
+	</div>
 
 	<!-- <section class="ftco-section bg-light">
 		<div class="container">
@@ -1037,9 +1062,12 @@
 					<h2 class="footer-heading">Have a Questions?</h2>
 					<div class="block-23 mb-3">
 						<ul>
-							<li><span class="icon fa fa-map"></span><span class="text">Hanuman Kovil Padithurai, Simmakkal, Madurai, Tamilnadu 625002</span></li>
-							<li><a href="tel://+918807344264"><span class="icon fa fa-phone"></span><span class="text">+91-88073 44264</span></a></li>
-							<li><a href="mailto:sales@kathirdevelopers.com"><span class="icon fa fa-paper-plane"></span><span
+							<li><span class="icon fa fa-map"></span><span class="text">Hanuman Kovil Padithurai,
+									Simmakkal, Madurai, Tamilnadu 625002</span></li>
+							<li><a href="tel://+918807344264"><span class="icon fa fa-phone"></span><span
+										class="text">+91-88073 44264</span></a></li>
+							<li><a href="mailto:sales@kathirdevelopers.com"><span
+										class="icon fa fa-paper-plane"></span><span
 										class="text">sales@kathirdevelopers.com</span></a></li>
 						</ul>
 					</div>
@@ -1051,7 +1079,8 @@
 					<p class="copyright">
 						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by SKG Consulting Pvt Ltd 
+						<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by SKG
+						Consulting Pvt Ltd
 						<!-- <i class="fa fa-heart" aria-hidden="true"></i> by 
 						<a href="https://colorlib.com/" target="_blank">Colorlib.com</a> -->
 						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -1091,83 +1120,95 @@
 	<script src="js/main.js"></script>
 
 	<!-- New JS for hero slider START -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const slider = document.getElementById('heroSlider');
-        if (!slider) return;
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const slider = document.getElementById('heroSlider');
+			if (!slider) return;
 
-        const slides = slider.querySelectorAll('.hero-slide');
-        const dotsContainer = slider.querySelector('.hero-dots');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        if (slides.length === 0 || !dotsContainer || !prevBtn || !nextBtn) return; // Safety check
+			const slides = slider.querySelectorAll('.hero-slide');
+			const dotsContainer = slider.querySelector('.hero-dots');
+			const prevBtn = document.getElementById('prevBtn');
+			const nextBtn = document.getElementById('nextBtn');
 
-        let current = 0;
-        const interval = 5000; // Autoplay interval
-        let timer;
+			if (slides.length === 0 || !dotsContainer || !prevBtn || !nextBtn) return; // Safety check
 
-        // 1. Dynamic Dot Creation (Ensures only 3 dots exist for 3 slides)
-        slides.forEach((slide, i) => {
-            const dot = document.createElement('span');
-            dot.classList.add('hero-dot');
-            dot.classList.toggle('active', i === current);
-            dot.addEventListener('click', () => {
-                goToSlide(i);
-            });
-            dotsContainer.appendChild(dot);
-        });
-        const dots = document.querySelectorAll('.hero-dot'); // Now select the newly created dots
+			let current = 0;
+			const interval = 5000; // Autoplay interval
+			let timer;
 
-        // 2. Core Navigation Functions
-        function showSlide(idx) {
-            // Modulo math for looping (0, 1, 2, 0, 1, 2...)
-            current = (idx % slides.length + slides.length) % slides.length; 
-            
-            // Update active classes
-            slides.forEach((s, i) => s.classList.toggle('active', i === current));
-            dots.forEach((d, i) => d.classList.toggle('active', i === current));
-        }
-        
-        function nextSlide() {
-            showSlide(current + 1);
-        }
-        
-        function prevSlide() {
-            showSlide(current - 1);
-        }
-        
-        function goToSlide(idx) {
-            showSlide(idx);
-            resetAutoplay();
-        }
+			// 1. Dynamic Dot Creation (Ensures only 3 dots exist for 3 slides)
+			slides.forEach((slide, i) => {
+				const dot = document.createElement('span');
+				dot.classList.add('hero-dot');
+				dot.classList.toggle('active', i === current);
+				dot.addEventListener('click', () => {
+					goToSlide(i);
+				});
+				dotsContainer.appendChild(dot);
+			});
+			const dots = document.querySelectorAll('.hero-dot'); // Now select the newly created dots
 
-        // 3. Autoplay and Timer Logic
-        function autoplay() {
-            timer = setInterval(nextSlide, interval);
-        }
-        
-        function resetAutoplay() {
-            clearInterval(timer);
-            autoplay();
-        }
+			// 2. Core Navigation Functions
+			function showSlide(idx) {
+				// Modulo math for looping (0, 1, 2, 0, 1, 2...)
+				current = (idx % slides.length + slides.length) % slides.length;
 
-        // 4. Event Listeners
-        prevBtn.onclick = () => { prevSlide(); resetAutoplay(); };
-        nextBtn.onclick = () => { nextSlide(); resetAutoplay(); };
-        
-        // Start the slider
-        autoplay();
+				// Update active classes
+				slides.forEach((s, i) => s.classList.toggle('active', i === current));
+				dots.forEach((d, i) => d.classList.toggle('active', i === current));
+			}
 
-        // Pause on hover
-        slider.addEventListener('mouseenter', () => clearInterval(timer));
-        slider.addEventListener('mouseleave', autoplay);
-    });
-</script>
+			function nextSlide() {
+				showSlide(current + 1);
+			}
+
+			function prevSlide() {
+				showSlide(current - 1);
+			}
+
+			function goToSlide(idx) {
+				showSlide(idx);
+				resetAutoplay();
+			}
+
+			// 3. Autoplay and Timer Logic
+			function autoplay() {
+				timer = setInterval(nextSlide, interval);
+			}
+
+			function resetAutoplay() {
+				clearInterval(timer);
+				autoplay();
+			}
+
+			// 4. Event Listeners
+			prevBtn.onclick = () => { prevSlide(); resetAutoplay(); };
+			nextBtn.onclick = () => { nextSlide(); resetAutoplay(); };
+
+			// Start the slider
+			autoplay();
+
+			// Pause on hover
+			slider.addEventListener('mouseenter', () => clearInterval(timer));
+			slider.addEventListener('mouseleave', autoplay);
+		});
+	</script>
 	<!-- New JS for hero slider END -->
-	 <script src="js/index.js"></script>
+	<script src="js/index.js"></script>
 
-
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+		(function () {
+			var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+			s1.async = true;
+			s1.src = 'https://embed.tawk.to/690f46e31c1717195b840d4d/1j9hqpqq8';
+			s1.charset = 'UTF-8';
+			s1.setAttribute('crossorigin', '*');
+			s0.parentNode.insertBefore(s1, s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->
 </body>
 
 
