@@ -9965,3 +9965,44 @@ textarea.form-control {
 		}
 
 		/* --- TABBED GALLERY STYLES END --- */
+
+
+    @media (max-width: 1024px) {
+      body {
+        overflow-x: hidden;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .ui-hidden {
+        display: none !important;
+      }
+
+      .ui-block {
+        display: block !important;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .lg-ui-block {
+        display: block !important;
+      }
+
+      .lg-ui-hidden {
+        display: none !important;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .md-ui-block {
+        display: block !important;
+      }
+
+      .md-ui-hidden {
+        display: none !important;
+      }
+    }
