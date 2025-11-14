@@ -4701,3 +4701,85 @@ if (plotData && plotData.length > 0) {
     $('#plot-inventory-table tbody').html('<tr><td colspan="4" class="text-center p-4">⚠️ **Data Missing.** The plot data array is empty or not defined.</td></tr>');
     $('#total-initial-plots').text(0);
 }
+
+// Helper function to calculate EMI: M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
+    function calculateEMI(P, R, N) {
+      const r = (R / 12) / 100; // Monthly interest rate (decimal)
+      const n = N * 12; // Total number of months
+      
+      if (r === 0) return P / n;
+      return P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    }
+
+    // Helper function to format currency for Indian Rupees
+    function formatCurrency(amount) {
+        return '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(amount);
+    }
+    
+    // Function to read inputs, calculate EMI, and display results
+    function displayEmiDetails() {
+      const P = parseFloat(document.getElementById('loanAmountInput').value); // Principal
+      const N = parseInt(document.getElementById('loanTenureInput').value); // Tenure in Years
+      const R = parseFloat(document.getElementById('interestRateInput').value); // Rate in % P.A.
+      
+      const emiResultElement = document.getElementById('emiResult');
+      const emiSummaryElement = document.getElementById('emiSummary');
+
+      // 1. Validation
+      if (isNaN(P) || P <= 0) {
+          emiResultElement.textContent = '₹0';
+          emiSummaryElement.textContent = '⚠️ Please enter a valid Loan Amount.';
+          return;
+      }
+      if (isNaN(N) || N <= 0 || N > 30) {
+          emiResultElement.textContent = '₹0';
+          emiSummaryElement.textContent = '⚠️ Please select a valid Tenure (1-30 years).';
+          return;
+      }
+      if (isNaN(R) || R <= 0) {
+          emiResultElement.textContent = '₹0';
+          emiSummaryElement.textContent = '⚠️ Please enter a valid Interest Rate.';
+          return;
+      }
+
+      // 2. Calculation
+      const r = (R / 12) / 100; // Monthly interest rate (decimal)
+      const n = N * 12; // Total number of months
+      
+      let calculatedEMI;
+      if (r === 0) {
+          calculatedEMI = P / n; // Avoid division by zero if rate is 0
+      } else {
+          calculatedEMI = calculateEMI(P, R, N);
+      }
+      
+      const totalPayments = calculatedEMI * n;
+      const totalInterest = totalPayments - P;
+      
+      // 3. Display Results
+      emiResultElement.textContent = formatCurrency(calculatedEMI.toFixed(0));
+      emiSummaryElement.innerHTML = `
+          For ${formatCurrency(P)} @ ${R.toFixed(2)}% over ${N} years.<br>
+          Total Interest: ${formatCurrency(totalInterest.toFixed(0))}
+      `;
+    }
+
+    // Logic to initialize values and display on modal open
+    $('#emiModal').on('show.bs.modal', function (e) {
+        // Ensure all inputs have default values set
+        const loanAmountInput = document.getElementById('loanAmountInput');
+        const tenureInput = document.getElementById('loanTenureInput');
+        const rateInput = document.getElementById('interestRateInput');
+        
+        // Set defaults if they don't exist (e.g., first time opening)
+        if (!loanAmountInput.value) loanAmountInput.value = 1500000;
+        if (!tenureInput.value) tenureInput.value = 15;
+        if (!rateInput.value) rateInput.value = 8.50;
+        
+        // Update the slider value displays
+        document.getElementById('tenureValue').textContent = tenureInput.value;
+        document.getElementById('rateValue').textContent = parseFloat(rateInput.value).toFixed(2);
+
+        // Run the calculation with initial values
+        displayEmiDetails();
+    });
