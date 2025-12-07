@@ -19,16 +19,14 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/fair-land-project.css">
 
- <style>
-   /* Custom styles added to ensure FA6 icons in the footer and amenities are visible and styled correctly */
-    
-    /* General Font Visibility and Style Enhancements for the entire page */
+  <style>
+    /* General Font Visibility */
     body {
-        /* Font updated to Poppins */
-        font-family: 'Poppins', sans-serif;
-        color: #444; /* Global body text color for better reading comfort than black */
+      font-family: 'Poppins', sans-serif;
+      color: #444;
     }
 
+    /* Footer Social Icons (existing) */
     .ftco-footer-social li {
       list-style: none;
     }
@@ -36,111 +34,81 @@
     .ftco-footer-social a {
       background: none !important;
       border: none !important;
-      width: auto !important;
-      height: auto !important;
-      line-height: normal !important;
-      display: inline-block !important;
-      padding: 0 !important;
       margin: 0 10px;
+      display: inline-block !important;
     }
 
-    /* Base style for all footer social icons (Size and Transition) */
     .ftco-footer-social a span.fa-brands {
-      font-size: 32px; /* Increased size for better visibility */
+      font-size: 32px;
       transition: color 0.3s ease;
     }
 
-    /* Set exact brand colors for default state and hover */
-    .fa-square-x-twitter { color: #000000; } /* Black for X/Twitter */
-    .ftco-footer-social a:hover span.fa-square-x-twitter { color: #333333; }
-    
-    .fa-square-facebook { color: #1877F2; } /* Blue for Facebook */
-    .ftco-footer-social a:hover span.fa-square-facebook { color: #1563C7; }
+    .fa-square-x-twitter {
+      color: #000;
+    }
 
-    .fa-square-instagram { color: #E4405F; } /* Reddish-pink for Instagram */
-    .ftco-footer-social a:hover span.fa-square-instagram { color: #C63A53; }
+    .fa-square-facebook {
+      color: #1877F2;
+    }
 
-    /* New Rule for Google Page Icon */
-    .fa-google { color: #4285F4; } /* Google Blue */
-    .ftco-footer-social a:hover span.fa-google { color: #356ACB; }
-    
-    /* Removed LinkedIn styles (fa-linkedin-in, fa-square-linkedin) */
+    .fa-square-instagram {
+      color: #E4405F;
+    }
 
-    .fa-square-youtube { color: #FF0000; } /* Red for YouTube */
-    .ftco-footer-social a:hover span.fa-square-youtube { color: #CC0000; }
-    /* End Custom styles for FA6 Footer */
+    .fa-google {
+      color: #4285F4;
+    }
 
-    /* Style for the professional amenity card */
+    .fa-square-youtube {
+      color: #FF0000;
+    }
+
+    /* Amenity Card (existing) */
     .amenity-card {
-      /* Subtle box shadow to lift the card */
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      /* Clean rounded corners */
       border-radius: 10px;
-      /* Padding is already handled by Bootstrap's p-4 */
-
-      /* Ensure all cards are the same height for a clean grid */
       min-height: 50px;
-
-      /* Use Flexbox for robust centering of content */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
-      /* Smooth transition for hover effects */
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      /* Smooth animation curve */
+      transition: all 0.3s;
     }
 
-    /* Optional: Add a primary color border and stronger shadow on hover */
     .amenity-card:hover {
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
       border: 1px solid #F96D00;
-      /* Use your brand color for the border */
     }
 
-    /* Style for the text title */
     .amenity-card h4 {
       font-size: 16px;
       font-weight: 600;
-      /* Make the text slightly bolder */
-      line-height: 1.4;
       color: #333;
-      /* Darker text for better contrast */
       margin-bottom: 0;
     }
 
-    /* --- UPI Payment Toggle (Pure CSS) --- */
-    /* Set a large screen threshold (e.g., 768px for tablets/desktops) */
-
-    /* By default, hide the desktop QR code (mobile-first approach) */
+    /* UPI & Video (existing) */
     #upi-desktop-qr {
       display: none;
     }
 
-    /* Rule for DESKTOP (Min width 768px) */
     @media (min-width: 768px) {
       #upi-mobile-link {
         display: none !important;
-        /* Hide the UPI Link on desktop */
       }
 
       #upi-desktop-qr {
         display: block !important;
-        /* Show the QR Code on desktop */
       }
     }
 
-    /* Rule for MOBILE (Max width 767px) */
     @media (max-width: 767px) {
       #upi-mobile-link {
         display: block !important;
-        /* Show the UPI Link on mobile */
       }
 
       #desktop-qr-container {
         display: none !important;
-        /* Hide the QR Code on mobile */
       }
     }
 
@@ -148,25 +116,19 @@
       display: inline-block;
       padding: 10px 20px;
       background-color: #5d50c6;
-      /* UPI-like color */
       color: white;
-      text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
     }
 
-    /* --- RESPONSIVE VIDEO STYLES --- */
     .video-responsive {
       overflow: hidden;
       padding-bottom: 56.25%;
-      /* 16:9 aspect ratio */
       position: relative;
       height: 0;
       width: 100%;
       max-width: 750px;
-      /* Optional: limit max width for large screens */
       margin: 0 auto;
-      /* Center the video horizontally */
     }
 
     .video-responsive iframe {
@@ -177,16 +139,160 @@
       position: absolute;
     }
 
-    /* --- IMAGE HEIGHT ADJUSTMENT ADDED HERE --- */
     #project-media-carousel .item img {
       height: 250px;
-      /* **Increased Height** - Change this value to adjust */
       width: 100%;
       object-fit: cover;
-      /* Ensures images fill the box without distortion */
     }
 
-    /* ------------------------------------------- */
+    /* --- ENHANCED GRID VIEW STYLES --- */
+    .plot-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .plot-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border-color: #F96D00;
+    }
+
+    /* ADDED: Status-based border color for the entire card */
+    .plot-card.plot-card-active {
+      border-left: 5px solid #28a745;
+      /* Green side border for Active */
+    }
+
+    .plot-card.plot-card-sold {
+      border-left: 5px solid #dc3545;
+      /* Red side border for Sold */
+    }
+
+    /* CHANGED: Header to neutral light grey */
+    .plot-card-header {
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .plot-card-header h5 {
+      margin: 0;
+      font-weight: 700;
+      color: #F96D00;
+      /* Keeps Plot No. in brand color */
+      font-size: 1.25rem;
+    }
+
+    .plot-card-body {
+      padding: 20px;
+    }
+
+    /* Detail Row Styling with Icons (FACING & AREA) */
+    .plot-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 5px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .plot-label {
+      color: #888;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    /* CHANGED: Icon color to neutral dark grey */
+    .plot-label i {
+      color: #6c757d;
+      margin-right: 8px;
+      font-size: 1.1em;
+    }
+
+    .plot-value {
+      color: #333;
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    /* Status Badge Colors (UNCHANGED: Already Green/Red) */
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-active {
+      background-color: #e6f7ee;
+      color: #28a745;
+      border: 1px solid #28a74540;
+    }
+
+    .status-sold {
+      background-color: #fcebeb;
+      color: #dc3545;
+      border: 1px solid #dc354540;
+    }
+
+
+    /* View Toggle Buttons (existing) */
+    .view-toggle-btn {
+      cursor: pointer;
+      padding: 5px 15px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #555;
+    }
+
+    .view-toggle-btn.active {
+      background-color: #F96D00;
+      color: #fff;
+      border-color: #F96D00;
+    }
+
+    .view-toggle-btn:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .view-toggle-btn:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    /* New WhatsApp Button Style */
+    .btn-whatsapp {
+      background-color: #25D366 !important;
+      /* Official WhatsApp Green */
+      border-color: #1FAF59 !important;
+      color: white !important;
+      font-weight: 600;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #1FAF59 !important;
+      border-color: #1FAF59 !important;
+      color: white !important;
+    }
+
+    .btn-whatsapp .fa-whatsapp {
+      margin-right: 5px;
+    }
   </style>
 </head>
 
@@ -195,8 +301,9 @@
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="index.html">
-				<img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
-				<div class="ui-hidden lg-ui-block md-ui-block">Kathir's <span>Developers</span></div> </a>
+        <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
+        <div class="ui-hidden lg-ui-block md-ui-block">Kathir's <span>Developers</span></div>
+      </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="fa-solid fa-bars"></span> Menu
@@ -251,32 +358,23 @@
 
           <div class="ftco-animate mb-5">
             <h3 class="mb-3">Project Gallery & Walkthrough</h3>
-
             <div id="project-media-carousel" class="owl-carousel owl-theme mb-4 gallery-popup">
-              <div class="item">
-                <a href="images/gallery-2.jpg" class="img-zoom" title="Fair Land Image 1">
-                  <img src="images/gallery-2.jpg" alt="Fair Land Image 1" class="img-fluid rounded">
+              <div class="item"><a href="images/gallery-2.jpg" class="img-zoom" title="Fair Land Image 1"><img
+                    src="images/gallery-2.jpg" alt="Fair Land Image 1" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-              <div class="item">
-                <a href="images/gallery-3.jpg" class="img-zoom" title="Fair Land Image 2">
-                  <img src="images/gallery-3.jpg" alt="Fair Land Image 2" class="img-fluid rounded">
+                </a></div>
+              <div class="item"><a href="images/gallery-3.jpg" class="img-zoom" title="Fair Land Image 2"><img
+                    src="images/gallery-3.jpg" alt="Fair Land Image 2" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-              <div class="item">
-                <a href="images/gallery-4.jpg" class="img-zoom" title="Fair Land Image 3">
-                  <img src="images/gallery-4.jpg" alt="Fair Land Image 3" class="img-fluid rounded">
+                </a></div>
+              <div class="item"><a href="images/gallery-4.jpg" class="img-zoom" title="Fair Land Image 3"><img
+                    src="images/gallery-4.jpg" alt="Fair Land Image 3" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-              <div class="item">
-                <a href="images/gallery-5.jpg" class="img-zoom" title="Fair Land Image 4">
-                  <img src="images/gallery-5.jpg" alt="Fair Land Image 4" class="img-fluid rounded">
+                </a></div>
+              <div class="item"><a href="images/gallery-5.jpg" class="img-zoom" title="Fair Land Image 4"><img
+                    src="images/gallery-5.jpg" alt="Fair Land Image 4" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
+                </a></div>
             </div>
           </div>
           <p>Fair Land is a prestigious residential project located on the ECR coast in Chennai. Our team
@@ -368,6 +466,7 @@
 
 
         </div>
+
         <div class="col-lg-4 sidebar order-lg-2 order-2 ftco-animate">
           <div class="sidebar-box ftco-animate">
             <h3>Project Information</h3>
@@ -375,19 +474,15 @@
               <li><strong>Client:</strong> Kathir's Developer</li>
               <li><strong>Location:</strong> Ayyankottai, Madurai</li>
               <li><strong>Status:</strong> Ongoing</li>
-              <li><strong>Category:</strong> Residential & Commercial Development</li>
+              <li><strong>Category:</strong> Residential Development</li>
               <li><strong>Area:</strong> 25,000 sq ft</li>
             </ul>
           </div>
           <div class="sidebar-box ftco-animate">
             <div class="video-responsive">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-              </iframe>
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
-
           <div class="sidebar-box ftco-animate">
             <h3>Download Brochure (PDF)</h3>
             <p>Get the complete details, floor plans, and pricing for the Fair Land project instantly.</p>
@@ -399,25 +494,20 @@
             <p>Interested in learning more about available units in the Fair Land project? Get in touch with
               our sales team.</p>
             <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
-             <p>
-                <button type="button" class="btn btn-info py-2 px-3" data-toggle="modal" data-target="#emiModal">
-                    <span class="fa-solid fa-calculator"></span> EMI Calculator
-                </button>
-            </p>
+            <p><button type="button" class="btn btn-info py-2 px-3" data-toggle="modal" data-target="#emiModal"><span
+                  class="fa-solid fa-calculator"></span> EMI Calculator</button></p>
           </div>
-
           <div class="sidebar-box ftco-animate">
             <h3 class="mb-3">Secure Your Plot Now</h3>
             <p>Instantly pay the booking fee of **₹25,000.00** via UPI.</p>
 
             <div id="upi-mobile-link" class="text-center">
               <h4>📱 Tap to Pay</h4>
-              <a href="upi://pay?pa=kathirdevelopers@upi&pn=Kathir%20Developers&am=25000.00&cu=INR" class="upi-button">
-                <i class="fa-solid fa-money"></i> Pay ₹25,000.00
-              </a>
+              <a href="upi://pay?pa=kathirdevelopers@upi&pn=Kathir%20Developers&am=25000.00&cu=INR"
+                class="upi-button"><i class="fa-solid fa-money"></i> Pay ₹25,000.00</a>
               <small class="d-block mt-2">Opens GPay, PhonePe, Paytm, etc.</small>
-            </div>
 
+            </div>
             <div id="upi-desktop-qr" class="text-center">
               <h4>🖥️ Scan to Pay</h4>
               <img
@@ -427,12 +517,20 @@
               <small class="d-block">UPI ID: **kathirdevelopers@upi**</small>
             </div>
           </div>
+        </div>
 
-          </div>
         <div class="col-12 order-lg-3 order-3 ftco-animate">
           <div class="ftco-animate mt-5">
-            <h3 class="mb-4">Fair Land Plot Inventory</h3>
-            <p>A total of **750 Plots** are available. Use the filters below to find your perfect plot.</p>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="mb-0">Fair Land Plot Inventory</h3>
+              <div class="btn-group">
+                <button class="view-toggle-btn active" id="btn-view-list"><i class="fa-solid fa-list"></i> List</button>
+                <button class="view-toggle-btn" id="btn-view-grid"><i class="fa-solid fa-th-large"></i> Grid</button>
+              </div>
+            </div>
+
+            <p>A total of **<span id="total-initial-plots"></span> Plots** are available.</p>
 
             <div class="row mb-4">
               <div class="col-md-3 col-sm-6">
@@ -443,18 +541,12 @@
                 <label for="plot-facing-filter">Filter by Facing:</label>
                 <select id="plot-facing-filter" class="form-control">
                   <option value="all">All Facings</option>
-                  <option value="North">North</option>
-                  <option value="East">East</option>
-                  <option value="West">West</option>
-                  <option value="South">South</option>
                 </select>
               </div>
               <div class="col-md-3 col-sm-6">
                 <label for="plot-status-filter">Filter by Status:</label>
                 <select id="plot-status-filter" class="form-control">
                   <option value="all">All Statuses</option>
-                  <option value="Active">Active</option>
-                  <option value="Sold">Sold</option>
                 </select>
               </div>
               <div class="col-md-3 col-sm-6 d-flex align-items-end">
@@ -462,7 +554,7 @@
               </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive" id="view-container-table">
               <table class="table table-bordered table-striped table-hover plot-inventory-table-custom"
                 id="plot-inventory-table">
                 <thead class="thead-dark">
@@ -471,6 +563,8 @@
                     <th scope="col">Facing</th>
                     <th scope="col">Sqft Size</th>
                     <th scope="col">Status</th>
+                    <th class="text-center">Whatsapp</th>
+                  </tr>
                   </tr>
                 </thead>
                 <tbody>
@@ -478,8 +572,11 @@
               </table>
             </div>
 
+            <div class="row d-none" id="view-container-grid">
+            </div>
+
             <p class="text-center mt-3"><small>Showing plots <span id="plot-count"></span> of <span
-                  id="total-filtered-plots"></span> plots. (Total <span id="total-initial-plots"></span> plots)</small>
+                  id="total-filtered-plots"></span> plots.</small>
             </p>
 
             <div class="row mt-4">
@@ -503,7 +600,7 @@
             Kathir's Developers
             Brick by brick, we build trust
           </p>
-        <ul class="ftco-footer-social p-0">
+          <ul class="ftco-footer-social p-0">
             <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="X (Twitter)"><span
                   class="fa-brands fa-square-x-twitter"></span></a></li>
             <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span
@@ -529,7 +626,8 @@
           <h2 class="footer-heading">Have a Questions?</h2>
           <div class="block-23 mb-3">
             <ul>
-              <li><span class="icon fa-solid fa-map"></span><span class="text">Hanuman Kovil Padithurai, Simmakkal, Madurai,
+              <li><span class="icon fa-solid fa-map"></span><span class="text">Hanuman Kovil Padithurai, Simmakkal,
+                  Madurai,
                   Tamilnadu 625002</span></li>
               <li><a href="tel://+918807344264"><span class="icon fa-solid fa-phone"></span><span class="text">+91-88073
                     44264</span></a></li>
@@ -558,52 +656,42 @@
         stroke="#F96D00" />
     </svg></div>
 
-    <div class="modal fade" id="emiModal" tabindex="-1" role="dialog" aria-labelledby="emiModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-compact" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="emiModalLabel">💰 EMI Calculator</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+  <div class="modal fade" id="emiModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-compact" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">💰 EMI Calculator</h5>
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Loan Amount (₹):</label>
+            <input type="number" class="form-control" id="loanAmountInput" value="1500000"
+              onkeyup="displayEmiDetails()">
           </div>
-          <div class="modal-body">
-            
-            <div class="form-group">
-                <label for="loanAmountInput">Loan Amount (₹):</label>
-                <input type="number" class="form-control" id="loanAmountInput" value="1500000" min="100000" step="1000" 
-                       placeholder="e.g., 1500000" onkeyup="displayEmiDetails()" onchange="displayEmiDetails()">
-            </div>
-            
-            <div class="form-group">
-                <label for="loanTenureInput">Tenure (Years): <span id="tenureValue" class="font-weight-bold text-info">15</span></label>
-                <input type="range" class="form-control-range" id="loanTenureInput" value="15" min="1" max="30" step="1" 
-                       oninput="document.getElementById('tenureValue').textContent=this.value; displayEmiDetails();">
-            </div>
-
-            <div class="form-group mb-4">
-                <label for="interestRateInput">Interest Rate (P.A. %): <span id="rateValue" class="font-weight-bold text-danger">8.50</span>%</label>
-                <input type="range" class="form-control-range" id="interestRateInput" value="8.50" min="5.00" max="20.00" step="0.05" 
-                       oninput="document.getElementById('rateValue').textContent=parseFloat(this.value).toFixed(2); displayEmiDetails();">
-            </div>
-            
-            <div id="emiDetailsContainer">
-                <div class="result-box">
-                    <h5>Estimated Monthly EMI</h5>
-                    <p class="emi-value" id="emiResult">₹0</p>
-                    <small id="emiSummary">Enter the details above to see your estimated EMI.</small>
-                </div>
-            </div>
-            
+          <div class="form-group">
+            <label>Tenure (Years): <span id="tenureValue">15</span></label>
+            <input type="range" class="form-control-range" id="loanTenureInput" value="15" min="1" max="30"
+              oninput="document.getElementById('tenureValue').textContent=this.value; displayEmiDetails();">
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <a href="contact.html" class="btn btn-primary"><span class="fa-solid fa-envelope"></span> Enquire for Booking</a>
+          <div class="form-group mb-4">
+            <label>Interest Rate (%): <span id="rateValue">8.50</span>%</label>
+            <input type="range" class="form-control-range" id="interestRateInput" value="8.50" min="5" max="20"
+              step="0.05"
+              oninput="document.getElementById('rateValue').textContent=parseFloat(this.value).toFixed(2); displayEmiDetails();">
+          </div>
+          <div id="emiDetailsContainer">
+            <div class="result-box">
+              <h5>Estimated EMI</h5>
+              <p class="emi-value" id="emiResult">₹0</p><small id="emiSummary">Enter details above.</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="js/jquery.min.js"></script>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -620,33 +708,9 @@
 
   <script>
     $(document).ready(function () {
-      // --- CAROUSEL & POPUP INITIALIZATION (Existing) ---
-      $('#project-hero-carousel').owlCarousel({
-        loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, autoplayTimeout: 5000,
-        autoplayHoverPause: true, animateOut: 'fadeOut', animateIn: 'fadeIn',
-      });
-
-      $('#project-media-carousel').owlCarousel({
-        loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-          0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 }
-        }
-      });
-
-      $('.gallery-popup').magnificPopup({
-        delegate: 'a.img-zoom', type: 'image',
-        gallery: { enabled: true },
-        zoom: {
-          enabled: true, duration: 300, easing: 'ease-in-out',
-          opener: function (openerElement) {
-            return openerElement.is('img') ? openerElement : openerElement.find('img');
-          }
-        }
-      });
-      // ------------------------------------
-
-
+      $('#project-hero-carousel').owlCarousel({ loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, autoplayTimeout: 5000, autoplayHoverPause: true, animateOut: 'fadeOut', animateIn: 'fadeIn', });
+      $('#project-media-carousel').owlCarousel({ loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 3000, autoplayHoverPause: true, responsive: { 0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 } } });
+      $('.gallery-popup').magnificPopup({ delegate: 'a.img-zoom', type: 'image', gallery: { enabled: true }, zoom: { enabled: true, duration: 300, easing: 'ease-in-out', opener: function (openerElement) { return openerElement.is('img') ? openerElement : openerElement.find('img'); } } });
     });
   </script>
   <script src="js/fair-land.js"></script>
@@ -661,6 +725,6 @@
       s0.parentNode.insertBefore(s1, s0);
     })();
   </script>
-  </body>
+</body>
 
 </html>

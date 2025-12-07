@@ -4506,40 +4506,30 @@ const customerPlotData = [
     }
 ];
 
-// =========================================================================
-
 // --- CONFIGURATION ---
-const plotsPerPage = 100;
-// The plotData is now loaded synchronously from the constant above
+const plotsPerPage = 24; // Lowered slightly so grid view doesn't scroll forever
 let plotData = customerPlotData;
 let filteredData = [];
 let currentPage = 1;
+let currentView = 'list'; // 'list' or 'grid'
 
-// --- UTILITY FUNCTIONS (NEW) ---
-
-// Function to extract unique values for a given key
+// --- UTILITY FUNCTIONS ---
 function getUniqueValues(data, key) {
     if (!data || data.length === 0) return [];
-    // Use Set to get unique values, filter out falsy values, and sort them
     const unique = [...new Set(data.map(item => item[key]).filter(value => value))];
     return unique.sort();
 }
 
-// Function to populate the dropdown filters
 function populateFilters(data) {
-    // 1. Facing Filter
     const uniqueFacings = getUniqueValues(data, 'facing');
     const $facingFilter = $('#plot-facing-filter');
-    // Remove all options except the first one (All Facings)
     $facingFilter.find('option:not(:first)').remove();
     uniqueFacings.forEach(facing => {
         $facingFilter.append(`<option value="${facing}">${facing}</option>`);
     });
 
-    // 2. Status Filter
     const uniqueStatuses = getUniqueValues(data, 'status');
     const $statusFilter = $('#plot-status-filter');
-    // Remove all options except the first one (All Statuses)
     $statusFilter.find('option:not(:first)').remove();
     uniqueStatuses.forEach(status => {
         $statusFilter.append(`<option value="${status}">${status}</option>`);
@@ -4547,44 +4537,156 @@ function populateFilters(data) {
 }
 
 // --- RENDERING FUNCTIONS ---
-function renderTablePage(page) {
-    const startIndex = (page - 1) * plotsPerPage;
+
+// Master render function that decides which view to show
+function renderData() {
+    const startIndex = (currentPage - 1) * plotsPerPage;
     const endIndex = startIndex + plotsPerPage;
     const pageData = filteredData.slice(startIndex, endIndex);
 
-    const $tableBody = $('#plot-inventory-table tbody');
-    $tableBody.empty();
-
-    if (pageData.length === 0) {
-        $tableBody.append(`<tr><td colspan="4" class="text-center p-4">No plots found matching your criteria. Please reset your filters.</td></tr>`);
-    } else {
-        pageData.forEach(plot => {
-            const sqftDisplay = plot.sqft ? `${plot.sqft} sqft` : '-';
-            const statusText = plot.status ? plot.status.toLowerCase() : 'unknown';
-            const badgeClass = (statusText === "active") ? "badge-success" : "badge-danger";
-
-            const row = `
-                            <tr class="plot-row" data-plot-no="${plot.plotNo}" data-facing="${plot.facing}" data-status="${plot.status}">
-                                <td>${plot.plotNo || '-'}</td>
-                                <td>${plot.facing || '-'}</td>
-                                <td>${sqftDisplay}</td>
-                                <td><span class="badge ${badgeClass} p-2">${plot.status || '-'}</span></td>
-                            </tr>
-                        `;
-            $tableBody.append(row);
-        });
-    }
-
-    // Update plot count text
+    // Update Counts
     const totalFiltered = filteredData.length;
     const plotsShown = pageData.length;
     const startPlot = totalFiltered > 0 ? startIndex + 1 : 0;
     const endPlot = totalFiltered > 0 ? startIndex + plotsShown : 0;
-
     $('#plot-count').text(startPlot + " - " + endPlot);
     $('#total-filtered-plots').text(totalFiltered);
 
+    // Render appropriate view
+    if (currentView === 'list') {
+        $('#view-container-table').removeClass('d-none');
+        $('#view-container-grid').addClass('d-none');
+        renderTable(pageData);
+    } else {
+        $('#view-container-table').addClass('d-none');
+        $('#view-container-grid').removeClass('d-none');
+        renderGrid(pageData);
+    }
+
     renderPagination();
+}
+
+// 1. Render Table View
+function renderTable(data) {
+    const $tableBody = $('#plot-inventory-table tbody');
+    $tableBody.empty();
+
+    // *** CONFIGURATION: REPLACE THIS NUMBER ***
+    const whatsappNumber = '918807344264'; // Your 10-digit number including country code (e.g., 91xxxxxxxxxx)
+    // *****************************************
+
+    if (data.length === 0) {
+        // Note: Colspan is updated to 5 for the new column
+        $tableBody.append(`<tr><td colspan="5" class="text-center p-4">No plots found matching your criteria.</td></tr>`);
+        return;
+    }
+
+    data.forEach(plot => {
+        const sqftDisplay = plot.sqft ? `${plot.sqft} sqft` : '-';
+        const statusText = plot.status ? plot.status : 'Unknown';
+        const isSold = statusText.toLowerCase() === 'sold';
+        // Using existing Bootstrap classes for status badges in the table
+        const badgeClass = isSold ? "badge-danger" : "badge-success";
+
+        // 1. Construct the pre-filled WhatsApp message
+        const message = encodeURIComponent(
+            `I am interested in Plot No. ${plot.plotNo} in the Fair Land project.\n` +
+            `Details:\n` +
+            `Area: ${plot.sqft} sq.ft\n` +
+            `Facing: ${plot.facing}\n` +
+            `Status: ${statusText}\n` +
+            `Please share the price and next steps.`
+        );
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+        // 2. WhatsApp icon HTML (Green for Active, Grey for Sold)
+        const whatsappIcon = isSold
+            // Disabled/Sold icon (greyed out)
+            ? `<span class="text-secondary" title="Sold Out"><i class="fa-brands fa-whatsapp fa-xl"></i></span>`
+            // Active plot icon (green and clickable)
+            : `<a href="${whatsappUrl}" target="_blank" class="text-success" title="WhatsApp Inquiry"><i class="fa-brands fa-whatsapp fa-xl"></i></a>`;
+
+
+        const row = `
+            <tr>
+                <td>${plot.plotNo || '-'}</td>
+                <td>${plot.facing || '-'}</td>
+                <td>${sqftDisplay}</td>
+                <td><span class="badge ${badgeClass} p-2">${statusText}</span></td>
+                <td class="text-center">${whatsappIcon}</td>
+            </tr>
+        `;
+        $tableBody.append(row);
+    });
+}
+
+
+// 2. Render Grid (Card) View
+function renderGrid(data) {
+    const $gridContainer = $('#view-container-grid');
+    $gridContainer.empty();
+
+    if (data.length === 0) {
+        $gridContainer.append(`<div class="col-12 text-center p-5"><h4>No plots found matching your criteria.</h4></div>`);
+        return;
+    }
+
+    // *** CONFIGURATION: REPLACE THIS NUMBER ***
+    const whatsappNumber = '918807344264'; // Your 10-digit number including country code (e.g., 91xxxxxxxxxx)
+    // *****************************************
+
+    data.forEach(plot => {
+        const statusText = plot.status ? plot.status : 'Unknown';
+        const isSold = statusText.toLowerCase() === 'sold';
+
+        const statusBadgeClass = isSold ? 'status-sold' : 'status-active';
+        const cardStatusClass = isSold ? 'plot-card-sold' : 'plot-card-active';
+
+        // Construct the pre-filled WhatsApp message
+        const message = encodeURIComponent(
+            `I am interested in Plot No. ${plot.plotNo} in the Fair Land project.\n` +
+            `Details:\n` +
+            `Area: ${plot.sqft} sq.ft\n` +
+            `Facing: ${plot.facing}\n` +
+            `Status: ${statusText}\n` +
+            `Please share the price and next steps.`
+        );
+
+        // Construct the WhatsApp URL
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+        // Dynamic Button based on status
+        const btnHtml = isSold
+            ? `<button class="btn btn-secondary btn-sm btn-block mt-3" disabled>Sold Out</button>`
+            // CHANGED: Class is now btn-whatsapp
+            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm btn-block mt-3"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`;
+
+        const cardHtml = `
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ftco-animate fadeInUp ftco-animated">
+                <div class="plot-card ${cardStatusClass}">
+                    <div class="plot-card-header">
+                        <h5>Plot ${plot.plotNo}</h5>
+                        <span class="status-badge ${statusBadgeClass}">${statusText}</span>
+                    </div>
+                    <div class="plot-card-body">
+                        
+                        <div class="plot-detail-row">
+                            <span class="plot-label"><i class="fa-solid fa-compass"></i> Facing</span>
+                            <span class="plot-value">${plot.facing}</span>
+                        </div>
+                        
+                        <div class="plot-detail-row">
+                            <span class="plot-label"><i class="fa-solid fa-ruler-combined"></i> Area</span>
+                            <span class="plot-value">${plot.sqft} Sq.ft</span>
+                        </div>
+                        
+                        ${btnHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+        $gridContainer.append(cardHtml);
+    });
 }
 
 function renderPagination() {
@@ -4594,14 +4696,14 @@ function renderPagination() {
 
     if (totalPages <= 1) return;
 
-    // Previous button
+    // Previous
     $pagination.append(`
-                    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a>
-                    </li>
-                `);
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a>
+        </li>
+    `);
 
-    // Page numbers (showing a limited range)
+    // Smart Pagination Window
     const maxPagesToShow = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
@@ -4616,25 +4718,27 @@ function renderPagination() {
 
     for (let i = startPage; i <= endPage; i++) {
         $pagination.append(`
-                        <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link" href="#" data-page="${i}">${i}</a>
-                        </li>
-                    `);
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `);
     }
 
     if (endPage < totalPages) {
         $pagination.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
     }
 
-    // Next button
+    // Next
     $pagination.append(`
-                    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
-                    </li>
-                `);
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+        </li>
+    `);
 }
 
-// Handles a click on a pagination link
+// --- EVENT HANDLERS ---
+
+// 1. Pagination Click
 $('#plot-pagination').on('click', 'a.page-link', function (e) {
     e.preventDefault();
     const totalPages = Math.ceil(filteredData.length / plotsPerPage);
@@ -4642,41 +4746,52 @@ $('#plot-pagination').on('click', 'a.page-link', function (e) {
 
     if (newPage > 0 && newPage <= totalPages) {
         currentPage = newPage;
-        renderTablePage(currentPage);
-        // Smooth scroll to the top of the table
+        renderData();
+        // Smooth scroll to top of section
         $('html, body').animate({
-            scrollTop: $('#plot-inventory-table').offset().top - 100
+            scrollTop: $('.ftco-section').offset().top - 50
         }, 500);
     }
 });
 
+// 2. View Toggle Click
+$('#btn-view-list').click(function () {
+    if (currentView !== 'list') {
+        currentView = 'list';
+        $(this).addClass('active');
+        $('#btn-view-grid').removeClass('active');
+        renderData();
+    }
+});
 
-// --- FILTERING LOGIC ---
+$('#btn-view-grid').click(function () {
+    if (currentView !== 'grid') {
+        currentView = 'grid';
+        $(this).addClass('active');
+        $('#btn-view-list').removeClass('active');
+        renderData();
+    }
+});
+
+// 3. Filters
 function applyFilters() {
     const selectedFacing = $('#plot-facing-filter').val();
     const selectedStatus = $('#plot-status-filter').val();
     const plotNoSearch = $('#plot-no-filter').val().trim();
-
     const plotNoInt = parseInt(plotNoSearch);
     const isValidPlotNoSearch = plotNoSearch !== '' && !isNaN(plotNoInt);
-
 
     filteredData = plotData.filter(plot => {
         const matchesFacing = selectedFacing === 'all' || plot.facing === selectedFacing;
         const matchesStatus = selectedStatus === 'all' || plot.status === selectedStatus;
-
-        // Match only the exact plot number if a number is provided
         const matchesPlotNo = !isValidPlotNoSearch || plot.plotNo === plotNoInt;
-
         return matchesFacing && matchesStatus && matchesPlotNo;
     });
 
-    // Reset to page 1 after applying new filters
     currentPage = 1;
-    renderTablePage(currentPage);
+    renderData();
 }
 
-// --- EVENT LISTENERS ---
 $('#plot-facing-filter, #plot-status-filter').on('change', applyFilters);
 $('#plot-no-filter').on('input', applyFilters);
 
@@ -4687,99 +4802,48 @@ $('#reset-filters').on('click', function () {
     applyFilters();
 });
 
-// --- INITIALIZATION (MODIFIED BLOCK) ---
+// --- INITIALIZATION ---
 if (plotData && plotData.length > 0) {
-    // 1. Set the initial total count text
     $('#total-initial-plots').text(plotData.length);
-
-    // 2. Populate the filters based on the data <--- NEW
     populateFilters(plotData);
-
-    // 3. Apply initial filters and render the table
-    applyFilters();
+    applyFilters(); // Triggers initial render
 } else {
-    $('#plot-inventory-table tbody').html('<tr><td colspan="4" class="text-center p-4">⚠️ **Data Missing.** The plot data array is empty or not defined.</td></tr>');
-    $('#total-initial-plots').text(0);
+    $('#plot-inventory-table tbody').html('<tr><td colspan="4">Data Missing.</td></tr>');
 }
 
-// Helper function to calculate EMI: M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
-    function calculateEMI(P, R, N) {
-      const r = (R / 12) / 100; // Monthly interest rate (decimal)
-      const n = N * 12; // Total number of months
-      
-      if (r === 0) return P / n;
-      return P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+// --- EMI CALCULATOR LOGIC (Kept as is) ---
+function calculateEMI(P, R, N) {
+    const r = (R / 12) / 100;
+    const n = N * 12;
+    if (r === 0) return P / n;
+    return P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+}
+
+function formatCurrency(amount) {
+    return '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(amount);
+}
+
+function displayEmiDetails() {
+    const P = parseFloat(document.getElementById('loanAmountInput').value);
+    const N = parseInt(document.getElementById('loanTenureInput').value);
+    const R = parseFloat(document.getElementById('interestRateInput').value);
+    const emiResultElement = document.getElementById('emiResult');
+    const emiSummaryElement = document.getElementById('emiSummary');
+
+    if (isNaN(P) || P <= 0 || isNaN(N) || N <= 0 || isNaN(R) || R <= 0) {
+        emiResultElement.textContent = '₹0';
+        return;
     }
 
-    // Helper function to format currency for Indian Rupees
-    function formatCurrency(amount) {
-        return '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(amount);
-    }
-    
-    // Function to read inputs, calculate EMI, and display results
-    function displayEmiDetails() {
-      const P = parseFloat(document.getElementById('loanAmountInput').value); // Principal
-      const N = parseInt(document.getElementById('loanTenureInput').value); // Tenure in Years
-      const R = parseFloat(document.getElementById('interestRateInput').value); // Rate in % P.A.
-      
-      const emiResultElement = document.getElementById('emiResult');
-      const emiSummaryElement = document.getElementById('emiSummary');
+    let calculatedEMI = (R === 0) ? P / (N * 12) : calculateEMI(P, R, N);
+    const totalPayments = calculatedEMI * (N * 12);
+    const totalInterest = totalPayments - P;
 
-      // 1. Validation
-      if (isNaN(P) || P <= 0) {
-          emiResultElement.textContent = '₹0';
-          emiSummaryElement.textContent = '⚠️ Please enter a valid Loan Amount.';
-          return;
-      }
-      if (isNaN(N) || N <= 0 || N > 30) {
-          emiResultElement.textContent = '₹0';
-          emiSummaryElement.textContent = '⚠️ Please select a valid Tenure (1-30 years).';
-          return;
-      }
-      if (isNaN(R) || R <= 0) {
-          emiResultElement.textContent = '₹0';
-          emiSummaryElement.textContent = '⚠️ Please enter a valid Interest Rate.';
-          return;
-      }
+    emiResultElement.textContent = formatCurrency(calculatedEMI.toFixed(0));
+    emiSummaryElement.innerHTML = `For ${formatCurrency(P)} @ ${R.toFixed(2)}% over ${N} years.<br>Total Interest: ${formatCurrency(totalInterest.toFixed(0))}`;
+}
 
-      // 2. Calculation
-      const r = (R / 12) / 100; // Monthly interest rate (decimal)
-      const n = N * 12; // Total number of months
-      
-      let calculatedEMI;
-      if (r === 0) {
-          calculatedEMI = P / n; // Avoid division by zero if rate is 0
-      } else {
-          calculatedEMI = calculateEMI(P, R, N);
-      }
-      
-      const totalPayments = calculatedEMI * n;
-      const totalInterest = totalPayments - P;
-      
-      // 3. Display Results
-      emiResultElement.textContent = formatCurrency(calculatedEMI.toFixed(0));
-      emiSummaryElement.innerHTML = `
-          For ${formatCurrency(P)} @ ${R.toFixed(2)}% over ${N} years.<br>
-          Total Interest: ${formatCurrency(totalInterest.toFixed(0))}
-      `;
-    }
-
-    // Logic to initialize values and display on modal open
-    $('#emiModal').on('show.bs.modal', function (e) {
-        // Ensure all inputs have default values set
-        const loanAmountInput = document.getElementById('loanAmountInput');
-        const tenureInput = document.getElementById('loanTenureInput');
-        const rateInput = document.getElementById('interestRateInput');
-        
-        // Set defaults if they don't exist (e.g., first time opening)
-        if (!loanAmountInput.value) loanAmountInput.value = 1500000;
-        if (!tenureInput.value) tenureInput.value = 15;
-        if (!rateInput.value) rateInput.value = 8.50;
-        
-        // Update the slider value displays
-        document.getElementById('tenureValue').textContent = tenureInput.value;
-        document.getElementById('rateValue').textContent = parseFloat(rateInput.value).toFixed(2);
-
-        // Run the calculation with initial values
-        displayEmiDetails();
-    });
+$('#emiModal').on('show.bs.modal', function () {
+    if (!document.getElementById('loanAmountInput').value) document.getElementById('loanAmountInput').value = 1500000;
+    displayEmiDetails();
+});
