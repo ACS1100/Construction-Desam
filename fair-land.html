@@ -20,6 +20,45 @@
   <link rel="stylesheet" href="css/fair-land-project.css">
 
   <style>
+    .btn-whatsapp:hover {
+      background-color: #1FAF59 !important;
+      border-color: #1FAF59 !important;
+      color: white !important;
+    }
+
+    .btn-whatsapp .fa-whatsapp {
+      margin-right: 5px;
+    }
+
+    /* **FLOATING ICON STYLING** */
+    .btn-schedule-fixed {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1050; /* Above all other elements like modals */
+      
+      /* Key changes for circular, icon-only button */
+      width: 60px; /* Fixed width */
+      height: 60px; /* Fixed height */
+      padding: 0; /* Remove padding */
+      border-radius: 50%; /* Makes it a perfect circle */
+      
+      /* Center the icon inside the button */
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Stronger shadow for floating effect */
+      font-size: 1.1rem;
+      font-weight: 700;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(249, 109, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0); }
+    }
     /* General Font Visibility */
     body {
       font-family: 'Poppins', sans-serif;
@@ -494,6 +533,12 @@
             <p>Interested in learning more about available units in the Fair Land project? Get in touch with
               our sales team.</p>
             <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
+            <p>
+              <button type="button" class="btn btn-warning py-2 px-3 w-100" data-toggle="modal"
+                data-target="#scheduleVisitModal">
+                <span class="fa-solid fa-house-chimney-user"></span> **Schedule Site Visit**
+              </button>
+            </p>
             <p><button type="button" class="btn btn-info py-2 px-3" data-toggle="modal" data-target="#emiModal"><span
                   class="fa-solid fa-calculator"></span> EMI Calculator</button></p>
           </div>
@@ -590,6 +635,12 @@
       </div>
     </div>
   </section>
+  </section>
+
+  <button type="button" class="btn btn-warning btn-schedule-fixed ftco-animate" data-toggle="modal"
+    data-target="#scheduleVisitModal">
+    <span class="fa-solid fa-calendar-check fa-2x"></span>
+</button>
 
   <footer class="footer">
     <div class="container">
@@ -686,6 +737,43 @@
               <p class="emi-value" id="emiResult">₹0</p><small id="emiSummary">Enter details above.</small>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="scheduleVisitModal" tabindex="-1" role="dialog" aria-labelledby="scheduleVisitModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-white">
+          <h5 class="modal-title" id="scheduleVisitModalLabel"><i class="fa-solid fa-calendar-check"></i> Book Your Site Visit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Fill in your details and preferred time, and we will send the details to our sales team on WhatsApp.</p>
+          <form id="scheduleVisitForm">
+            <div class="form-group">
+              <label for="visitorName">Your Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="visitorName" required placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="visitorPhone">WhatsApp Phone Number <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" id="visitorPhone" required placeholder="+91 00000 00000">
+            </div>
+            <div class="form-group">
+              <label for="visitDate">Preferred Date</label>
+              <input type="date" class="form-control" id="visitDate">
+            </div>
+            <div class="form-group">
+              <label for="visitTime">Preferred Time</label>
+              <input type="time" class="form-control" id="visitTime">
+            </div>
+            <button type="submit" class="btn btn-whatsapp w-100 mt-3"><i class="fa-brands fa-whatsapp"></i> Send Visit Request via WhatsApp</button>
+          </form>
+          <small class="text-muted mt-2 d-block text-center">Your privacy is important to us. This opens your WhatsApp app.</small>
         </div>
       </div>
     </div>
