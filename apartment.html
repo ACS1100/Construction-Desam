@@ -9,12 +9,13 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/apartment.css">
@@ -139,13 +140,7 @@
       position: absolute;
     }
 
-    #project-media-carousel .item img {
-      height: 250px;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    /* --- ENHANCED GRID VIEW STYLES --- */
+    /* --- ENHANCED GRID VIEW STYLES (EXISTING) --- */
     .flat-card {
       background: #fff;
       border: 1px solid #f0f0f0;
@@ -293,6 +288,86 @@
     .btn-whatsapp .fa-whatsapp {
       margin-right: 5px;
     }
+    
+    /* **FLOATING ICON CONTAINER STYLING** */
+    #floating-actions-container {
+      position: fixed;
+      /* Increased to 100px for clearance from Tawk.to chat widget */
+      bottom: 100px; 
+      right: 20px;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column-reverse; /* Stacks icons from bottom up */
+      align-items: flex-end;
+      gap: 15px; /* 15px vertical space between each icon */
+    }
+    
+    /* **FLOATING ACTION BUTTON STYLING (MODIFIED FOR TEXT LABEL) ** */
+    .btn-schedule-fixed {
+      width: auto; /* Allow width to expand to fit text */
+      height: 55px; 
+      padding: 0 15px; /* Add horizontal padding */
+      border-radius: 30px; /* Make it a rounded rectangle */
+      
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 8px; /* Space between icon and text */
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+      font-size: 1.1rem; 
+      font-weight: 700;
+      animation: pulse 2s infinite;
+    }
+
+    /* Style for the icon */
+    .btn-schedule-fixed .fa-solid {
+      margin-right: 0; /* No external margin */
+      font-size: 1.5rem; /* Maintain large icon size */
+    }
+
+    /* Style for the text label - always visible */
+    .schedule-text-visible {
+        display: inline-block;
+        font-weight: 600;
+    }
+    
+    /* Optional: Tweak icon size for mobile */
+    @media (max-width: 767px) {
+        .btn-schedule-fixed {
+            font-size: 1rem; /* Slightly smaller font on mobile */
+        }
+        .btn-schedule-fixed .fa-solid {
+            font-size: 1.3rem;
+        }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(249, 109, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0); }
+    }
+    
+    /* Custom style for the carousel images within the on-page viewer */
+    #floorPlanViewerContainer .carousel-item img {
+        max-height: 70vh; /* Limit height to 70% of viewport height */
+        width: auto; /* Maintain aspect ratio */
+        margin: 0 auto;
+        object-fit: contain;
+        border-radius: 5px;
+    }
+    
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 15px;
+    }
+    
+    /* The old .gallery-scroll-container CSS was removed here to enable Owl Carousel. 
+       Owl Carousel handles the responsive display and scrolling automatically. */
+
+
   </style>
 </head>
 
@@ -304,7 +379,7 @@
         <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
         <div class="ui-hidden lg-ui-block md-ui-block">Kathir's <span>Developers</span></div>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav"
         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="fa-solid fa-bars"></span> Menu
       </button>
@@ -358,35 +433,79 @@
 
                     <div class="ftco-animate mb-5">
                         <h3 class="mb-3">Project Gallery & Walkthrough</h3>
+                        
                         <div id="project-media-carousel" class="owl-carousel owl-theme mb-4 gallery-popup">
-                            <div class="item"><a href="images/gallery-2.jpg" class="img-zoom"
-                                    title="Apartment Image 1"><img src="images/gallery-2.jpg" alt="Apartment Image 1"
-                                        class="img-fluid rounded">
+                            
+                            <div class="item">
+                                <a href="images/gallery-2.jpg" class="img-zoom" title="Apartment Image 1">
+                                    <img src="images/gallery-2.jpg" alt="Apartment Image 1" class="img-fluid rounded">
                                     <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                                </a></div>
-                            <div class="item"><a href="images/gallery-3.jpg" class="img-zoom"
-                                    title="Apartment Image 2"><img src="images/gallery-3.jpg" alt="Apartment Image 2"
-                                        class="img-fluid rounded">
+                                </a>
+                            </div>
+                            
+                            <div class="item">
+                                <a href="images/gallery-3.jpg" class="img-zoom" title="Apartment Image 2">
+                                    <img src="images/gallery-3.jpg" alt="Apartment Image 2" class="img-fluid rounded">
                                     <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                                </a></div>
-                            <div class="item"><a href="images/gallery-4.jpg" class="img-zoom"
-                                    title="Apartment Image 3"><img src="images/gallery-4.jpg" alt="Apartment Image 3"
-                                        class="img-fluid rounded">
+                                </a>
+                            </div>
+                            
+                            <div class="item">
+                                <a href="images/gallery-4.jpg" class="img-zoom" title="Apartment Image 3">
+                                    <img src="images/gallery-4.jpg" alt="Apartment Image 3" class="img-fluid rounded">
                                     <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                                </a></div>
-                            <div class="item"><a href="images/gallery-5.jpg" class="img-zoom"
-                                    title="Apartment Image 4"><img src="images/gallery-5.jpg" alt="Apartment Image 4"
-                                        class="img-fluid rounded">
+                                </a>
+                            </div>
+                            
+                            <div class="item">
+                                <a href="images/gallery-5.jpg" class="img-zoom" title="Apartment Image 4">
+                                    <img src="images/gallery-5.jpg" alt="Apartment Image 4" class="img-fluid rounded">
                                     <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                                </a></div>
+                                </a>
+                            </div>
+                            
+                            <div class="item">
+                                <a href="images/gallery-6.jpg" class="img-zoom" title="Apartment Image 5">
+                                    <img src="images/gallery-6.jpg" alt="Apartment Image 5" class="img-fluid rounded">
+                                    <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
+                                </a>
+                            </div>
+                            
                         </div>
-                    </div>
+                        </div>
                     <p>Apartment is a prestigious residential project located on the ECR coast in Chennai. Our team
                         handled the complete lifecycle of this project, from architectural design and structural
                         engineering to interior finishing.</p>
                     <p>The goal was to create a modern, sustainable community that maximized natural light and coastal
                         views. This involved using locally sourced, eco-friendly materials and incorporating rainwater
                         harvesting systems.</p>
+
+                    <div class="ftco-animate mb-5">
+                        <h3 class="mb-4">Apartment Floor Plans</h3>
+                        <p>Explore the layouts and dimensions for our different unit types. Click the buttons below to view the image gallery.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-outline-primary m-1 show-plan-btn" data-plan-id="1bhk" data-plan-title="1 BHK Floor Plans Gallery">
+                                <i class="fa-solid fa-bed"></i> 1 BHK
+                            </button>
+                            <button type="button" class="btn btn-outline-primary m-1 show-plan-btn" data-plan-id="2bhk" data-plan-title="2 BHK Floor Plans Gallery">
+                                <i class="fa-solid fa-bed"></i> 2 BHK
+                            </button>
+                            <button type="button" class="btn btn-outline-primary m-1 show-plan-btn" data-plan-id="3bhk" data-plan-title="3 BHK Floor Plans Gallery">
+                                <i class="fa-solid fa-bed"></i> 3 BHK
+                            </button>
+                            <button type="button" class="btn btn-outline-primary m-1 show-plan-btn" data-plan-id="4bhk" data-plan-title="4 BHK Floor Plans Gallery">
+                                <i class="fa-solid fa-bed"></i> 4 BHK
+                            </button>
+                            <button type="button" class="btn btn-outline-success m-1 show-plan-btn" data-plan-id="site" data-plan-title="Floor and Site Plans Gallery">
+                                <i class="fa-solid fa-map-location-dot"></i> Floor and Site
+                            </button>
+                        </div>
+                        
+                        <div id="floorPlanViewerContainer" class="mt-4 p-3 shadow-sm" style="min-height: 400px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+                            </div>
+                        
+                        <a href="contact.html" class="btn btn-warning mt-3 py-2 px-4"><i class="fa-solid fa-question-circle"></i> Enquire Now</a>
+                    </div>
 
                     <div class="ftco-animate mb-4">
                         <h3 class="mb-4 text-center">Project Amenities</h3>
@@ -499,8 +618,8 @@
                         <p>Interested in learning more about available flats in the Apartment project? Get in touch with
                             our sales team.</p>
                         <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
-                        <p><button type="button" class="btn btn-info py-2 px-3" data-toggle="modal"
-                                data-target="#emiModal"><span class="fa-solid fa-calculator"></span> EMI
+                        <p><button type="button" class="btn btn-info py-2 px-3" data-bs-toggle="modal"
+                                data-bs-target="#emiModal"><span class="fa-solid fa-calculator"></span> EMI
                                 Calculator</button></p>
                     </div>
                     <div class="sidebar-box ftco-animate">
@@ -625,15 +744,15 @@
                         Brick by brick, we build trust
                     </p>
                     <ul class="ftco-footer-social p-0">
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                        <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="X (Twitter)"><span class="fa-brands fa-square-x-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                        <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Facebook"><span class="fa-brands fa-square-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                        <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Instagram"><span class="fa-brands fa-square-instagram"></span></a></li>
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                        <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Google Page"><span class="fa-brands fa-google"></span></a></li>
-                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                        <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="YouTube"><span class="fa-brands fa-square-youtube"></span></a></li>
                     </ul>
                 </div>
@@ -689,7 +808,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">💰 EMI Calculator</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -716,30 +835,205 @@
             </div>
         </div>
     </div>
-
-    <script src="js/jquery.min.js"></script>
+    
+    <div class="modal fade" id="scheduleVisitModal" tabindex="-1" aria-labelledby="scheduleVisitModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-white">
+            <h5 class="modal-title" id="scheduleVisitModalLabel"><i class="fa-solid fa-calendar-check"></i> Book Your Site Visit</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Fill in your details and preferred time, and we will send the details to our sales team on WhatsApp.</p>
+            <form id="scheduleVisitForm">
+              <div class="form-group">
+                <label for="visitorName">Your Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="visitorName" required placeholder="Name">
+              </div>
+              <div class="form-group">
+                <label for="visitorPhone">WhatsApp Phone Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="visitorPhone" required placeholder="+91 00000 00000">
+              </div>
+              <div class="form-group">
+                <label for="visitDate">Preferred Date</label>
+                <input type="date" class="form-control" id="visitDate">
+              </div>
+              <div class="form-group">
+                <label for="visitTime">Preferred Time</label>
+                <input type="time" class="form-control" id="visitTime">
+              </div>
+              <button type="submit" class="btn btn-whatsapp w-100 mt-3"><i class="fa-brands fa-whatsapp"></i> Send Visit Request via WhatsApp</button>
+            </form>
+            <small class="text-muted mt-2 d-block text-center">Your privacy is important to us. This opens your WhatsApp app.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="js/jquery.min.js"></script> 
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script defer src="js/main.js"></script> 
+    <script defer src="js/apartment.js"></script> 
 
     <script>
         $(document).ready(function () {
-      $('#project-hero-carousel').owlCarousel({ loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, autoplayTimeout: 5000, autoplayHoverPause: true, animateOut: 'fadeOut', animateIn: 'fadeIn', });
-            $('#project-media-carousel').owlCarousel({ loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 3000, autoplayHoverPause: true, responsive: { 0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 } } });
-            $('.gallery-popup').magnificPopup({ delegate: 'a.img-zoom', type: 'image', gallery: { enabled: true }, zoom: { enabled: true, duration: 300, easing: 'ease-in-out', opener: function (openerElement) { return openerElement.is('img') ? openerElement : openerElement.find('img'); } } });
+            // Hero Carousel (The banner at the top)
+            $('#project-hero-carousel').owlCarousel({ 
+                loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, 
+                autoplayTimeout: 5000, autoplayHoverPause: true, animateOut: 'fadeOut', 
+                animateIn: 'fadeIn' 
+            });
+
+            // Project Media Carousel (The gallery the user is having trouble with)
+            $('#project-media-carousel').owlCarousel({ 
+                loop: true, margin: 20, nav: true, dots: false, autoplay: true, 
+                autoplayTimeout: 3000, autoplayHoverPause: true, 
+                responsive: { 0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 } } 
+            });
+
+            // Magnific Popup Initialization for the Gallery
+            $('.gallery-popup').magnificPopup({ 
+                delegate: 'a.img-zoom', type: 'image', gallery: { enabled: true }, 
+                zoom: { enabled: true, duration: 300, easing: 'ease-in-out', 
+                        opener: function (openerElement) { 
+                            return openerElement.is('img') ? openerElement : openerElement.find('img'); 
+                        } 
+                } 
+            });
         });
     </script>
-    <script src="js/apartment.js"></script> 
+
+    <script>
+        // Native JavaScript Floor Plan Logic (No jQuery as requested for this feature)
+        
+        // --- Floor Plan Data Structure (Max 5 images per plan) ---
+        const floorPlanData = {
+            '1bhk': [
+                { src: 'images/floorplans/1bhk_plan_1.jpg', title: '1 BHK Floor Plan - View 1 (Living/Dining)' },
+                { src: 'images/floorplans/1bhk_plan_2.jpg', title: '1 BHK Floor Plan - View 2 (Bedroom)' },
+                { src: 'images/floorplans/1bhk_plan_3.jpg', title: '1 BHK Floor Plan - View 3 (Kitchen)' },
+                { src: 'images/floorplans/1bhk_plan_4.jpg', title: '1 BHK Floor Plan - View 4 (Balcony)' },
+                { src: 'images/floorplans/1bhk_plan_5.jpg', title: '1 BHK Floor Plan - View 5 (Detailed Layout)' }
+            ],
+            '2bhk': [
+                { src: 'images/floorplans/2bhk_plan_1.jpg', title: '2 BHK Floor Plan - View 1 (Master Bedroom)' },
+                { src: 'images/floorplans/2bhk_plan_2.jpg', title: '2 BHK Floor Plan - View 2 (Living Area)' },
+                { src: 'images/floorplans/2bhk_plan_3.jpg', title: '2 BHK Floor Plan - View 3 (Kids Room)' },
+                { src: 'images/floorplans/2bhk_plan_4.jpg', title: '2 BHK Floor Plan - View 4 (Detailed Layout)' },
+                { src: 'images/floorplans/2bhk_plan_5.jpg', title: '2 BHK Floor Plan - View 5 (Entrance View)' }
+            ],
+            '3bhk': [
+                { src: 'images/floorplans/3bhk_plan_1.jpg', title: '3 BHK Floor Plan - View 1 (Master Bedroom Suite)' },
+                { src: 'images/floorplans/3bhk_plan_2.jpg', title: '3 BHK Floor Plan - View 2 (Kitchen & Utility)' },
+                { src: 'images/floorplans/3bhk_plan_3.jpg', title: '3 BHK Floor Plan - View 3 (Balcony View)' },
+                { src: 'images/floorplans/3bhk_plan_4.jpg', title: '3 BHK Floor Plan - View 4 (Detailed Layout)' },
+                { src: 'images/floorplans/3bhk_plan_5.jpg', title: '3 BHK Floor Plan - View 5 (3D Render)' }
+            ],
+            '4bhk': [
+                { src: 'images/floorplans/4bhk_plan_1.jpg', title: '4 BHK Floor Plan - View 1 (Luxury Living)' },
+                { src: 'images/floorplans/4bhk_plan_2.jpg', title: '4 BHK Floor Plan - View 2 (Guest Suite)' },
+                { src: 'images/floorplans/4bhk_plan_3.jpg', title: '4 BHK Floor Plan - View 3 (Study Room)' },
+                { src: 'images/floorplans/4bhk_plan_4.jpg', title: '4 BHK Floor Plan - View 4 (Detailed Layout)' },
+                { src: 'images/floorplans/4bhk_plan_5.jpg', title: '4 BHK Floor Plan - View 5 (Terrace/Rooftop)' }
+            ],
+            'site': [
+                { src: 'images/floorplans/site_plan_1.jpg', title: 'Floor and Site Plan - View 1 (Overall Layout)' },
+                { src: 'images/floorplans/site_plan_2.jpg', title: 'Floor and Site Plan - View 2 (Tower A & B)' },
+                { src: 'images/floorplans/site_plan_3.jpg', title: 'Floor and Site Plan - View 3 (Amenities Location)' },
+                { src: 'images/floorplans/site_plan_4.jpg', title: 'Floor and Site Plan - View 4 (Parking Layout)' },
+                { src: 'images/floorplans/site_plan_5.jpg', title: 'Floor and Site Plan - View 5 (Detailed Building View)' }
+            ]
+        };
+        
+        // Central function to render the carousel into the container
+        function renderFloorPlan(planId, planTitle, containerId, shouldScroll = false) {
+            const container = document.getElementById(containerId);
+            const images = floorPlanData[planId];
+            const carouselId = `planCarousel-${planId}`; // Unique ID for the carousel
+            
+            // 1. Check for data and handle empty case
+            if (!images || images.length === 0) {
+                container.innerHTML = `<h4 class="text-center mb-3 text-danger">${planTitle}</h4><div class="text-center p-5">No plans available for this unit type.</div>`;
+                return;
+            }
+
+            // 2. Build the Carousel Inner HTML
+            let carouselInnerHTML = '';
+            images.forEach((img, index) => {
+                const isActive = index === 0 ? ' active' : '';
+                carouselInnerHTML += `
+                    <div class="carousel-item${isActive} text-center">
+                        <img class="d-block mx-auto img-fluid" src="${img.src}" alt="${img.title}">
+                        <div class="mt-3 mb-2">
+                            <p class="mb-0 text-muted">${img.title}</p>
+                            <span class="badge bg-primary">Image ${index + 1} of ${images.length}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 3. Construct the full Carousel structure
+            const fullCarouselHTML = `
+                <h4 class="text-center mb-3">${planTitle}</h4>
+                <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-inner">${carouselInnerHTML}</div>
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </div>
+            `;
+
+            // 4. Inject Content
+            container.innerHTML = fullCarouselHTML;
+
+            // 5. Scroll (if triggered by a button click)
+            if (shouldScroll) {
+                container.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const floorPlanViewerContainer = document.getElementById('floorPlanViewerContainer');
+            const viewPlanButtons = document.querySelectorAll('.show-plan-btn'); 
+
+            // === 1. Load Default Plan (Site Plan) on page load ===
+            renderFloorPlan('site', 'Floor and Site Plans Gallery (Default View)', 'floorPlanViewerContainer', false);
+            
+            // === 2. Set up button event listeners ===
+            viewPlanButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const planId = this.getAttribute('data-plan-id');
+                    const planTitle = this.getAttribute('data-plan-title');
+                    
+                    // Render the selected plan and scroll to it
+                    renderFloorPlan(planId, planTitle, 'floorPlanViewerContainer', true);
+                });
+            });
+
+            // Ensure EMI calculator runs once everything is set up. 
+            // The displayEmiDetails function is defined globally in apartment.js.
+            if (typeof window.displayEmiDetails === 'function') {
+                window.displayEmiDetails();
+            }
+
+        });
+    </script>
+    
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         (function () {
@@ -751,6 +1045,14 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
     </script>
+    
+    <div id="floating-actions-container">
+        <button type="button" class="btn btn-warning btn-schedule-fixed" data-bs-toggle="modal"
+          data-bs-target="#scheduleVisitModal">
+          <span class="fa-solid fa-calendar-check text-white"></span> 
+          <span class="schedule-text-visible text-white">Schedule Site Visit</span> 
+        </button>
+    </div>
 </body>
 
 </html>
