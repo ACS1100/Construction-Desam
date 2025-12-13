@@ -37,7 +37,7 @@ function filterAndRender() {
     const typeFilter = getValue('flat-type-filter');
     const statusFilter = getValue('flat-status-filter');
     const searchInput = getValue('flat-no-filter').toLowerCase().trim();
-    
+
     // Determine view mode (Replace jQuery .hasClass())
     const btnGridView = getEl('btn-view-grid');
     const isGridView = btnGridView && btnGridView.classList.contains('active');
@@ -47,7 +47,7 @@ function filterAndRender() {
         const floorMatch = floorFilter === 'all' || flat.floor.toString() === floorFilter;
         const typeMatch = typeFilter === 'all' || flat.type === typeFilter;
         const statusMatch = statusFilter === 'all' || flat.status === statusFilter;
-        
+
         const searchMatch = searchInput === '' ||
             flat.flatNo.toLowerCase().includes(searchInput) ||
             flat.floor.toString().includes(searchInput) ||
@@ -64,7 +64,7 @@ function filterAndRender() {
 
     renderCurrentPage();
     renderPagination();
-    
+
     // Update view mode visibility (Replace jQuery .addClass()/.removeClass())
     const tableView = getEl('view-container-table');
     const gridView = getEl('view-container-grid');
@@ -85,7 +85,7 @@ function renderCurrentPage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageData = filteredData.slice(startIndex, endIndex);
-    
+
     const btnGridView = getEl('btn-view-grid');
     const viewMode = btnGridView && btnGridView.classList.contains('active') ? 'grid' : 'table';
 
@@ -94,7 +94,7 @@ function renderCurrentPage() {
     } else {
         renderGrid(pageData);
     }
-    
+
     // Update flat count display
     const currentCount = pageData.length > 0 ? `${startIndex + 1}-${Math.min(endIndex, filteredData.length)}` : '0';
     setText('flat-count', currentCount);
@@ -106,7 +106,7 @@ function renderTable(data) {
     const tableBody = document.querySelector('#flat-inventory-table tbody');
     if (!tableBody) return;
     tableBody.innerHTML = '';
-    
+
     const whatsappNumber = SALES_TEAM_NUMBER;
 
     if (data.length === 0) {
@@ -122,7 +122,7 @@ function renderTable(data) {
         const sqftDisplay = flat.sqft ? `${flat.sqft} sq.ft` : 'N/A';
 
         const message = encodeURIComponent(
-            `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` + 
+            `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` +
             `Details:\n` +
             `Floor: ${flat.floor}\n` +
             `Type: ${flat.type}\n` +
@@ -133,7 +133,7 @@ function renderTable(data) {
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        const btnHtml = isSold 
+        const btnHtml = isSold
             ? `<button class="btn btn-secondary btn-sm" disabled>Sold Out</button>`
             : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`;
 
@@ -173,7 +173,7 @@ function renderGrid(data) {
         const cardStatusClass = isSold ? "flat-card-sold" : (statusText.toLowerCase() === 'active' ? "flat-card-active" : "");
 
         const message = encodeURIComponent(
-            `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` + 
+            `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` +
             `Details:\n` +
             `Floor: ${flat.floor}\n` +
             `Type: ${flat.type}\n` +
@@ -184,7 +184,7 @@ function renderGrid(data) {
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        const btnHtml = isSold 
+        const btnHtml = isSold
             ? `<button class="btn btn-secondary btn-sm btn-block mt-3" disabled>Sold Out</button>`
             : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm btn-block mt-3"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`;
 
@@ -254,7 +254,7 @@ function renderPagination() {
     }
 
     let paginationHtml = '';
-    
+
     // Previous button
     paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage - 1}">Prev</a></li>`;
 
@@ -287,7 +287,7 @@ function renderPagination() {
     // Bind event listeners to new page links
     paginationEl.querySelectorAll('.page-link').forEach(link => {
         if (!link.parentNode.classList.contains('disabled')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const newPage = parseInt(this.getAttribute('data-page'));
                 if (newPage > 0 && newPage <= totalPages) {
@@ -308,10 +308,10 @@ function initialSetup() {
     const floorFilter = getEl('flat-floor-filter');
     const typeFilter = getEl('flat-type-filter');
     const statusFilter = getEl('flat-status-filter');
-    
+
     const floors = new Set();
     const types = new Set();
-    
+
     // Manually add options for status, or populate dynamically from data if needed
     // Re-populate Status filter options explicitly
     if (statusFilter) {
@@ -404,18 +404,18 @@ function calculateEMI(P, R, N) {
 // Function to format numbers with Indian currency style (e.g., ₹ 1,23,456)
 function formatIndianCurrency(number) {
     if (number === null || isNaN(number)) return 'N/A';
-    
+
     // Round to nearest integer before formatting
     number = Math.round(number);
-    
+
     const parts = number.toString().split('.');
     let lastThree = parts[0].substring(parts[0].length - 3);
     const otherNumbers = parts[0].substring(0, parts[0].length - 3);
-    
+
     if (otherNumbers !== '') {
         lastThree = ',' + lastThree;
     }
-    
+
     let res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
 
     if (parts.length > 1) {
@@ -429,7 +429,7 @@ function displayEmiDetails() {
     const loanAmount = parseFloat(getValue('loanAmountInput')) || 0;
     const interestRate = parseFloat(getValue('interestRateInput')) || 0;
     const loanTenure = parseFloat(getValue('loanTenureInput')) || 0;
-    
+
     if (loanAmount <= 0 || loanTenure <= 0) {
         setText('emi-result', 'N/A');
         setText('total-interest-payable', 'N/A');
@@ -437,7 +437,7 @@ function displayEmiDetails() {
         setText('total-amount-payable', 'N/A');
         return;
     }
-    
+
     const emi = calculateEMI(loanAmount, interestRate, loanTenure);
     const totalPrincipal = loanAmount;
     const totalAmount = emi * (loanTenure * 12);
@@ -464,7 +464,7 @@ const floorPlans = {
 function renderFloorPlan(planId, title, containerId, autoScroll = false) {
     const plans = floorPlans[planId] || [];
     const container = getEl(containerId);
-    
+
     if (!container) return;
 
     // Update the title
@@ -481,7 +481,7 @@ function renderFloorPlan(planId, title, containerId, autoScroll = false) {
 
     plans.forEach((planUrl, index) => {
         const isActive = index === 0 ? 'active' : '';
-        
+
         // Indicators
         carouselIndicators += `
             <button type="button" data-bs-target="#floorPlanCarousel" data-bs-slide-to="${index}" 
@@ -530,14 +530,14 @@ window.renderFloorPlan = renderFloorPlan;
 // *** MODAL AND INITIALIZATION HOOKS ***
 // =========================================================================
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 1. Initialize Flat Inventory on DOMContentLoaded
     initialSetup();
 
     // 2. Schedule Visit Modal Logic
     const visitForm = getEl('scheduleVisitForm');
     if (visitForm) {
-        visitForm.addEventListener('submit', function(e) {
+        visitForm.addEventListener('submit', function (e) {
             e.preventDefault();
             handleScheduleVisitSubmit();
         });
@@ -551,16 +551,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const loanAmountInput = getEl('loanAmountInput');
             const tenureInput = getEl('loanTenureInput');
             const rateInput = getEl('interestRateInput');
-            
+
             // Set default values if empty
             if (loanAmountInput && !loanAmountInput.value) loanAmountInput.value = 1500000;
             if (tenureInput && !tenureInput.value) tenureInput.value = 15;
             if (rateInput && !rateInput.value) rateInput.value = 8.50;
-            
+
             // Update display values
             if (tenureInput) setText('tenureValue', tenureInput.value);
             if (rateInput) setText('rateValue', parseFloat(rateInput.value).toFixed(2));
-            
+
             displayEmiDetails();
         });
     }
@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', function() {
     emiInputs.forEach(id => {
         const el = getEl(id);
         if (el) {
-            el.addEventListener('input', function() {
+            el.addEventListener('input', function () {
                 if (this.id === 'loanTenureInput') {
                     setText('tenureValue', this.value);
                 } else if (this.id === 'interestRateInput') {
@@ -593,8 +593,8 @@ function handleScheduleVisitSubmit() {
     const time = getValue('visitTime');
 
     if (!name || !phone) {
-      alert('Please enter your Name and Contact Number.');
-      return;
+        alert('Please enter your Name and Contact Number.');
+        return;
     }
 
     let whatsappMessage = `*New Site Visit Request (${PROJECT_NAME})*\n\n`;
@@ -603,11 +603,11 @@ function handleScheduleVisitSubmit() {
     whatsappMessage += `*Contact No.:* ${phone}\n`;
 
     if (date || time) {
-      whatsappMessage += `\n*Preferred Schedule:*\n`;
-      whatsappMessage += `  - Date: ${date ? date : 'Not Specified'}\n`;
-      whatsappMessage += `  - Time: ${time ? time : 'Not Specified'}\n`;
+        whatsappMessage += `\n*Preferred Schedule:*\n`;
+        whatsappMessage += `  - Date: ${date ? date : 'Not Specified'}\n`;
+        whatsappMessage += `  - Time: ${time ? time : 'Not Specified'}\n`;
     } else {
-      whatsappMessage += `\n_The visitor is flexible. Please contact them to schedule._\n`;
+        whatsappMessage += `\n_The visitor is flexible. Please contact them to schedule._\n`;
     }
 
     whatsappMessage += `\n*Source:* Website - ${PROJECT_NAME} Project Page`;
