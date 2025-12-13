@@ -30,28 +30,40 @@
       margin-right: 5px;
     }
 
-    /* **FLOATING ICON STYLING** */
-    .btn-schedule-fixed {
+    /* **FLOATING ICON CONTAINER STYLING** */
+    #floating-actions-container {
       position: fixed;
-      bottom: 20px;
+      /* Increased to 100px for clearance from Tawk.to chat widget */
+      bottom: 100px; 
       right: 20px;
-      z-index: 1050; /* Above all other elements like modals */
-      
-      /* Key changes for circular, icon-only button */
-      width: 60px; /* Fixed width */
-      height: 60px; /* Fixed height */
+      z-index: 1050;
+      display: flex;
+      flex-direction: column-reverse; /* Stacks icons from bottom up */
+      align-items: flex-end;
+      gap: 15px; /* 15px vertical space between each icon */
+    }
+    
+    /* **FLOATING ICON STYLING (MODIFIED FOR CIRCULAR CHATBOT SIZE)** */
+    .btn-schedule-fixed {
+      /* New fixed size for a circular icon */
+      width: 55px; 
+      height: 55px; 
       padding: 0; /* Remove padding */
-      border-radius: 50%; /* Makes it a perfect circle */
+      border-radius: 50%; /* Make it a perfect circle */
       
-      /* Center the icon inside the button */
       display: flex; 
-      justify-content: center;
-      align-items: center;
+      justify-content: center; /* Center icon horizontally */
+      align-items: center; /* Center icon vertically */
       
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Stronger shadow for floating effect */
-      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+      font-size: 1.5rem; /* Increase icon size */
       font-weight: 700;
       animation: pulse 2s infinite;
+    }
+
+    /* Remove margin on the icon since there is no text */
+    .btn-schedule-fixed .fa-solid {
+      margin-right: 0; 
     }
 
     @keyframes pulse {
@@ -533,12 +545,6 @@
             <p>Interested in learning more about available units in the Fair Land project? Get in touch with
               our sales team.</p>
             <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
-            <p>
-              <button type="button" class="btn btn-warning py-2 px-3 w-100" data-toggle="modal"
-                data-target="#scheduleVisitModal">
-                <span class="fa-solid fa-house-chimney-user"></span> **Schedule Site Visit**
-              </button>
-            </p>
             <p><button type="button" class="btn btn-info py-2 px-3" data-toggle="modal" data-target="#emiModal"><span
                   class="fa-solid fa-calculator"></span> EMI Calculator</button></p>
           </div>
@@ -580,7 +586,7 @@
             <div class="row mb-4">
               <div class="col-md-3 col-sm-6">
                 <label for="plot-no-filter">Filter by Plot No:</label>
-                <input type="number" id="plot-no-filter" class="form-control" placeholder="Enter plot number">
+                <input type="number" class="form-control" id="plot-no-filter" placeholder="Enter plot number">
               </div>
               <div class="col-md-3 col-sm-6">
                 <label for="plot-facing-filter">Filter by Facing:</label>
@@ -637,11 +643,7 @@
   </section>
   </section>
 
-  <button type="button" class="btn btn-warning btn-schedule-fixed ftco-animate" data-toggle="modal"
-    data-target="#scheduleVisitModal">
-    <span class="fa-solid fa-calendar-check fa-2x"></span>
-</button>
-
+  
   <footer class="footer">
     <div class="container">
       <div class="row">
@@ -813,6 +815,13 @@
       s0.parentNode.insertBefore(s1, s0);
     })();
   </script>
+  
+  <div id="floating-actions-container">
+    <button type="button" class="btn btn-warning btn-schedule-fixed" data-toggle="modal"
+      data-target="#scheduleVisitModal">
+      <span class="fa-solid fa-bell text-white"></span> 
+    </button>
+    </div>
 </body>
 
 </html>
