@@ -10006,3 +10006,13 @@ textarea.form-control {
         display: none !important;
       }
     }
+/* In your CSS file (e.g., css/style.css) */
+
+.work .img {
+    height: 350px;             /* <--- THIS IS THE CRITICAL LINE */
+    width: 100%;               /* Ensure it fills the container */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;        /* Required for the hover effects */
+}

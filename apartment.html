@@ -731,9 +731,10 @@
                   Grid</button>
               </div>
             </div>
-            <p class="col-md-12 text-muted">A total of **<span id="total-initial-flats">0</span>** flats are
-              available.
-              Currently displaying **<span id="total-filtered-flats">0</span>** flats based on filters.
+            <p class="col-md-12 text-muted">Total Inventory: 
+              <span id="total-initial-flats" class="fw-bold">0</span> flats | Showing 
+              <span id="flat-count">0-0</span> of 
+              <span id="total-filtered-flats" class="fw-bold">0</span> results
             </p>
           </div>
 
@@ -792,7 +793,7 @@
                   <th>Area (Sq.ft)</th>
                                     <th>Price</th>
                   <th>Status</th>
-                  <th class="text-center">Whatsapp</th>
+                  <th class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -967,6 +968,15 @@
     });
   </script>
 
+<script>
+    // Initialize tooltips everywhere on the page
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>
 
   <script type="text/javascript">
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();

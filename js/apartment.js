@@ -130,7 +130,7 @@ function renderCurrentPage() {
     setText('flat-count', currentCount);
 }
 
-// 3. Render Table View (List) - UPDATED FOR NEW BUTTONS AND RESPONSIVENESS
+// 3. Render Table View (List) - UPDATED FOR ICON-ONLY BUTTONS
 function renderTable(data) {
     // Replace jQuery selection and .empty()
     const tableBody = document.querySelector('#flat-inventory-table tbody');
@@ -149,9 +149,19 @@ function renderTable(data) {
     data.forEach(flat => {
         const statusText = flat.status || 'Unknown';
         const isSold = statusText.toLowerCase() === 'sold';
-        const badgeClass = isSold ? "status-sold" : (statusText.toLowerCase() === 'active' ? "status-active" : "bg-secondary text-white");
         const sqftDisplay = flat.sqft ? `${flat.sqft} sq.ft` : 'N/A';
 
+        // Set Bootstrap 5 badge class based on status
+        let badgeClass;
+        if (isSold) {
+            badgeClass = "bg-danger"; // Sold: Red/Danger
+        } else if (statusText.toLowerCase() === 'active') {
+            badgeClass = "bg-success"; // Active: Green/Success
+        } else {
+            badgeClass = "bg-warning text-dark"; // Hold: Yellow/Warning
+        }
+        
+        // WhatsApp Message content
         const message = encodeURIComponent(
             `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` +
             `Details:\n` +
@@ -165,36 +175,55 @@ function renderTable(data) {
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        // NEW: View Images Button
-        const viewBtnHtml = `
-            <button class="btn btn-info btn-sm view-flat-btn mb-1 mb-md-0" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#flatImageViewerModal"
-                    data-flat-type="${flat.type}">
-                <i class="fa-solid fa-camera"></i>
-            </button>`;
+        let viewBtnHtml;
+        let whatsappBtnHtml;
 
-        // Updated WhatsApp Button with Icon
-        const whatsappBtnHtml = isSold
-            ? `<button class="btn btn-secondary btn-sm" disabled>Sold Out</button>`
-            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fa-brands fa-whatsapp"></i></a>`;
+        if (isSold) {
+            // Disabled state for Sold flats (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Flat is Sold: View Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </button>`;
+            
+            whatsappBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Flat is Sold: Contact Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>`;
+        } else {
+            // Active state (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-info btn-sm view-flat-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#flatImageViewerModal"
+                        data-bs-placement="top"
+                        title="View Flat Images"
+                        data-flat-type="${flat.type}">
+                    <i class="fa-solid fa-camera"></i>
+                </button>`;
 
+            // Using btn-success for WhatsApp, icon-only, for a modern look
+            whatsappBtnHtml = `<a href="${whatsappUrl}" target="_blank" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Contact on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>`;
+        }
+        
+        // Price display style
+        const priceClass = isSold ? 'text-decoration-line-through text-danger' : 'fw-bold text-success';
+        
         rowsHtml += `
             <tr>
                 <td>${flat.flatNo}</td> 
                 <td>${flat.floor}</td>
                 <td>${flat.type}</td>
                 <td>${sqftDisplay}</td>
-                <td>${flat.price}</td>
-                <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
-                <td class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">${viewBtnHtml} ${whatsappBtnHtml}</td>
+                <td><span class="${priceClass}">${flat.price}</span></td>
+                <td><span class="badge ${badgeClass} text-uppercase">${statusText}</span></td>
+                <td class="text-center gap-2">${viewBtnHtml} ${whatsappBtnHtml}</td>
             </tr>
         `;
     });
     tableBody.innerHTML = rowsHtml;
 }
 
-// 4. Render Grid View - UPDATED FOR NEW BUTTONS AND RESPONSIVENESS
+// 4. Render Grid View - UPDATED FOR ICON-ONLY BUTTONS
 function renderGrid(data) {
     // Replace jQuery selection and .empty()
     const gridContainer = getEl('view-container-grid');
@@ -212,10 +241,22 @@ function renderGrid(data) {
     data.forEach(flat => {
         const statusText = flat.status || 'Unknown';
         const isSold = statusText.toLowerCase() === 'sold';
-        const statusBadgeClass = isSold ? "status-sold" : (statusText.toLowerCase() === 'active' ? "status-active" : "bg-secondary text-white");
-        const cardStatusClass = isSold ? "flat-card-sold" : (statusText.toLowerCase() === 'active' ? "flat-card-active" : "");
         const sqftDisplay = flat.sqft ? `${flat.sqft} sq.ft` : 'N/A';
 
+        // Set Bootstrap 5 badge class based on status
+        let statusBadgeClass;
+        let cardStatusClass;
+        if (isSold) {
+            statusBadgeClass = "bg-danger"; // Sold: Red/Danger
+            cardStatusClass = "flat-card-sold";
+        } else if (statusText.toLowerCase() === 'active') {
+            statusBadgeClass = "bg-success"; // Active: Green/Success
+            cardStatusClass = "flat-card-active";
+        } else {
+            statusBadgeClass = "bg-warning text-dark"; // Hold: Yellow/Warning
+            cardStatusClass = "";
+        }
+        
         const message = encodeURIComponent(
             `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` +
             `Details:\n` +
@@ -228,28 +269,47 @@ function renderGrid(data) {
             `Please share the price and next steps.`
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+        
+        let viewBtnHtml;
+        let whatsappBtnHtml;
 
-        // NEW: View Button
-        const viewBtnHtml = `
-            <button class="btn btn-info btn-sm view-flat-btn flex-grow-1" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#flatImageViewerModal"
-                    data-flat-type="${flat.type}">
-                <i class="fa-solid fa-camera"></i> View
-            </button>`;
+        if (isSold) {
+            // Disabled state for Sold flats (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Flat is Sold: View Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </button>`;
+            
+            whatsappBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Flat is Sold: Contact Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>`;
+        } else {
+            // Active state (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-info btn-sm view-flat-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#flatImageViewerModal"
+                        data-bs-placement="top"
+                        title="View Flat Images"
+                        data-flat-type="${flat.type}">
+                    <i class="fa-solid fa-camera"></i>
+                </button>`;
 
-        // Updated WhatsApp Button with Icon
-        const whatsappBtnHtml = isSold
-            ? `<button class="btn btn-secondary btn-sm flex-grow-1" disabled>Sold Out</button>`
-            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm flex-grow-1"><i class="fa-brands fa-whatsapp"></i></a>`;
+            // Using btn-success for WhatsApp, icon-only.
+            whatsappBtnHtml = `<a href="${whatsappUrl}" target="_blank" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Contact on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>`;
+        }
 
+        // Price display style
+        const priceClass = isSold ? 'text-decoration-line-through text-danger' : 'fw-bold text-success';
+        
         // Responsive Grid Card Structure (col-12/col-sm-6/col-lg-4 makes it responsive)
         cardsHtml += `
             <div class="col-12 col-sm-6 col-lg-4 mb-4 ftco-animate fadeInUp ftco-animated">
                 <div class="flat-card ${cardStatusClass}">
                     <div class="flat-card-header">
                         <h5>Flat ${flat.flatNo}</h5>
-                        <span class="status-badge ${statusBadgeClass}">${statusText}</span>
+                        <span class="badge ${statusBadgeClass} text-uppercase">${statusText}</span>
                     </div>
                     <div class="flat-card-body">
                         <div class="plot-detail-row">
@@ -266,14 +326,14 @@ function renderGrid(data) {
                         </div>
                         <div class="plot-detail-row">
                             <span class="plot-label"><i class="fa-solid fa-indian-rupee-sign"></i> Price:</span>
-                            <span class="plot-value">${flat.price}</span>
+                            <span class="plot-value ${priceClass}">${flat.price}</span>
                         </div>
                         <div class="plot-detail-row mb-0 border-bottom-0">
                             <span class="plot-label"><i class="fa-solid fa-compass"></i> Facing:</span>
                             <span class="plot-value">${flat.facing}</span>
                         </div>
                     </div>
-                    <div class="flat-card-footer p-3 border-top d-flex gap-2">
+                    <div class="flat-card-footer p-3 border-top d-flex justify-content-center gap-2">
                         ${viewBtnHtml}
                         ${whatsappBtnHtml}
                     </div>
@@ -409,6 +469,10 @@ function initialSetup() {
             priceFilter.insertAdjacentHTML('beforeend', `<option value="${price}">${price}</option>`);
         });
     }
+
+     // *** FIX: SET INITIAL TOTAL FLAT COUNT HERE ***
+    setText('total-initial-flats', customerFlatData.length);
+    // **********************************************
 
 
     // Bind filter change events
