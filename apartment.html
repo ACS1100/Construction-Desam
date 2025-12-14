@@ -555,9 +555,6 @@
             <div id="floorPlanViewerContainer" class="mt-4 p-3 shadow-sm"
               style="min-height: 400px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
             </div>
-
-            <a href="contact.html" class="btn btn-warning mt-3 py-2 px-4"><i class="fa-solid fa-question-circle"></i>
-              Enquire Now</a>
           </div>
 
           <div class="ftco-animate mb-4">
@@ -669,9 +666,11 @@
             <p>Interested in learning more about available flats in the Apartment project? Get in touch with
               our sales team.</p>
             <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
-            <p><button type="button" class="btn btn-info py-2 px-3" data-bs-toggle="modal"
-                data-bs-target="#emiModal"><span class="fa-solid fa-calculator"></span> EMI
-                Calculator</button></p>
+            <p>
+        <button type="button" class="btn btn-info py-2 px-3" data-bs-toggle="modal" data-bs-target="#emiCalculatorModal">
+    <i class="fa-solid fa-calculator"></i> Calculate My EMI
+</button>
+        </p>
           </div>
           <div class="sidebar-box ftco-animate">
             <h3 class="mb-3">Secure Your Flat Now</h3>
@@ -852,39 +851,6 @@
         stroke="#F96D00" />
     </svg></div>
 
-  <div class="modal fade" id="emiModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-compact" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">💰 EMI Calculator</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Loan Amount (₹):</label>
-            <input type="number" class="form-control" id="loanAmountInput" value="1500000">
-          </div>
-          <div class="form-group">
-            <label>Tenure (Years): <span id="tenureValue">15</span></label>
-            <input type="range" class="form-control-range" id="loanTenureInput" value="15" min="1" max="30">
-          </div>
-          <div class="form-group mb-4">
-            <label>Interest Rate (%): <span id="rateValue">8.50</span>%</label>
-            <input type="range" class="form-control-range" id="interestRateInput" value="8.50" min="5" max="20"
-              step="0.05">
-          </div>
-          <div id="emiDetailsContainer">
-            <div class="result-box">
-              <h5>Estimated EMI</h5>
-              <p class="emi-value" id="emiResult">₹0</p><small id="emiSummary">Enter details
-                above.</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="modal fade" id="scheduleVisitModal" tabindex="-1" aria-labelledby="scheduleVisitModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -933,6 +899,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script defer src="js/main.js"></script>
   <script defer src="js/apartment.js"></script>
@@ -966,128 +933,6 @@
     });
   </script>
 
-  <script>
-    // Native JavaScript Floor Plan Logic (No jQuery as requested for this feature)
-
-    // --- Floor Plan Data Structure (Max 5 images per plan) ---
-    const floorPlanData = {
-      '1bhk': [
-        { src: 'images/floorplans/1bhk_plan_1.jpg', title: '1 BHK Floor Plan - View 1 (Living/Dining)' },
-        { src: 'images/floorplans/1bhk_plan_2.jpg', title: '1 BHK Floor Plan - View 2 (Bedroom)' },
-        { src: 'images/floorplans/1bhk_plan_3.jpg', title: '1 BHK Floor Plan - View 3 (Kitchen)' },
-        { src: 'images/floorplans/1bhk_plan_4.jpg', title: '1 BHK Floor Plan - View 4 (Balcony)' },
-        { src: 'images/floorplans/1bhk_plan_5.jpg', title: '1 BHK Floor Plan - View 5 (Detailed Layout)' }
-      ],
-      '2bhk': [
-        { src: 'images/floorplans/2bhk_plan_1.jpg', title: '2 BHK Floor Plan - View 1 (Master Bedroom)' },
-        { src: 'images/floorplans/2bhk_plan_2.jpg', title: '2 BHK Floor Plan - View 2 (Living Area)' },
-        { src: 'images/floorplans/2bhk_plan_3.jpg', title: '2 BHK Floor Plan - View 3 (Kids Room)' },
-        { src: 'images/floorplans/2bhk_plan_4.jpg', title: '2 BHK Floor Plan - View 4 (Detailed Layout)' },
-        { src: 'images/floorplans/2bhk_plan_5.jpg', title: '2 BHK Floor Plan - View 5 (Entrance View)' }
-      ],
-      '3bhk': [
-        { src: 'images/floorplans/3bhk_plan_1.jpg', title: '3 BHK Floor Plan - View 1 (Master Bedroom Suite)' },
-        { src: 'images/floorplans/3bhk_plan_2.jpg', title: '3 BHK Floor Plan - View 2 (Kitchen & Utility)' },
-        { src: 'images/floorplans/3bhk_plan_3.jpg', title: '3 BHK Floor Plan - View 3 (Balcony View)' },
-        { src: 'images/floorplans/3bhk_plan_4.jpg', title: '3 BHK Floor Plan - View 4 (Detailed Layout)' },
-        { src: 'images/floorplans/3bhk_plan_5.jpg', title: '3 BHK Floor Plan - View 5 (3D Render)' }
-      ],
-      '4bhk': [
-        { src: 'images/floorplans/4bhk_plan_1.jpg', title: '4 BHK Floor Plan - View 1 (Luxury Living)' },
-        { src: 'images/floorplans/4bhk_plan_2.jpg', title: '4 BHK Floor Plan - View 2 (Guest Suite)' },
-        { src: 'images/floorplans/4bhk_plan_3.jpg', title: '4 BHK Floor Plan - View 3 (Study Room)' },
-        { src: 'images/floorplans/4bhk_plan_4.jpg', title: '4 BHK Floor Plan - View 4 (Detailed Layout)' },
-        { src: 'images/floorplans/4bhk_plan_5.jpg', title: '4 BHK Floor Plan - View 5 (Terrace/Rooftop)' }
-      ],
-      'site': [
-        { src: 'images/floorplans/site_plan_1.jpg', title: 'Floor and Site Plan - View 1 (Overall Layout)' },
-        { src: 'images/floorplans/site_plan_2.jpg', title: 'Floor and Site Plan - View 2 (Tower A & B)' },
-        { src: 'images/floorplans/site_plan_3.jpg', title: 'Floor and Site Plan - View 3 (Amenities Location)' },
-        { src: 'images/floorplans/site_plan_4.jpg', title: 'Floor and Site Plan - View 4 (Parking Layout)' },
-        { src: 'images/floorplans/site_plan_5.jpg', title: 'Floor and Site Plan - View 5 (Detailed Building View)' }
-      ]
-    };
-
-    // Central function to render the carousel into the container
-    function renderFloorPlan(planId, planTitle, containerId, shouldScroll = false) {
-      const container = document.getElementById(containerId);
-      const images = floorPlanData[planId];
-      const carouselId = `planCarousel-${planId}`; // Unique ID for the carousel
-
-      // 1. Check for data and handle empty case
-      if (!images || images.length === 0) {
-        container.innerHTML = `<h4 class="text-center mb-3 text-danger">${planTitle}</h4><div class="text-center p-5">No plans available for this unit type.</div>`;
-        return;
-      }
-
-      // 2. Build the Carousel Inner HTML
-      let carouselInnerHTML = '';
-      images.forEach((img, index) => {
-        const isActive = index === 0 ? ' active' : '';
-        carouselInnerHTML += `
-                    <div class="carousel-item${isActive} text-center">
-                        <img class="d-block mx-auto img-fluid" src="${img.src}" alt="${img.title}">
-                        <div class="mt-3 mb-2">
-                            <p class="mb-0 text-muted">${img.title}</p>
-                            <span class="badge bg-primary">Image ${index + 1} of ${images.length}</span>
-                        </div>
-                    </div>
-                `;
-      });
-
-      // 3. Construct the full Carousel structure
-      const fullCarouselHTML = `
-                <h4 class="text-center mb-3">${planTitle}</h4>
-                <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
-                    <div class="carousel-inner">${carouselInnerHTML}</div>
-                    
-                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </button>
-                </div>
-            `;
-
-      // 4. Inject Content
-      container.innerHTML = fullCarouselHTML;
-
-      // 5. Scroll (if triggered by a button click)
-      if (shouldScroll) {
-        container.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const floorPlanViewerContainer = document.getElementById('floorPlanViewerContainer');
-      const viewPlanButtons = document.querySelectorAll('.show-plan-btn');
-
-      // === 1. Load Default Plan (Site Plan) on page load ===
-      renderFloorPlan('site', 'Floor and Site Plans Gallery (Default View)', 'floorPlanViewerContainer', false);
-
-      // === 2. Set up button event listeners ===
-      viewPlanButtons.forEach(button => {
-        button.addEventListener('click', function () {
-          const planId = this.getAttribute('data-plan-id');
-          const planTitle = this.getAttribute('data-plan-title');
-
-          // Render the selected plan and scroll to it
-          renderFloorPlan(planId, planTitle, 'floorPlanViewerContainer', true);
-        });
-      });
-
-      // Ensure EMI calculator runs once everything is set up. 
-      // The displayEmiDetails function is defined globally in apartment.js.
-      if (typeof window.displayEmiDetails === 'function') {
-        window.displayEmiDetails();
-      }
-
-    });
-  </script>
 
   <script type="text/javascript">
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
@@ -1108,6 +953,74 @@
       <span class="schedule-text-visible text-white">Schedule Site Visit</span>
     </button>
   </div>
+  <div class="modal fade" id="emiCalculatorModal" tabindex="-1" aria-labelledby="emiCalculatorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="emiCalculatorModalLabel">💰 EMI Calculation Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <h4 class="mb-3 text-center text-primary">Loan Parameters</h4>
+                            
+                            <div class="mb-3">
+                                <label for="loanAmount" class="form-label">Loan Amount (P)</label>
+                                <input type="number" class="form-control" id="loanAmount" value="500000" min="1000" oninput="calculateEMI()">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="interestRate" class="form-label">Interest Rate (R) - Annually</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="interestRate" value="10" min="0.1" max="50" step="0.1" oninput="calculateEMI()">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="loanTenure" class="form-label">Loan Tenure (N) - In Years</label>
+                                <input type="number" class="form-control" id="loanTenure" value="5" min="1" max="30" oninput="calculateEMI()">                            
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4 class="mb-3 text-center text-success">Calculation Results</h4>
+                            <table class="table table-bordered text-center">
+                                <tbody>
+                                    <tr class="table-success">
+                                        <th>Monthly EMI</th>
+                                        <td id="emiResult" class="fw-bold fs-5">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Interest Payable</th>
+                                        <td id="interestResult">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Payment (P + I)</th>
+                                        <td id="totalPaymentResult" class="fw-bold">₹0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <!-- <p class="text-info mt-3">
+                                **Auto-Calculation:** Values update automatically as you type.
+                            </p> -->
+                            
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

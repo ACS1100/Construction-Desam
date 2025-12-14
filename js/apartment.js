@@ -389,70 +389,6 @@ function resetFilters() {
 
 
 // =========================================================================
-// *** EMI CALCULATION UTILITY FUNCTIONS (Made global for HTML script access) ***
-// =========================================================================
-
-function calculateEMI(P, R, N) {
-    const r = (R / 12) / 100;
-    const n = N * 12;
-
-    if (r === 0) return P / n; // Simple interest approximation if rate is 0
-
-    return P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
-}
-
-// Function to format numbers with Indian currency style (e.g., ₹ 1,23,456)
-function formatIndianCurrency(number) {
-    if (number === null || isNaN(number)) return 'N/A';
-
-    // Round to nearest integer before formatting
-    number = Math.round(number);
-
-    const parts = number.toString().split('.');
-    let lastThree = parts[0].substring(parts[0].length - 3);
-    const otherNumbers = parts[0].substring(0, parts[0].length - 3);
-
-    if (otherNumbers !== '') {
-        lastThree = ',' + lastThree;
-    }
-
-    let res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-
-    if (parts.length > 1) {
-        res += "." + parts[1];
-    }
-    return '₹ ' + res;
-}
-
-// Function to calculate and display EMI details
-function displayEmiDetails() {
-    const loanAmount = parseFloat(getValue('loanAmountInput')) || 0;
-    const interestRate = parseFloat(getValue('interestRateInput')) || 0;
-    const loanTenure = parseFloat(getValue('loanTenureInput')) || 0;
-
-    if (loanAmount <= 0 || loanTenure <= 0) {
-        setText('emi-result', 'N/A');
-        setText('total-interest-payable', 'N/A');
-        setText('total-principal-payable', 'N/A');
-        setText('total-amount-payable', 'N/A');
-        return;
-    }
-
-    const emi = calculateEMI(loanAmount, interestRate, loanTenure);
-    const totalPrincipal = loanAmount;
-    const totalAmount = emi * (loanTenure * 12);
-    const totalInterest = totalAmount - totalPrincipal;
-
-    setText('emi-result', formatIndianCurrency(emi));
-    setText('total-principal-payable', formatIndianCurrency(totalPrincipal));
-    setText('total-interest-payable', formatIndianCurrency(totalInterest));
-    setText('total-amount-payable', formatIndianCurrency(totalAmount));
-}
-// Made displayEmiDetails globally available for HTML inline script to call
-window.displayEmiDetails = displayEmiDetails;
-
-
-// =========================================================================
 // *** FLOOR PLAN VIEWER LOGIC ***
 // =========================================================================
 const floorPlans = {
@@ -542,44 +478,6 @@ document.addEventListener('DOMContentLoaded', function () {
             handleScheduleVisitSubmit();
         });
     }
-
-    // 3. EMI Calculator Modal pre-fill and display logic
-    // Add event listener for when the EMI modal is about to be shown (Bootstrap 5)
-    const emiModal = getEl('emiModal');
-    if (emiModal) {
-        emiModal.addEventListener('show.bs.modal', function () {
-            const loanAmountInput = getEl('loanAmountInput');
-            const tenureInput = getEl('loanTenureInput');
-            const rateInput = getEl('interestRateInput');
-
-            // Set default values if empty
-            if (loanAmountInput && !loanAmountInput.value) loanAmountInput.value = 1500000;
-            if (tenureInput && !tenureInput.value) tenureInput.value = 15;
-            if (rateInput && !rateInput.value) rateInput.value = 8.50;
-
-            // Update display values
-            if (tenureInput) setText('tenureValue', tenureInput.value);
-            if (rateInput) setText('rateValue', parseFloat(rateInput.value).toFixed(2));
-
-            displayEmiDetails();
-        });
-    }
-
-    // Bind EMI calculation to input changes
-    const emiInputs = ['loanAmountInput', 'loanTenureInput', 'interestRateInput'];
-    emiInputs.forEach(id => {
-        const el = getEl(id);
-        if (el) {
-            el.addEventListener('input', function () {
-                if (this.id === 'loanTenureInput') {
-                    setText('tenureValue', this.value);
-                } else if (this.id === 'interestRateInput') {
-                    setText('rateValue', parseFloat(this.value).toFixed(2));
-                }
-                displayEmiDetails();
-            });
-        }
-    });
 });
 
 // =========================================================================
@@ -624,4 +522,204 @@ function handleScheduleVisitSubmit() {
         const modalInstance = bootstrap.Modal.getInstance(visitModalEl) || new bootstrap.Modal(visitModalEl);
         modalInstance.hide();
     }
+
+    // Native JavaScript Floor Plan Logic (No jQuery as requested for this feature)
+
+    // --- Floor Plan Data Structure (Max 5 images per plan) ---
+    const floorPlanData = {
+      '1bhk': [
+        { src: 'images/floorplans/1bhk_plan_1.jpg', title: '1 BHK Floor Plan - View 1 (Living/Dining)' },
+        { src: 'images/floorplans/1bhk_plan_2.jpg', title: '1 BHK Floor Plan - View 2 (Bedroom)' },
+        { src: 'images/floorplans/1bhk_plan_3.jpg', title: '1 BHK Floor Plan - View 3 (Kitchen)' },
+        { src: 'images/floorplans/1bhk_plan_4.jpg', title: '1 BHK Floor Plan - View 4 (Balcony)' },
+        { src: 'images/floorplans/1bhk_plan_5.jpg', title: '1 BHK Floor Plan - View 5 (Detailed Layout)' }
+      ],
+      '2bhk': [
+        { src: 'images/floorplans/2bhk_plan_1.jpg', title: '2 BHK Floor Plan - View 1 (Master Bedroom)' },
+        { src: 'images/floorplans/2bhk_plan_2.jpg', title: '2 BHK Floor Plan - View 2 (Living Area)' },
+        { src: 'images/floorplans/2bhk_plan_3.jpg', title: '2 BHK Floor Plan - View 3 (Kids Room)' },
+        { src: 'images/floorplans/2bhk_plan_4.jpg', title: '2 BHK Floor Plan - View 4 (Detailed Layout)' },
+        { src: 'images/floorplans/2bhk_plan_5.jpg', title: '2 BHK Floor Plan - View 5 (Entrance View)' }
+      ],
+      '3bhk': [
+        { src: 'images/floorplans/3bhk_plan_1.jpg', title: '3 BHK Floor Plan - View 1 (Master Bedroom Suite)' },
+        { src: 'images/floorplans/3bhk_plan_2.jpg', title: '3 BHK Floor Plan - View 2 (Kitchen & Utility)' },
+        { src: 'images/floorplans/3bhk_plan_3.jpg', title: '3 BHK Floor Plan - View 3 (Balcony View)' },
+        { src: 'images/floorplans/3bhk_plan_4.jpg', title: '3 BHK Floor Plan - View 4 (Detailed Layout)' },
+        { src: 'images/floorplans/3bhk_plan_5.jpg', title: '3 BHK Floor Plan - View 5 (3D Render)' }
+      ],
+      '4bhk': [
+        { src: 'images/floorplans/4bhk_plan_1.jpg', title: '4 BHK Floor Plan - View 1 (Luxury Living)' },
+        { src: 'images/floorplans/4bhk_plan_2.jpg', title: '4 BHK Floor Plan - View 2 (Guest Suite)' },
+        { src: 'images/floorplans/4bhk_plan_3.jpg', title: '4 BHK Floor Plan - View 3 (Study Room)' },
+        { src: 'images/floorplans/4bhk_plan_4.jpg', title: '4 BHK Floor Plan - View 4 (Detailed Layout)' },
+        { src: 'images/floorplans/4bhk_plan_5.jpg', title: '4 BHK Floor Plan - View 5 (Terrace/Rooftop)' }
+      ],
+      'site': [
+        { src: 'images/floorplans/site_plan_1.jpg', title: 'Floor and Site Plan - View 1 (Overall Layout)' },
+        { src: 'images/floorplans/site_plan_2.jpg', title: 'Floor and Site Plan - View 2 (Tower A & B)' },
+        { src: 'images/floorplans/site_plan_3.jpg', title: 'Floor and Site Plan - View 3 (Amenities Location)' },
+        { src: 'images/floorplans/site_plan_4.jpg', title: 'Floor and Site Plan - View 4 (Parking Layout)' },
+        { src: 'images/floorplans/site_plan_5.jpg', title: 'Floor and Site Plan - View 5 (Detailed Building View)' }
+      ]
+    };
+
+    // Central function to render the carousel into the container
+    function renderFloorPlan(planId, planTitle, containerId, shouldScroll = false) {
+      const container = document.getElementById(containerId);
+      const images = floorPlanData[planId];
+      const carouselId = `planCarousel-${planId}`; // Unique ID for the carousel
+
+      // 1. Check for data and handle empty case
+      if (!images || images.length === 0) {
+        container.innerHTML = `<h4 class="text-center mb-3 text-danger">${planTitle}</h4><div class="text-center p-5">No plans available for this unit type.</div>`;
+        return;
+      }
+
+      // 2. Build the Carousel Inner HTML
+      let carouselInnerHTML = '';
+      images.forEach((img, index) => {
+        const isActive = index === 0 ? ' active' : '';
+        carouselInnerHTML += `
+                    <div class="carousel-item${isActive} text-center">
+                        <img class="d-block mx-auto img-fluid" src="${img.src}" alt="${img.title}">
+                        <div class="mt-3 mb-2">
+                            <p class="mb-0 text-muted">${img.title}</p>
+                            <span class="badge bg-primary">Image ${index + 1} of ${images.length}</span>
+                        </div>
+                    </div>
+                `;
+      });
+
+      // 3. Construct the full Carousel structure
+      const fullCarouselHTML = `
+                <h4 class="text-center mb-3">${planTitle}</h4>
+                <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-inner">${carouselInnerHTML}</div>
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </div>
+            `;
+
+      // 4. Inject Content
+      container.innerHTML = fullCarouselHTML;
+
+      // 5. Scroll (if triggered by a button click)
+      if (shouldScroll) {
+        container.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const floorPlanViewerContainer = document.getElementById('floorPlanViewerContainer');
+      const viewPlanButtons = document.querySelectorAll('.show-plan-btn');
+
+      // === 1. Load Default Plan (Site Plan) on page load ===
+      renderFloorPlan('site', 'Floor and Site Plans Gallery (Default View)', 'floorPlanViewerContainer', false);
+
+      // === 2. Set up button event listeners ===
+      viewPlanButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const planId = this.getAttribute('data-plan-id');
+          const planTitle = this.getAttribute('data-plan-title');
+
+          // Render the selected plan and scroll to it
+          renderFloorPlan(planId, planTitle, 'floorPlanViewerContainer', true);
+        });
+      });
+    });
+
+    
 }
+
+/**
+ * EMI Calculator Logic
+ * This file contains the primary function to calculate EMI 
+ * and the event listeners for auto-calculation and modal display.
+ */
+
+// Function to calculate the EMI
+function calculateEMI() {
+    // 1. Get input values
+    const P = parseFloat(document.getElementById('loanAmount').value);       
+    const R_annual = parseFloat(document.getElementById('interestRate').value); 
+    let N_years = parseFloat(document.getElementById('loanTenure').value);    
+    
+    // --- START OF NEW VALIDATION CHECK ---
+    const MAX_TENURE = 30;
+    const loanTenureElement = document.getElementById('loanTenure');
+
+    if (N_years > MAX_TENURE) {
+        // Set the value back to 30 for both calculation and display
+        N_years = MAX_TENURE;
+        loanTenureElement.value = MAX_TENURE;
+    }
+    // --- END OF NEW VALIDATION CHECK ---
+
+    // 2. Validate input (original check)
+    if (isNaN(P) || P <= 0 || isNaN(R_annual) || R_annual < 0 || isNaN(N_years) || N_years <= 0) {
+        document.getElementById('emiResult').textContent = '₹0';
+        document.getElementById('interestResult').textContent = '₹0';
+        document.getElementById('totalPaymentResult').textContent = '₹0';
+        return; 
+    }
+
+    // 3. Convert annual rate to monthly rate (r) and years to months (n)
+    const r = (R_annual / 12) / 100;
+    const n = N_years * 12; // This 'n' is now guaranteed to be 360 or less
+
+    // 4. EMI Calculation Formula (rest of the code remains the same)
+    let EMI;
+    let totalPayment;
+    let totalInterest;
+    
+    if (r === 0) {
+        EMI = P / n;
+    } else {
+        const powerFactor = Math.pow((1 + r), n);
+        EMI = P * r * powerFactor / (powerFactor - 1);
+    }
+    
+    // 5. Calculate Total Payment and Total Interest
+    totalPayment = EMI * n;
+    totalInterest = totalPayment - P;
+
+    // 6. Format and Display Results
+    const formatter = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+    
+    document.getElementById('emiResult').textContent = formatter.format(EMI);
+    document.getElementById('interestResult').textContent = formatter.format(totalInterest);
+    document.getElementById('totalPaymentResult').textContent = formatter.format(totalPayment);
+}
+
+
+// Event Listener to handle initial calculation and modal opening (fixes the ReferenceError timing issue)
+document.addEventListener('DOMContentLoaded', () => {
+    // Get a reference to the Bootstrap modal element
+    const emiModal = document.getElementById('emiCalculatorModal');
+    
+    if (emiModal) {
+        // CRITICAL FIX: Add an event listener that runs 'calculateEMI()' 
+        // only when the modal is fully opened, ensuring the results elements are available.
+        emiModal.addEventListener('shown.bs.modal', function () {
+            calculateEMI(); 
+        });
+    }
+    
+    // Run an initial calculation on page load for default values
+    calculateEMI(); 
+});
