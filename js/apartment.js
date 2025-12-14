@@ -1,14 +1,14 @@
 // =========================================================================
 // *** APARTMENT FLAT INVENTORY DATA ***
 const customerFlatData = [
-    { "flatNo": "A-101", "floor": 1, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active" },
-    { "flatNo": "A-102", "floor": 1, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Sold" },
-    { "flatNo": "A-201", "floor": 2, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active" },
-    { "flatNo": "A-202", "floor": 2, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Active" },
-    { "flatNo": "B-301", "floor": 3, "type": "1 BHK", "sqft": 800, "facing": "South", "status": "Hold" },
-    { "flatNo": "B-302", "floor": 3, "type": "2 BHK", "sqft": 1200, "facing": "West", "status": "Active" },
-    { "flatNo": "C-401", "floor": 4, "type": "3 BHK", "sqft": 1450, "facing": "East", "status": "Active" },
-    { "flatNo": "C-402", "floor": 4, "type": "1 BHK", "sqft": 750, "facing": "North", "status": "Sold" },
+    { "flatNo": "A-101", "floor": 1, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active", "price": 75 },
+    { "flatNo": "A-102", "floor": 1, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Sold", "price": 90 },
+    { "flatNo": "A-201", "floor": 2, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active", "price": 78 },
+    { "flatNo": "A-202", "floor": 2, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Active", "price": 92 },
+    { "flatNo": "B-301", "floor": 3, "type": "1 BHK", "sqft": 800, "facing": "South", "status": "Hold", "price": 45 },
+    { "flatNo": "B-302", "floor": 3, "type": "2 BHK", "sqft": 1200, "facing": "West", "status": "Active", "price": 72 },
+    { "flatNo": "C-401", "floor": 4, "type": "3 BHK", "sqft": 1450, "facing": "East", "status": "Active", "price": 88 },
+    { "flatNo": "C-402", "floor": 4, "type": "1 BHK", "sqft": 750, "facing": "North", "status": "Sold", "price": 42 },
 ];
 
 // =========================================================================
@@ -35,6 +35,7 @@ function filterAndRender() {
     // Replace jQuery .val() with native .value
     const floorFilter = getValue('flat-floor-filter');
     const typeFilter = getValue('flat-type-filter');
+    const priceFilter = getValue('flat-price-filter');
     const statusFilter = getValue('flat-status-filter');
     const searchInput = getValue('flat-no-filter').toLowerCase().trim();
 
@@ -46,15 +47,17 @@ function filterAndRender() {
     filteredData = customerFlatData.filter(flat => {
         const floorMatch = floorFilter === 'all' || flat.floor.toString() === floorFilter;
         const typeMatch = typeFilter === 'all' || flat.type === typeFilter;
+const priceMatch = priceFilter === 'all' || flat.price === parseFloat(priceFilter);
         const statusMatch = statusFilter === 'all' || flat.status === statusFilter;
 
         const searchMatch = searchInput === '' ||
             flat.flatNo.toLowerCase().includes(searchInput) ||
             flat.floor.toString().includes(searchInput) ||
             flat.type.toLowerCase().includes(searchInput) ||
+                        flat.price.toLowerCase().includes(searchInput) ||
             flat.status.toLowerCase().includes(searchInput);
 
-        return floorMatch && typeMatch && statusMatch && searchMatch;
+        return floorMatch && typeMatch && priceMatch && statusMatch && searchMatch;
     });
 
     // Reset pagination and render (Replace jQuery .text())
@@ -128,6 +131,7 @@ function renderTable(data) {
             `Type: ${flat.type}\n` +
             `Area: ${flat.sqft} sq.ft\n` +
             `Facing: ${flat.facing}\n` +
+                        `Price: ${flat.price}\n` +
             `Status: ${statusText}\n` +
             `Please share the price and next steps.`
         );
@@ -143,6 +147,8 @@ function renderTable(data) {
                 <td>${flat.floor}</td>
                 <td>${flat.type}</td>
                 <td>${sqftDisplay}</td>
+                                <td>${flat.price}</td>
+
                 <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
                 <td>${btnHtml}</td>
             </tr>
@@ -179,6 +185,7 @@ function renderGrid(data) {
             `Type: ${flat.type}\n` +
             `Area: ${flat.sqft} sq.ft\n` +
             `Facing: ${flat.facing}\n` +
+                        `Price: ${flat.price}\n` +
             `Status: ${statusText}\n` +
             `Please share the price and next steps.`
         );
@@ -211,6 +218,10 @@ function renderGrid(data) {
                         <div class="plot-detail-row">
                             <span class="plot-label"><i class="fa-solid fa-compass"></i> Facing:</span>
                             <span class="plot-value">${flat.facing}</span>
+                        </div>
+                        <div class="plot-detail-row">
+                            <span class="plot-label"><i class="fa-solid fa-key"></i> Price:</span>
+                            <span class="plot-value">${flat.price}</span>
                         </div>
                         ${btnHtml}
                     </div>
@@ -307,10 +318,12 @@ function renderPagination() {
 function initialSetup() {
     const floorFilter = getEl('flat-floor-filter');
     const typeFilter = getEl('flat-type-filter');
+        const priceFilter = getEl('flat-price-filter');
     const statusFilter = getEl('flat-status-filter');
 
     const floors = new Set();
     const types = new Set();
+    const prices = new Set();
 
     // Manually add options for status, or populate dynamically from data if needed
     // Re-populate Status filter options explicitly
@@ -323,6 +336,8 @@ function initialSetup() {
     customerFlatData.forEach(flat => {
         floors.add(flat.floor.toString());
         types.add(flat.type);
+                prices.add(flat.price);
+
     });
 
     // Populate Floor Filter
@@ -339,8 +354,15 @@ function initialSetup() {
         });
     }
 
+        if (priceFilter) {
+        Array.from(prices).sort().forEach(price => {
+            priceFilter.insertAdjacentHTML('beforeend', `<option value="${price}">${price}</option>`);
+        });
+    }
+
+
     // Bind filter change events
-    const filterInputs = ['flat-floor-filter', 'flat-type-filter', 'flat-status-filter', 'flat-no-filter'];
+    const filterInputs = ['flat-floor-filter', 'flat-type-filter', 'flat-price-filter', 'flat-status-filter', 'flat-no-filter'];
     filterInputs.forEach(id => {
         const el = getEl(id);
         if (el) el.addEventListener(el.tagName === 'INPUT' ? 'keyup' : 'change', filterAndRender);
@@ -383,6 +405,8 @@ function resetFilters() {
     if (getEl('flat-floor-filter')) getEl('flat-floor-filter').value = 'all';
     if (getEl('flat-type-filter')) getEl('flat-type-filter').value = 'all';
     if (getEl('flat-status-filter')) getEl('flat-status-filter').value = 'all';
+        if (getEl('flat-price-filter')) getEl('flat-price-filter').value = 'all';
+
     if (getEl('flat-no-filter')) getEl('flat-no-filter').value = '';
     filterAndRender();
 }
@@ -521,9 +545,10 @@ function handleScheduleVisitSubmit() {
     if (typeof bootstrap !== 'undefined' && visitModalEl) {
         const modalInstance = bootstrap.Modal.getInstance(visitModalEl) || new bootstrap.Modal(visitModalEl);
         modalInstance.hide();
-    }
+    }    
+}
 
-    // Native JavaScript Floor Plan Logic (No jQuery as requested for this feature)
+// Native JavaScript Floor Plan Logic (No jQuery as requested for this feature)
 
     // --- Floor Plan Data Structure (Max 5 images per plan) ---
     const floorPlanData = {
@@ -638,8 +663,6 @@ function handleScheduleVisitSubmit() {
       });
     });
 
-    
-}
 
 /**
  * EMI Calculator Logic
