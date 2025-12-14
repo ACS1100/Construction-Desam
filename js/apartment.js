@@ -12,6 +12,32 @@ const customerFlatData = [
 ];
 
 // =========================================================================
+// *** NEW: FLAT IMAGE DATA (5 images per type for viewer) ***
+// NOTE: Ensure these image paths exist, or update them.
+const flatImages = {
+    "1 BHK": [
+        { src: 'images/flat/1bhk_view_1.jpg', alt: '1 BHK Living Room' },
+        { src: 'images/flat/1bhk_view_2.jpg', alt: '1 BHK Kitchen' },
+        { src: 'images/flat/1bhk_view_3.jpg', alt: '1 BHK Bedroom' },
+        { src: 'images/flat/1bhk_view_4.jpg', alt: '1 BHK Balcony View' },
+        { src: 'images/flat/1bhk_view_5.jpg', alt: '1 BHK Bathroom' },
+    ],
+    "2 BHK": [
+        { src: 'images/flat/2bhk_view_1.jpg', alt: '2 BHK Spacious Living Area' },
+        { src: 'images/flat/2bhk_view_2.jpg', alt: '2 BHK Master Bedroom' },
+        { src: 'images/flat/2bhk_view_3.jpg', alt: '2 BHK Guest Room' },
+        { src: 'images/flat/2bhk_view_4.jpg', alt: '2 BHK Modular Kitchen' },
+        { src: 'images/flat/2bhk_view_5.jpg', alt: '2 BHK Entrance & Foyer' },
+    ],
+    "3 BHK": [
+        { src: 'images/flat/3bhk_view_1.jpg', alt: '3 BHK Premium Hall' },
+        { src: 'images/flat/3bhk_view_2.jpg', alt: '3 BHK Dining Area' },
+        { src: 'images/flat/3bhk_view_3.jpg', alt: '3 BHK Kids Room' },
+        { src: 'images/flat/3bhk_view_4.jpg', alt: '3 BHK Utility Area' },
+        { src: 'images/flat/3bhk_view_5.jpg', alt: '3 BHK View from Balcony' },
+    ],
+};
+// =========================================================================
 // *** CONFIGURATION & STATE ***
 const itemsPerPage = 12;
 let currentPage = 1;
@@ -47,14 +73,15 @@ function filterAndRender() {
     filteredData = customerFlatData.filter(flat => {
         const floorMatch = floorFilter === 'all' || flat.floor.toString() === floorFilter;
         const typeMatch = typeFilter === 'all' || flat.type === typeFilter;
-const priceMatch = priceFilter === 'all' || flat.price === parseFloat(priceFilter);
+        const priceMatch = priceFilter === 'all' || flat.price === parseFloat(priceFilter);
         const statusMatch = statusFilter === 'all' || flat.status === statusFilter;
 
         const searchMatch = searchInput === '' ||
             flat.flatNo.toLowerCase().includes(searchInput) ||
             flat.floor.toString().includes(searchInput) ||
             flat.type.toLowerCase().includes(searchInput) ||
-                        flat.price.toLowerCase().includes(searchInput) ||
+            // FIX: Convert flat.price (number) to string before comparison
+            flat.price.toString().toLowerCase().includes(searchInput) ||
             flat.status.toLowerCase().includes(searchInput);
 
         return floorMatch && typeMatch && priceMatch && statusMatch && searchMatch;
@@ -103,7 +130,7 @@ function renderCurrentPage() {
     setText('flat-count', currentCount);
 }
 
-// 3. Render Table View (List)
+// 3. Render Table View (List) - UPDATED FOR NEW BUTTONS AND RESPONSIVENESS
 function renderTable(data) {
     // Replace jQuery selection and .empty()
     const tableBody = document.querySelector('#flat-inventory-table tbody');
@@ -113,7 +140,8 @@ function renderTable(data) {
     const whatsappNumber = SALES_TEAM_NUMBER;
 
     if (data.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="6" class="text-center p-4">No flats found matching your criteria.</td></tr>`;
+        // Updated colspan to 7 for the new 'Action' column
+        tableBody.innerHTML = `<tr><td colspan="7" class="text-center p-4">No flats found matching your criteria.</td></tr>`;
         return;
     }
 
@@ -131,15 +159,25 @@ function renderTable(data) {
             `Type: ${flat.type}\n` +
             `Area: ${flat.sqft} sq.ft\n` +
             `Facing: ${flat.facing}\n` +
-                        `Price: ${flat.price}\n` +
+            `Price: ${flat.price}\n` +
             `Status: ${statusText}\n` +
             `Please share the price and next steps.`
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        const btnHtml = isSold
+        // NEW: View Images Button
+        const viewBtnHtml = `
+            <button class="btn btn-info btn-sm view-flat-btn mb-1 mb-md-0" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#flatImageViewerModal"
+                    data-flat-type="${flat.type}">
+                <i class="fa-solid fa-camera"></i>
+            </button>`;
+
+        // Updated WhatsApp Button with Icon
+        const whatsappBtnHtml = isSold
             ? `<button class="btn btn-secondary btn-sm" disabled>Sold Out</button>`
-            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`;
+            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fa-brands fa-whatsapp"></i></a>`;
 
         rowsHtml += `
             <tr>
@@ -147,17 +185,16 @@ function renderTable(data) {
                 <td>${flat.floor}</td>
                 <td>${flat.type}</td>
                 <td>${sqftDisplay}</td>
-                                <td>${flat.price}</td>
-
+                <td>${flat.price}</td>
                 <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
-                <td>${btnHtml}</td>
+                <td class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">${viewBtnHtml} ${whatsappBtnHtml}</td>
             </tr>
         `;
     });
     tableBody.innerHTML = rowsHtml;
 }
 
-// 4. Render Grid View
+// 4. Render Grid View - UPDATED FOR NEW BUTTONS AND RESPONSIVENESS
 function renderGrid(data) {
     // Replace jQuery selection and .empty()
     const gridContainer = getEl('view-container-grid');
@@ -177,6 +214,7 @@ function renderGrid(data) {
         const isSold = statusText.toLowerCase() === 'sold';
         const statusBadgeClass = isSold ? "status-sold" : (statusText.toLowerCase() === 'active' ? "status-active" : "bg-secondary text-white");
         const cardStatusClass = isSold ? "flat-card-sold" : (statusText.toLowerCase() === 'active' ? "flat-card-active" : "");
+        const sqftDisplay = flat.sqft ? `${flat.sqft} sq.ft` : 'N/A';
 
         const message = encodeURIComponent(
             `I am interested in flat No. ${flat.flatNo} in the ${PROJECT_NAME} project.\n` +
@@ -185,18 +223,29 @@ function renderGrid(data) {
             `Type: ${flat.type}\n` +
             `Area: ${flat.sqft} sq.ft\n` +
             `Facing: ${flat.facing}\n` +
-                        `Price: ${flat.price}\n` +
+            `Price: ${flat.price}\n` +
             `Status: ${statusText}\n` +
             `Please share the price and next steps.`
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        const btnHtml = isSold
-            ? `<button class="btn btn-secondary btn-sm btn-block mt-3" disabled>Sold Out</button>`
-            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm btn-block mt-3"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`;
+        // NEW: View Button
+        const viewBtnHtml = `
+            <button class="btn btn-info btn-sm view-flat-btn flex-grow-1" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#flatImageViewerModal"
+                    data-flat-type="${flat.type}">
+                <i class="fa-solid fa-camera"></i> View
+            </button>`;
 
+        // Updated WhatsApp Button with Icon
+        const whatsappBtnHtml = isSold
+            ? `<button class="btn btn-secondary btn-sm flex-grow-1" disabled>Sold Out</button>`
+            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm flex-grow-1"><i class="fa-brands fa-whatsapp"></i></a>`;
+
+        // Responsive Grid Card Structure (col-12/col-sm-6/col-lg-4 makes it responsive)
         cardsHtml += `
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ftco-animate fadeInUp ftco-animated">
+            <div class="col-12 col-sm-6 col-lg-4 mb-4 ftco-animate fadeInUp ftco-animated">
                 <div class="flat-card ${cardStatusClass}">
                     <div class="flat-card-header">
                         <h5>Flat ${flat.flatNo}</h5>
@@ -213,17 +262,20 @@ function renderGrid(data) {
                         </div>
                         <div class="plot-detail-row">
                             <span class="plot-label"><i class="fa-solid fa-ruler-combined"></i> Area:</span>
-                            <span class="plot-value">${flat.sqft} sq.ft</span>
+                            <span class="plot-value">${sqftDisplay}</span>
                         </div>
                         <div class="plot-detail-row">
+                            <span class="plot-label"><i class="fa-solid fa-indian-rupee-sign"></i> Price:</span>
+                            <span class="plot-value">${flat.price}</span>
+                        </div>
+                        <div class="plot-detail-row mb-0 border-bottom-0">
                             <span class="plot-label"><i class="fa-solid fa-compass"></i> Facing:</span>
                             <span class="plot-value">${flat.facing}</span>
                         </div>
-                        <div class="plot-detail-row">
-                            <span class="plot-label"><i class="fa-solid fa-key"></i> Price:</span>
-                            <span class="plot-value">${flat.price}</span>
-                        </div>
-                        ${btnHtml}
+                    </div>
+                    <div class="flat-card-footer p-3 border-top d-flex gap-2">
+                        ${viewBtnHtml}
+                        ${whatsappBtnHtml}
                     </div>
                 </div>
             </div>
@@ -318,14 +370,13 @@ function renderPagination() {
 function initialSetup() {
     const floorFilter = getEl('flat-floor-filter');
     const typeFilter = getEl('flat-type-filter');
-        const priceFilter = getEl('flat-price-filter');
+    const priceFilter = getEl('flat-price-filter');
     const statusFilter = getEl('flat-status-filter');
 
     const floors = new Set();
     const types = new Set();
     const prices = new Set();
 
-    // Manually add options for status, or populate dynamically from data if needed
     // Re-populate Status filter options explicitly
     if (statusFilter) {
         statusFilter.insertAdjacentHTML('beforeend', '<option value="Active">Active</option>');
@@ -336,8 +387,7 @@ function initialSetup() {
     customerFlatData.forEach(flat => {
         floors.add(flat.floor.toString());
         types.add(flat.type);
-                prices.add(flat.price);
-
+        prices.add(flat.price);
     });
 
     // Populate Floor Filter
@@ -354,8 +404,8 @@ function initialSetup() {
         });
     }
 
-        if (priceFilter) {
-        Array.from(prices).sort().forEach(price => {
+    if (priceFilter) {
+        Array.from(prices).sort((a, b) => parseFloat(a) - parseFloat(b)).forEach(price => {
             priceFilter.insertAdjacentHTML('beforeend', `<option value="${price}">${price}</option>`);
         });
     }
@@ -405,7 +455,7 @@ function resetFilters() {
     if (getEl('flat-floor-filter')) getEl('flat-floor-filter').value = 'all';
     if (getEl('flat-type-filter')) getEl('flat-type-filter').value = 'all';
     if (getEl('flat-status-filter')) getEl('flat-status-filter').value = 'all';
-        if (getEl('flat-price-filter')) getEl('flat-price-filter').value = 'all';
+    if (getEl('flat-price-filter')) getEl('flat-price-filter').value = 'all';
 
     if (getEl('flat-no-filter')) getEl('flat-no-filter').value = '';
     filterAndRender();
@@ -413,7 +463,73 @@ function resetFilters() {
 
 
 // =========================================================================
+// *** NEW: FLAT IMAGE VIEWER MODAL LOGIC (FOR THE 5 IMAGES) ***
+// =========================================================================
+
+/**
+ * Renders a carousel of 5 flat images into the modal container based on the flat type.
+ * Assumes the HTML structure for a Bootstrap modal and carousel is in place:
+ * <div id="flatImageViewerModal">
+ * <h5 id="flatImageViewerTitle"></h5>
+ * <div id="flatImageCarousel" class="carousel slide" data-bs-ride="false">
+ * <div class="carousel-indicators" id="flatImageCarouselIndicators"></div>
+ * <div class="carousel-inner" id="flatImageCarouselInner"></div>
+ * * </div>
+ * </div>
+ *
+ * @param {string} flatType - The type of flat (e.g., "2 BHK").
+ */
+function renderFlatImagesViewer(flatType) {
+    const images = flatImages[flatType];
+    const modalTitleEl = document.getElementById('flatImageViewerTitle');
+    const carouselInnerEl = document.getElementById('flatImageCarouselInner');
+    const carouselIndicatorsEl = document.getElementById('flatImageCarouselIndicators');
+
+    // Handle missing or zero images
+    if (!images || images.length === 0) {
+        if (modalTitleEl) modalTitleEl.textContent = `${flatType} Flat Images`;
+        if (carouselInnerEl) carouselInnerEl.innerHTML = `<div class="p-5 text-center">No images available for ${flatType}.</div>`;
+        if (carouselIndicatorsEl) carouselIndicatorsEl.innerHTML = '';
+        return;
+    }
+
+    // Set Title
+    if (modalTitleEl) modalTitleEl.textContent = `${flatType} Flat Images (${images.length} Views)`;
+    if (carouselInnerEl) carouselInnerEl.innerHTML = '';
+    if (carouselIndicatorsEl) carouselIndicatorsEl.innerHTML = '';
+
+    let itemsHtml = '';
+    let indicatorsHtml = '';
+
+    images.forEach((img, index) => {
+        const isActive = index === 0 ? 'active' : '';
+
+        // Carousel Item (Ensuring images are responsive and contained within the modal view)
+        itemsHtml += `
+            <div class="carousel-item ${isActive} text-center">
+                <img src="${img.src}" class="d-block w-100 mx-auto" alt="${img.alt}" style="max-height: 75vh; object-fit: contain;">
+                <div class="mt-2 mb-2">
+                    <p class="mb-0 text-muted">${img.alt}</p>
+                    <span class="badge bg-primary">Image ${index + 1} of ${images.length}</span>
+                </div>
+            </div>
+        `;
+
+        // Carousel Indicator
+        indicatorsHtml += `
+            <button type="button" data-bs-target="#flatImageCarousel" data-bs-slide-to="${index}" 
+                    class="${isActive}" aria-current="${isActive ? 'true' : 'false'}" 
+                    aria-label="Slide ${index + 1}"></button>
+        `;
+    });
+
+    if (carouselInnerEl) carouselInnerEl.innerHTML = itemsHtml;
+    if (carouselIndicatorsEl) carouselIndicatorsEl.innerHTML = indicatorsHtml;
+}
+
+// =========================================================================
 // *** FLOOR PLAN VIEWER LOGIC ***
+// (Original logic from file)
 // =========================================================================
 const floorPlans = {
     "1bhk": ["images/floor-plan-1bhk-1.jpg", "images/floor-plan-1bhk-2.jpg"],
@@ -494,7 +610,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 1. Initialize Flat Inventory on DOMContentLoaded
     initialSetup();
 
-    // 2. Schedule Visit Modal Logic
+    // 2. Schedule Visit Modal Logic (unchanged)
     const visitForm = getEl('scheduleVisitForm');
     if (visitForm) {
         visitForm.addEventListener('submit', function (e) {
@@ -502,10 +618,24 @@ document.addEventListener('DOMContentLoaded', function () {
             handleScheduleVisitSubmit();
         });
     }
+    
+    // 3. NEW: Flat Image Viewer Logic (Modal population when button is clicked)
+    const flatImageViewerModal = getEl('flatImageViewerModal');
+    if (flatImageViewerModal) {
+        flatImageViewerModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            const button = event.relatedTarget; 
+            // Extract info from data-flat-type attribute
+            const flatType = button.getAttribute('data-flat-type'); 
+            // Call the render function
+            renderFlatImagesViewer(flatType);
+        });
+    }
 });
 
 // =========================================================================
 // *** WHATSAPP SUBMISSION HANDLER ***
+// (Original logic from file)
 // =========================================================================
 
 function handleScheduleVisitSubmit() {
@@ -549,6 +679,7 @@ function handleScheduleVisitSubmit() {
 }
 
 // Native JavaScript Floor Plan Logic (No jQuery as requested for this feature)
+// (Original logic from file, updated for consistency)
 
     // --- Floor Plan Data Structure (Max 5 images per plan) ---
     const floorPlanData = {
@@ -569,7 +700,7 @@ function handleScheduleVisitSubmit() {
       '3bhk': [
         { src: 'images/floorplans/3bhk_plan_1.jpg', title: '3 BHK Floor Plan - View 1 (Master Bedroom Suite)' },
         { src: 'images/floorplans/3bhk_plan_2.jpg', title: '3 BHK Floor Plan - View 2 (Kitchen & Utility)' },
-        { src: 'images/floorplans/3bhk_plan_3.jpg', title: '3 BHK Floor Plan - View 3 (Balcony View)' },
+        { src: 'images/floorplans/3bhk_plan_3.jpg', title: '3 BHK Floor Plan - View 3 (Kids/Guest Room)' },
         { src: 'images/floorplans/3bhk_plan_4.jpg', title: '3 BHK Floor Plan - View 4 (Detailed Layout)' },
         { src: 'images/floorplans/3bhk_plan_5.jpg', title: '3 BHK Floor Plan - View 5 (3D Render)' }
       ],
@@ -603,6 +734,7 @@ function handleScheduleVisitSubmit() {
 
       // 2. Build the Carousel Inner HTML
       let carouselInnerHTML = '';
+      let indicatorsHTML = '';
       images.forEach((img, index) => {
         const isActive = index === 0 ? ' active' : '';
         carouselInnerHTML += `
@@ -614,12 +746,18 @@ function handleScheduleVisitSubmit() {
                         </div>
                     </div>
                 `;
+         indicatorsHTML += `
+            <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" 
+                    class="${isActive}" aria-current="${isActive ? 'true' : 'false'}" 
+                    aria-label="Slide ${index + 1}"></button>
+        `;
       });
 
       // 3. Construct the full Carousel structure
       const fullCarouselHTML = `
                 <h4 class="text-center mb-3">${planTitle}</h4>
                 <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-indicators">${indicatorsHTML}</div>
                     <div class="carousel-inner">${carouselInnerHTML}</div>
                     
                     <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
@@ -649,7 +787,9 @@ function handleScheduleVisitSubmit() {
       const viewPlanButtons = document.querySelectorAll('.show-plan-btn');
 
       // === 1. Load Default Plan (Site Plan) on page load ===
-      renderFloorPlan('site', 'Floor and Site Plans Gallery (Default View)', 'floorPlanViewerContainer', false);
+      if (floorPlanViewerContainer) {
+        renderFloorPlan('site', 'Floor and Site Plans Gallery (Default View)', 'floorPlanViewerContainer', false);
+      }
 
       // === 2. Set up button event listeners ===
       viewPlanButtons.forEach(button => {
@@ -666,8 +806,7 @@ function handleScheduleVisitSubmit() {
 
 /**
  * EMI Calculator Logic
- * This file contains the primary function to calculate EMI 
- * and the event listeners for auto-calculation and modal display.
+ * (Original logic from file)
  */
 
 // Function to calculate the EMI

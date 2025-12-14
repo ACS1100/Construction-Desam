@@ -23,6 +23,30 @@
 
   <style>
     /* ... existing styles ... */
+    /* --- NEW: Image Viewer Modal Styling --- */
+    .flat-image-modal-img {
+        height: 70vh; /* Set a large height for the image in the viewer */
+        object-fit: contain; /* Use 'contain' to ensure the full image is visible, or 'cover' for full fill */
+        width: 100%;
+        background-color: #f8f9fa; /* Light background for 'contain' mode */
+        border-radius: 8px;
+    }
+
+    @media (max-width: 767px) {
+        .flat-image-modal-img {
+            height: 50vh; /* Shorter height on mobile */
+        }
+    }
+    
+    /* Ensure the grid is responsive on all screens */
+    #view-container-grid {
+        display: flex; /* Ensure the row is a flex container */
+    }
+
+    /* Style for the action buttons in the table to align them nicely */
+    .flat-inventory-table-custom td:last-child {
+        min-width: 200px; /* Ensure enough space for the two buttons */
+    }
 
     /* --- NEW: FIX PROJECT MEDIA CAROUSEL HEIGHT AND RESPONSIVENESS --- */
     #project-media-carousel .item img {
@@ -1031,6 +1055,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="flatImageViewerModal" tabindex="-1" aria-labelledby="flatImageViewerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="flat-image-viewer-title">Flat Images</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                
+                <div id="flatImageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        </div>
+
+                    <div class="carousel-inner" id="flat-image-carousel-inner">
+                        </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#flatImageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#flatImageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
