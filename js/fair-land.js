@@ -1,437 +1,977 @@
 // =========================================================================
-// *** HARDCODED PLOT INVENTORY DATA ***
-// This is the data used to populate the table and the dropdown filters.
-
+// *** APARTMENT Plot INVENTORY DATA ***
 const customerPlotData = [
     // CLIENT DATA HERE
     {
         "plotNo": 1,
         "facing": "North",
         "sqft": "3500",
+        "price": 4500000,
         "status": "Active"
     },
     {
         "plotNo": 2,
         "facing": "South",
         "sqft": "4500",
+        "price": 4500000,
+
         "status": "Active"
     },
     {
         "plotNo": 3,
         "facing": "East",
         "sqft": "2500",
+        "price": 4500000,
+
         "status": "Active"
     },
     {
         "plotNo": 4,
         "facing": "West",
         "sqft": "5000",
+        "price": 7500000,
+
         "status": "Sold"
     },
     {
         "plotNo": 5,
         "facing": "North",
         "sqft": "1500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 6,
         "facing": "East",
         "sqft": "4500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 7,
         "facing": "West",
         "sqft": "5000",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 8,
         "facing": "South",
         "sqft": "3500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 9,
         "facing": "North",
         "sqft": "1500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 10,
         "facing": "East",
         "sqft": "2500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 11,
         "facing": "West",
         "sqft": "3500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 12,
         "facing": "South",
         "sqft": "4500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 13,
         "facing": "North",
         "sqft": "5000",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 14,
         "facing": "East",
         "sqft": "1500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 15,
         "facing": "West",
         "sqft": "2500",
+        "price": 7500000,
+
         "status": "Sold"
     },
     {
         "plotNo": 16,
         "facing": "South",
         "sqft": "3500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 17,
         "facing": "North",
         "sqft": "4500",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 18,
         "facing": "East",
         "sqft": "5000",
+        "price": 7500000,
+
         "status": "Active"
     },
     {
         "plotNo": 19,
         "facing": "West",
         "sqft": "1500",
+        "price": 8500000,
+
         "status": "Active"
     },
     {
         "plotNo": 20,
         "facing": "South",
         "sqft": "2500",
+        "price": 9500000,
+
         "status": "Sold"
     },
 ];
 
-// --- CONFIGURATION ---
-const plotsPerPage = 24; // Lowered slightly so grid view doesn't scroll forever
-let plotData = customerPlotData;
-let filteredData = [];
+// =========================================================================
+// *** NEW: Plot IMAGE DATA (5 images per facing for viewer) ***
+// NOTE: Ensure these image paths exist, or update them.
+const plotImages = {
+    "North": [
+        { src: 'images/plot/1bhk_view_1.jpg', alt: '1 BHK Living Room' },
+        { src: 'images/plot/1bhk_view_2.jpg', alt: '1 BHK Kitchen' },
+        { src: 'images/plot/1bhk_view_3.jpg', alt: '1 BHK Bedroom' },
+        { src: 'images/plot/1bhk_view_4.jpg', alt: '1 BHK Balcony View' },
+        { src: 'images/plot/1bhk_view_5.jpg', alt: '1 BHK Bathroom' },
+    ],
+    "South": [
+        { src: 'images/plot/2bhk_view_1.jpg', alt: '2 BHK Spacious Living Area' },
+        { src: 'images/plot/2bhk_view_2.jpg', alt: '2 BHK Master Bedroom' },
+        { src: 'images/plot/2bhk_view_3.jpg', alt: '2 BHK Guest Room' },
+        { src: 'images/plot/2bhk_view_4.jpg', alt: '2 BHK Modular Kitchen' },
+        { src: 'images/plot/2bhk_view_5.jpg', alt: '2 BHK Entrance & Foyer' },
+    ],
+    "West": [
+        { src: 'images/plot/3bhk_view_1.jpg', alt: '3 BHK Premium Hall' },
+        { src: 'images/plot/3bhk_view_2.jpg', alt: '3 BHK Dining Area' },
+        { src: 'images/plot/3bhk_view_3.jpg', alt: '3 BHK Kids Room' },
+        { src: 'images/plot/3bhk_view_4.jpg', alt: '3 BHK Utility Area' },
+        { src: 'images/plot/3bhk_view_5.jpg', alt: '3 BHK View from Balcony' },
+    ],
+    "East": [
+        { src: 'images/plot/3bhk_view_1.jpg', alt: '3 BHK Premium Hall' },
+        { src: 'images/plot/3bhk_view_2.jpg', alt: '3 BHK Dining Area' },
+        { src: 'images/plot/3bhk_view_3.jpg', alt: '3 BHK Kids Room' },
+        { src: 'images/plot/3bhk_view_4.jpg', alt: '3 BHK Utility Area' },
+        { src: 'images/plot/3bhk_view_5.jpg', alt: '3 BHK View from Balcony' },
+    ],
+};
+// =========================================================================
+// *** CONFIGURATION & STATE ***
+const itemsPerPage = 5; // FIX: Changed from 12 to 5 so pagination appears with the current 8-plot dataset
 let currentPage = 1;
-let currentView = 'list'; // 'list' or 'grid'
+let totalPages = 0;
+let filteredData = [];
+
+// --- CONSTANTS ---
+const PROJECT_NAME = 'Coastal Residential Development';
+const SALES_TEAM_NUMBER = '918807344264';
 
 // --- UTILITY FUNCTIONS ---
-function getUniqueValues(data, key) {
-    if (!data || data.length === 0) return [];
-    const unique = [...new Set(data.map(item => item[key]).filter(value => value))];
-    return unique.sort();
-}
+const getEl = (id) => document.getElementById(id);
+const getValue = (id) => getEl(id) ? getEl(id).value : null;
+const setText = (id, content) => getEl(id) ? getEl(id).textContent = content : null;
 
-function populateFilters(data) {
-    const uniqueFacings = getUniqueValues(data, 'facing');
-    const $facingFilter = $('#plot-facing-filter');
-    $facingFilter.find('option:not(:first)').remove();
-    uniqueFacings.forEach(facing => {
-        $facingFilter.append(`<option value="${facing}">${facing}</option>`);
+// =========================================================================
+// *** INVENTORY LOGIC ***
+
+// 1. Filtering Logic
+function filterAndRender() {
+    // Replace jQuery .val() with native .value
+    const facingFilter = getValue('plot-facing-filter');
+    const priceFilter = getValue('plot-price-filter');
+    const statusFilter = getValue('plot-status-filter');
+    const searchInput = getValue('plot-no-filter').toLowerCase().trim();
+
+    // Determine view mode (Replace jQuery .hasClass())
+    const btnGridView = getEl('btn-view-grid');
+    const isGridView = btnGridView && btnGridView.classList.contains('active');
+    const viewMode = isGridView ? 'grid' : 'table';
+
+    filteredData = customerPlotData.filter(plot => {
+        const facingMatch = facingFilter === 'all' || plot.facing === facingFilter;
+        const priceMatch = priceFilter === 'all' || plot.price === parseFloat(priceFilter);
+        const statusMatch = statusFilter === 'all' || plot.status === statusFilter;
+
+        const searchMatch = searchInput === '' ||
+            plot.plotNo.toString().toLowerCase().includes(searchInput) ||
+            plot.facing.toLowerCase().includes(searchInput) ||
+            // FIX: Convert plot.price (number) to string before comparison
+            plot.price.toString().toLowerCase().includes(searchInput) ||
+            plot.status.toLowerCase().includes(searchInput);
+
+        return facingMatch && priceMatch && statusMatch && searchMatch;
     });
 
-    const uniqueStatuses = getUniqueValues(data, 'status');
-    const $statusFilter = $('#plot-status-filter');
-    $statusFilter.find('option:not(:first)').remove();
-    uniqueStatuses.forEach(status => {
-        $statusFilter.append(`<option value="${status}">${status}</option>`);
-    });
+    // Reset pagination and render (Replace jQuery .text())
+    currentPage = 1;
+    totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    setText('total-filtered-plots', filteredData.length);
+
+    renderCurrentPage();
+    renderPagination();
+
+    // Update view mode visibility (Replace jQuery .addClass()/.removeClass())
+    const tableView = getEl('view-container-table');
+    const gridView = getEl('view-container-grid');
+
+    if (tableView && gridView) {
+        if (viewMode === 'grid') {
+            tableView.classList.add('d-none');
+            gridView.classList.remove('d-none');
+        } else {
+            tableView.classList.remove('d-none');
+            gridView.classList.add('d-none');
+        }
+    }
 }
 
-// --- RENDERING FUNCTIONS ---
-
-// Master render function that decides which view to show
-function renderData() {
-    const startIndex = (currentPage - 1) * plotsPerPage;
-    const endIndex = startIndex + plotsPerPage;
+// 2. Rendering Logic for the Current Page
+function renderCurrentPage() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
     const pageData = filteredData.slice(startIndex, endIndex);
 
-    // Update Counts
-    const totalFiltered = filteredData.length;
-    const plotsShown = pageData.length;
-    const startPlot = totalFiltered > 0 ? startIndex + 1 : 0;
-    const endPlot = totalFiltered > 0 ? startIndex + plotsShown : 0;
-    $('#plot-count').text(startPlot + " - " + endPlot);
-    $('#total-filtered-plots').text(totalFiltered);
+    const btnGridView = getEl('btn-view-grid');
+    const viewMode = btnGridView && btnGridView.classList.contains('active') ? 'grid' : 'table';
 
-    // Render appropriate view
-    if (currentView === 'list') {
-        $('#view-container-table').removeClass('d-none');
-        $('#view-container-grid').addClass('d-none');
+    if (viewMode === 'table') {
         renderTable(pageData);
     } else {
-        $('#view-container-table').addClass('d-none');
-        $('#view-container-grid').removeClass('d-none');
         renderGrid(pageData);
     }
 
-    renderPagination();
+    // Update plot count display
+    const currentCount = pageData.length > 0 ? `${startIndex + 1}-${Math.min(endIndex, filteredData.length)}` : '0';
+    setText('plot-count', currentCount);
 }
 
-// 1. Render Table View
+// 3. Render Table View (List) - UPDATED FOR ICON-ONLY BUTTONS
 function renderTable(data) {
-    const $tableBody = $('#plot-inventory-table tbody');
-    $tableBody.empty();
+    // Replace jQuery selection and .empty()
+    const tableBody = document.querySelector('#plot-inventory-table tbody');
+    if (!tableBody) return;
+    tableBody.innerHTML = '';
 
-    // *** CONFIGURATION: REPLACE THIS NUMBER ***
-    const whatsappNumber = '918807344264'; // Your 10-digit number including country code (e.g., 91xxxxxxxxxx)
-    // *****************************************
+    const whatsappNumber = SALES_TEAM_NUMBER;
 
     if (data.length === 0) {
-        // Note: Colspan is updated to 5 for the new column
-        $tableBody.append(`<tr><td colspan="5" class="text-center p-4">No plots found matching your criteria.</td></tr>`);
+        // Updated colspan to 7 for the new 'Action' column
+        tableBody.innerHTML = `<tr><td colspan="7" class="text-center p-4">No plots found matching your criteria.</td></tr>`;
         return;
     }
 
+    let rowsHtml = '';
     data.forEach(plot => {
-        const sqftDisplay = plot.sqft ? `${plot.sqft} sqft` : '-';
-        const statusText = plot.status ? plot.status : 'Unknown';
+        const statusText = plot.status || 'Unknown';
         const isSold = statusText.toLowerCase() === 'sold';
-        // Using existing Bootstrap classes for status badges in the table
-        const badgeClass = isSold ? "badge-danger" : "badge-success";
+        const sqftDisplay = plot.sqft ? `${plot.sqft} sq.ft` : 'N/A';
 
-        // 1. Construct the pre-filled WhatsApp message
+        // Set Bootstrap 5 badge class based on status
+        let badgeClass;
+        if (isSold) {
+            badgeClass = "bg-danger"; // Sold: Red/Danger
+        } else if (statusText.toLowerCase() === 'active') {
+            badgeClass = "bg-success"; // Active: Green/Success
+        } else {
+            badgeClass = "bg-warning text-dark"; // Hold: Yellow/Warning
+        }
+
+        // WhatsApp Message content
         const message = encodeURIComponent(
-            `I am interested in Plot No. ${plot.plotNo} in the Fair Land project.\n` +
+            `I am interested in plot No. ${plot.plotNo} in the ${PROJECT_NAME} project.\n` +
             `Details:\n` +
-            `Area: ${plot.sqft} sq.ft\n` +
             `Facing: ${plot.facing}\n` +
+            `Area: ${plot.sqft} sq.ft\n` +
+            `Price: ${plot.price}\n` +
             `Status: ${statusText}\n` +
             `Please share the price and next steps.`
         );
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        // 2. WhatsApp icon HTML (Green for Active, Grey for Sold)
-        const whatsappIcon = isSold
-            // Disabled/Sold icon (greyed out)
-            ? `<span class="text-secondary" title="Sold Out"><i class="fa-brands fa-whatsapp fa-xl"></i></span>`
-            // Active plot icon (green and clickable)
-            : `<a href="${whatsappUrl}" target="_blank" class="text-success" title="WhatsApp Inquiry"><i class="fa-brands fa-whatsapp fa-xl"></i></a>`;
+        let viewBtnHtml;
+        let whatsappBtnHtml;
 
+        if (isSold) {
+            // Disabled state for Sold plots (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Plot is Sold: View Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </button>`;
 
-        const row = `
+            whatsappBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Plot is Sold: Contact Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-brands fa-whatsapp fa-xl"></i>
+                </button>`;
+        } else {
+            // Active state (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-info btn-sm view-plot-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#plotImageViewerModal"
+                        data-bs-placement="top"
+                        title="View Plot Images"
+                        data-plot-facing="${plot.facing}">
+                    <i class="fa-solid fa-camera"></i>
+                </button>`;
+
+            // Using btn-success for WhatsApp, icon-only, for a modern look
+            whatsappBtnHtml = `<a href="${whatsappUrl}" target="_blank" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Contact on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>`;
+        }
+
+        // Price display style
+        const priceClass = isSold ? 'text-decoration-line-through text-danger' : 'fw-bold text-success';
+
+        rowsHtml += `
             <tr>
-                <td>${plot.plotNo || '-'}</td>
-                <td>${plot.facing || '-'}</td>
+                <td>${plot.plotNo}</td> 
+                <td>${plot.facing}</td>
                 <td>${sqftDisplay}</td>
-                <td><span class="badge ${badgeClass} p-2">${statusText}</span></td>
-                <td class="text-center">${whatsappIcon}</td>
+                <td><span class="${priceClass}">${plot.price}</span></td>
+                <td><span class="badge ${badgeClass} text-uppercase">${statusText}</span></td>
+                <td class="text-center gap-2">${viewBtnHtml} ${whatsappBtnHtml}</td>
             </tr>
         `;
-        $tableBody.append(row);
     });
+    tableBody.innerHTML = rowsHtml;
 }
 
-
-// 2. Render Grid (Card) View
+// 4. Render Grid View - UPDATED FOR ICON-ONLY BUTTONS
 function renderGrid(data) {
-    const $gridContainer = $('#view-container-grid');
-    $gridContainer.empty();
+    // Replace jQuery selection and .empty()
+    const gridContainer = getEl('view-container-grid');
+    if (!gridContainer) return;
+    gridContainer.innerHTML = '';
+
+    const whatsappNumber = SALES_TEAM_NUMBER;
 
     if (data.length === 0) {
-        $gridContainer.append(`<div class="col-12 text-center p-5"><h4>No plots found matching your criteria.</h4></div>`);
+        gridContainer.innerHTML = `<div class="col-12"><div class="alert alert-info text-center">No plots found matching your criteria.</div></div>`;
         return;
     }
 
-    // *** CONFIGURATION: REPLACE THIS NUMBER ***
-    const whatsappNumber = '918807344264'; // Your 10-digit number including country code (e.g., 91xxxxxxxxxx)
-    // *****************************************
-
+    let cardsHtml = '';
     data.forEach(plot => {
-        const statusText = plot.status ? plot.status : 'Unknown';
+        const statusText = plot.status || 'Unknown';
         const isSold = statusText.toLowerCase() === 'sold';
+        const sqftDisplay = plot.sqft ? `${plot.sqft} sq.ft` : 'N/A';
 
-        const statusBadgeClass = isSold ? 'status-sold' : 'status-active';
-        const cardStatusClass = isSold ? 'plot-card-sold' : 'plot-card-active';
+        // Set Bootstrap 5 badge class based on status
+        let statusBadgeClass;
+        let cardStatusClass;
+        if (isSold) {
+            statusBadgeClass = "bg-danger"; // Sold: Red/Danger
+            cardStatusClass = "plot-card-sold";
+        } else if (statusText.toLowerCase() === 'active') {
+            statusBadgeClass = "bg-success"; // Active: Green/Success
+            cardStatusClass = "plot-card-active";
+        } else {
+            statusBadgeClass = "bg-warning text-dark"; // Hold: Yellow/Warning
+            cardStatusClass = "";
+        }
 
-        // Construct the pre-filled WhatsApp message
         const message = encodeURIComponent(
-            `I am interested in Plot No. ${plot.plotNo} in the Fair Land project.\n` +
+            `I am interested in plot No. ${plot.plotNo} in the ${PROJECT_NAME} project.\n` +
             `Details:\n` +
-            `Area: ${plot.sqft} sq.ft\n` +
             `Facing: ${plot.facing}\n` +
+            `Area: ${plot.sqft} sq.ft\n` +
+            `Price: ${plot.price}\n` +
             `Status: ${statusText}\n` +
             `Please share the price and next steps.`
         );
-
-        // Construct the WhatsApp URL
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-        // Dynamic Button based on status
-        const btnHtml = isSold
-            ? `<button class="btn btn-secondary btn-sm btn-block mt-3" disabled>Sold Out</button>`
-            // CHANGED: Class is now btn-whatsapp
-            : `<a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-sm btn-block mt-3"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`;
+        let viewBtnHtml;
+        let whatsappBtnHtml;
 
-        const cardHtml = `
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ftco-animate fadeInUp ftco-animated">
+        if (isSold) {
+            // Disabled state for Sold plots (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Plot is Sold: View Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </button>`;
+
+            whatsappBtnHtml = `
+                <button class="btn btn-secondary btn-sm disabled" disabled title="Plot is Sold: Contact Disabled" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>`;
+        } else {
+            // Active state (ICON-ONLY)
+            viewBtnHtml = `
+                <button class="btn btn-info btn-sm view-plot-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#plotImageViewerModal"
+                        data-bs-placement="top"
+                        title="View Plot Images"
+                        data-plot-facing="${plot.facing}">
+                    <i class="fa-solid fa-camera"></i>
+                </button>`;
+
+            // Using btn-success for WhatsApp, icon-only.
+            whatsappBtnHtml = `<a href="${whatsappUrl}" target="_blank" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Contact on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>`;
+        }
+
+        // Price display style
+        const priceClass = isSold ? 'text-decoration-line-through text-danger' : 'fw-bold text-success';
+
+        // Responsive Grid Card Structure (col-12/col-sm-6/col-lg-4 makes it responsive)
+        cardsHtml += `
+            <div class="col-12 col-sm-6 col-lg-4 mb-4 ftco-animate fadeInUp ftco-animated">
                 <div class="plot-card ${cardStatusClass}">
                     <div class="plot-card-header">
                         <h5>Plot ${plot.plotNo}</h5>
-                        <span class="status-badge ${statusBadgeClass}">${statusText}</span>
+                        <span class="badge ${statusBadgeClass} text-uppercase">${statusText}</span>
                     </div>
                     <div class="plot-card-body">
-                        
                         <div class="plot-detail-row">
-                            <span class="plot-label"><i class="fa-solid fa-compass"></i> Facing</span>
+                            <span class="plot-label"><i class="fa-solid fa-key"></i> Facing:</span>
                             <span class="plot-value">${plot.facing}</span>
                         </div>
-                        
                         <div class="plot-detail-row">
-                            <span class="plot-label"><i class="fa-solid fa-ruler-combined"></i> Area</span>
-                            <span class="plot-value">${plot.sqft} Sq.ft</span>
+                            <span class="plot-label"><i class="fa-solid fa-ruler-combined"></i> Area:</span>
+                            <span class="plot-value">${sqftDisplay}</span>
                         </div>
-                        
-                        ${btnHtml}
+                        <div class="plot-detail-row">
+                            <span class="plot-label"><i class="fa-solid fa-indian-rupee-sign"></i> Price:</span>
+                            <span class="plot-value ${priceClass}">${plot.price}</span>
+                        </div>
+                    </div>
+                    <div class="plot-card-footer p-3 border-top d-flex justify-content-center gap-2">
+                        ${viewBtnHtml}
+                        ${whatsappBtnHtml}
                     </div>
                 </div>
             </div>
         `;
-        $gridContainer.append(cardHtml);
     });
+    gridContainer.innerHTML = cardsHtml;
 }
 
+// 5. Pagination Logic
 function renderPagination() {
-    const totalPages = Math.ceil(filteredData.length / plotsPerPage);
-    const $pagination = $('#plot-pagination');
-    $pagination.empty();
+    const paginationEl = getEl('plot-pagination');
+    if (!paginationEl) return;
+    paginationEl.innerHTML = '';
 
-    if (totalPages <= 1) return;
+    if (totalPages <= 1) {
+        return;
+    }
 
-    // Previous
-    $pagination.append(`
-        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a>
-        </li>
-    `);
-
-    // Smart Pagination Window
     const maxPagesToShow = 5;
-    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    let startPage;
+    let endPage;
 
-    if (endPage - startPage < maxPagesToShow - 1) {
-        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    if (totalPages <= maxPagesToShow) {
+        // less than max pages so show all
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        // more than max pages so calculate start and end pages
+        if (currentPage <= Math.ceil(maxPagesToShow / 2)) {
+            startPage = 1;
+            endPage = maxPagesToShow;
+        } else if (currentPage + Math.floor(maxPagesToShow / 2) >= totalPages) {
+            startPage = totalPages - maxPagesToShow + 1;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - Math.floor(maxPagesToShow / 2);
+            endPage = currentPage + Math.floor(maxPagesToShow / 2);
+        }
     }
 
+    let paginationHtml = '';
+
+    // Previous button
+    paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage - 1}">Prev</a></li>`;
+
+    // First page button (if needed)
     if (startPage > 1) {
-        $pagination.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
+        paginationHtml += `<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>`;
+        if (startPage > 2) {
+            paginationHtml += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        }
     }
 
+    // Page number buttons
     for (let i = startPage; i <= endPage; i++) {
-        $pagination.append(`
-            <li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#" data-page="${i}">${i}</a>
-            </li>
-        `);
+        paginationHtml += `<li class="page-item ${currentPage === i ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
     }
 
+    // Last page button (if needed)
     if (endPage < totalPages) {
-        $pagination.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
+        if (endPage < totalPages - 1) {
+            paginationHtml += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        }
+        paginationHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
     }
 
-    // Next
-    $pagination.append(`
-        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-            <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
-        </li>
-    `);
+    // Next button
+    paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage + 1}">Next</a></li>`;
+
+    paginationEl.innerHTML = paginationHtml;
+
+    // Bind event listeners to new page links
+    paginationEl.querySelectorAll('.page-link').forEach(link => {
+        if (!link.parentNode.classList.contains('disabled')) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const newPage = parseInt(this.getAttribute('data-page'));
+                if (newPage > 0 && newPage <= totalPages) {
+                    currentPage = newPage;
+                    renderCurrentPage();
+                    renderPagination();
+                    // Scroll to inventory section
+                    const inventory = getEl('plot-inventory-section');
+                    if (inventory) inventory.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+    });
 }
 
-// --- EVENT HANDLERS ---
+// 6. Initial Setup: Populate filters and render initial inventory
+function initialSetup() {
+    const facingFilter = getEl('plot-facing-filter');
+    const priceFilter = getEl('plot-price-filter');
+    const statusFilter = getEl('plot-status-filter');
 
-// 1. Pagination Click
-$('#plot-pagination').on('click', 'a.page-link', function (e) {
-    e.preventDefault();
-    const totalPages = Math.ceil(filteredData.length / plotsPerPage);
-    const newPage = parseInt($(this).data('page'));
+    const facings = new Set();
+    const prices = new Set();
 
-    if (newPage > 0 && newPage <= totalPages) {
-        currentPage = newPage;
-        renderData();
-        // Smooth scroll to top of section
-        $('html, body').animate({
-            scrollTop: $('.ftco-section').offset().top - 50
-        }, 500);
+    // Re-populate Status filter options explicitly
+    if (statusFilter) {
+        statusFilter.insertAdjacentHTML('beforeend', '<option value="Active">Active</option>');
+        statusFilter.insertAdjacentHTML('beforeend', '<option value="Hold">Hold</option>');
+        statusFilter.insertAdjacentHTML('beforeend', '<option value="Sold">Sold</option>');
     }
-});
 
-// 2. View Toggle Click
-$('#btn-view-list').click(function () {
-    if (currentView !== 'list') {
-        currentView = 'list';
-        $(this).addClass('active');
-        $('#btn-view-grid').removeClass('active');
-        renderData();
-    }
-});
-
-$('#btn-view-grid').click(function () {
-    if (currentView !== 'grid') {
-        currentView = 'grid';
-        $(this).addClass('active');
-        $('#btn-view-list').removeClass('active');
-        renderData();
-    }
-});
-
-// 3. Filters
-function applyFilters() {
-    const selectedFacing = $('#plot-facing-filter').val();
-    const selectedStatus = $('#plot-status-filter').val();
-    const plotNoSearch = $('#plot-no-filter').val().trim();
-    const plotNoInt = parseInt(plotNoSearch);
-    const isValidPlotNoSearch = plotNoSearch !== '' && !isNaN(plotNoInt);
-
-    filteredData = plotData.filter(plot => {
-        const matchesFacing = selectedFacing === 'all' || plot.facing === selectedFacing;
-        const matchesStatus = selectedStatus === 'all' || plot.status === selectedStatus;
-        const matchesPlotNo = !isValidPlotNoSearch || plot.plotNo === plotNoInt;
-        return matchesFacing && matchesStatus && matchesPlotNo;
+    customerPlotData.forEach(plot => {
+        facings.add(plot.facing);
+        prices.add(plot.price);
     });
 
-    currentPage = 1;
-    renderData();
+    // Populate Facing Filter
+    if (facingFilter) {
+        Array.from(facings).sort().forEach(facing => {
+            facingFilter.insertAdjacentHTML('beforeend', `<option value="${facing}">${facing}</option>`);
+        });
+    }
+
+    if (priceFilter) {
+        Array.from(prices).sort((a, b) => parseFloat(a) - parseFloat(b)).forEach(price => {
+            priceFilter.insertAdjacentHTML('beforeend', `<option value="${price}">${price}</option>`);
+        });
+    }
+
+    // *** FIX: SET INITIAL TOTAL Plot COUNT HERE ***
+    setText('total-initial-plots', customerPlotData.length);
+    // **********************************************
+
+
+    // Bind filter change events
+    const filterInputs = ['plot-facing-filter', 'plot-price-filter', 'plot-status-filter', 'plot-no-filter'];
+    filterInputs.forEach(id => {
+        const el = getEl(id);
+        if (el) el.addEventListener(el.tagName === 'INPUT' ? 'keyup' : 'change', filterAndRender);
+    });
+
+    // Bind the reset button
+    const resetBtn = getEl('reset-filters');
+    if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+
+    // 5. Bind the view toggle buttons
+    const btnList = getEl('btn-view-list');
+    const btnGrid = getEl('btn-view-grid');
+    const tableView = getEl('view-container-table');
+    const gridView = getEl('view-container-grid');
+
+    if (btnList && btnGrid && tableView && gridView) {
+        btnList.addEventListener('click', function () {
+            this.classList.add('active');
+            btnGrid.classList.remove('active');
+            tableView.classList.remove('d-none');
+            gridView.classList.add('d-none');
+            renderCurrentPage();
+        });
+
+        btnGrid.addEventListener('click', function () {
+            this.classList.add('active');
+            btnList.classList.remove('active');
+            tableView.classList.add('d-none');
+            gridView.classList.remove('d-none');
+            renderCurrentPage();
+        });
+    }
+
+    // 6. Initial load of data
+    filterAndRender();
 }
 
-$('#plot-facing-filter, #plot-status-filter').on('change', applyFilters);
-$('#plot-no-filter').on('input', applyFilters);
+// 7. Reset Filters Function
+function resetFilters() {
+    if (getEl('plot-facing-filter')) getEl('plot-facing-filter').value = 'all';
+    if (getEl('plot-status-filter')) getEl('plot-status-filter').value = 'all';
+    if (getEl('plot-price-filter')) getEl('plot-price-filter').value = 'all';
 
-$('#reset-filters').on('click', function () {
-    $('#plot-no-filter').val('');
-    $('#plot-facing-filter').val('all');
-    $('#plot-status-filter').val('all');
-    applyFilters();
+    if (getEl('plot-no-filter')) getEl('plot-no-filter').value = '';
+    filterAndRender();
+}
+
+
+// =========================================================================
+// *** NEW: PLOT IMAGE VIEWER MODAL LOGIC (FOR THE 5 IMAGES) ***
+// =========================================================================
+
+/**
+ * Renders a carousel of 5 plot images into the modal container based on the plot facing.
+ * Assumes the HTML structure for a Bootstrap modal and carousel is in place:
+ * <div id="plotImageViewerModal">
+ * <h5 id="plot-image-viewer-title"></h5> <--- FIX: Corrected ID
+ * <div id="plotImageCarousel" class="carousel slide" data-bs-ride="false">
+ * <div class="carousel-indicators" id="plotImageCarouselIndicators"></div>
+ * <div class="carousel-inner" id="plot-image-carousel-inner"></div> <--- FIX: Corrected ID
+ * * </div>
+ * </div>
+ *
+ * @param {string} plotFacing - The facing of plot (e.g., "2 BHK").
+ */
+function renderplotImagesViewer(plotFacing) {
+    const images = plotImages[plotFacing];
+    const modalTitleEl = document.getElementById('plot-image-viewer-title'); // FIX: Use correct ID
+    const carouselInnerEl = document.getElementById('plot-image-carousel-inner'); // FIX: Use correct ID
+    const carouselIndicatorsEl = document.getElementById('plotImageCarouselIndicators');
+
+    // Handle missing or zero images
+    if (!images || images.length === 0) {
+        if (modalTitleEl) modalTitleEl.textContent = `${plotFacing} Plot Images`;
+        if (carouselInnerEl) carouselInnerEl.innerHTML = `<div class="p-5 text-center">No images available for ${plotFacing}.</div>`;
+        if (carouselIndicatorsEl) carouselIndicatorsEl.innerHTML = '';
+        return;
+    }
+
+    // Set Title
+    if (modalTitleEl) modalTitleEl.textContent = `${plotFacing} Plot Images (${images.length} Views)`;
+    if (carouselInnerEl) carouselInnerEl.innerHTML = '';
+    if (carouselIndicatorsEl) carouselIndicatorsEl.innerHTML = '';
+
+    let itemsHtml = '';
+    let indicatorsHtml = '';
+
+    images.forEach((img, index) => {
+        const isActive = index === 0 ? 'active' : '';
+
+        // Carousel Item (Ensuring images are responsive and contained within the modal view)
+        itemsHtml += `
+            <div class="carousel-item ${isActive} text-center">
+                <img src="${img.src}" class="d-block w-100 mx-auto" alt="${img.alt}" style="max-height: 75vh; object-fit: contain;">
+                <div class="mt-2 mb-2">
+                    <p class="mb-0 text-muted">${img.alt}</p>
+                    <span class="badge bg-primary">Image ${index + 1} of ${images.length}</span>
+                </div>
+            </div>
+        `;
+
+        // Carousel Indicator
+        indicatorsHtml += `
+            <button type="button" data-bs-target="#plotImageCarousel" data-bs-slide-to="${index}" 
+                    class="${isActive}" aria-current="${isActive ? 'true' : 'false'}" 
+                    aria-label="Slide ${index + 1}"></button>
+        `;
+    });
+
+    if (carouselInnerEl) carouselInnerEl.innerHTML = itemsHtml;
+    if (carouselIndicatorsEl) carouselIndicatorsEl.innerHTML = indicatorsHtml;
+}
+
+// =========================================================================
+// *** Plot PLAN VIEWER LOGIC ***
+// (Original logic from file)
+// =========================================================================
+const plotPlans = {
+    "1bhk": ["images/plot-plan-1bhk-1.jpg", "images/plot-plan-1bhk-2.jpg"],
+    "2bhk": ["images/plot-plan-2bhk-1.jpg", "images/plot-plan-2bhk-2.jpg", "images/plot-plan-2bhk-3.jpg"],
+    "3bhk": ["images/plot-plan-3bhk-1.jpg", "images/plot-plan-3bhk-2.jpg"],
+};
+
+function renderPlotPlan(planId, title, containerId, autoScroll = false) {
+    const plans = plotPlans[planId] || [];
+    const container = getEl(containerId);
+
+    if (!container) return;
+
+    // Update the title
+    const titleEl = getEl('plotPlanViewerTitle');
+    if (titleEl) titleEl.textContent = title;
+
+    if (plans.length === 0) {
+        container.innerHTML = `<div class="alert alert-warning text-center">No plot plans available for ${planId.toUpperCase()} yet.</div>`;
+        return;
+    }
+
+    let carouselIndicators = '';
+    let carouselItems = '';
+
+    plans.forEach((planUrl, index) => {
+        const isActive = index === 0 ? 'active' : '';
+
+        // Indicators
+        carouselIndicators += `
+            <button type="button" data-bs-target="#plotPlanCarousel" data-bs-slide-to="${index}" 
+                    class="${isActive}" aria-current="${isActive ? 'true' : 'false'}" 
+                    aria-label="Slide ${index + 1}"></button>
+        `;
+
+        // Carousel Items
+        carouselItems += `
+            <div class="carousel-item ${isActive}">
+                <img src="${planUrl}" class="d-block w-100" alt="plot Plan ${index + 1}">
+            </div>
+        `;
+    });
+
+    // Full Carousel HTML Structure
+    container.innerHTML = `
+        <div id="plotPlanCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                ${carouselIndicators}
+            </div>
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#plotPlanCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#plotPlanCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+
+    if (autoScroll) {
+        // Scroll to the viewer
+        container.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+// Made renderPlotPlan globally available for HTML inline script to call
+window.renderPlotPlan = renderPlotPlan;
+
+
+// =========================================================================
+// *** MODAL AND INITIALIZATION HOOKS ***
+// =========================================================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Initialize Plot Inventory on DOMContentLoaded
+    initialSetup();
+
+    // 2. Schedule Visit Modal Logic (unchanged)
+    const visitForm = getEl('scheduleVisitForm');
+    if (visitForm) {
+        visitForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            handleScheduleVisitSubmit();
+        });
+    }
+
+    // 3. NEW: Plot Image Viewer Logic (Modal population when button is clicked)
+    const plotImageViewerModal = getEl('plotImageViewerModal');
+    if (plotImageViewerModal) {
+        plotImageViewerModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Extract info from data-plot-facing attribute
+            const plotFacing = button.getAttribute('data-plot-facing');
+            // Call the render function
+            renderplotImagesViewer(plotFacing);
+        });
+    }
 });
 
-// --- INITIALIZATION ---
-if (plotData && plotData.length > 0) {
-    $('#total-initial-plots').text(plotData.length);
-    populateFilters(plotData);
-    applyFilters(); // Triggers initial render
-} else {
-    $('#plot-inventory-table tbody').html('<tr><td colspan="4">Data Missing.</td></tr>');
+// =========================================================================
+// *** WHATSAPP SUBMISSION HANDLER ***
+// (Original logic from file)
+// =========================================================================
+
+function handleScheduleVisitSubmit() {
+    const name = getValue('visitorName');
+    const phone = getValue('visitorPhone');
+    const date = getValue('visitDate');
+    const time = getValue('visitTime');
+
+    if (!name || !phone) {
+        alert('Please enter your Name and Contact Number.');
+        return;
+    }
+
+    let whatsappMessage = `*New Site Visit Request (${PROJECT_NAME})*\n\n`;
+    whatsappMessage += `*Project:* ${PROJECT_NAME}\n`;
+    whatsappMessage += `*Visitor Name:* ${name}\n`;
+    whatsappMessage += `*Contact No.:* ${phone}\n`;
+
+    if (date || time) {
+        whatsappMessage += `\n*Preferred Schedule:*\n`;
+        whatsappMessage += `  - Date: ${date ? date : 'Not Specified'}\n`;
+        whatsappMessage += `  - Time: ${time ? time : 'Not Specified'}\n`;
+    } else {
+        whatsappMessage += `\n_The visitor is flexible. Please contact them to schedule._\n`;
+    }
+
+    whatsappMessage += `\n*Source:* Website - ${PROJECT_NAME} Project Page`;
+
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappLink = `https://wa.me/${SALES_TEAM_NUMBER}?text=${encodedMessage}`;
+
+    window.open(whatsappLink, '_blank');
+
+    // NATIVE BOOTSTRAP 5 MODAL HIDE
+    const visitModalEl = getEl('scheduleVisitModal');
+    // Ensure Bootstrap's JS object is loaded before trying to access it
+    if (typeof bootstrap !== 'undefined' && visitModalEl) {
+        const modalInstance = bootstrap.Modal.getInstance(visitModalEl) || new bootstrap.Modal(visitModalEl);
+        modalInstance.hide();
+    }
 }
 
-// --- EMI CALCULATOR LOGIC (Kept as is) ---
+// Native JavaScript Plot Plan Logic (No jQuery as requested for this feature)
+// (Original logic from file, updated for consistency)
+
+// --- Plot Plan Data Structure (Max 5 images per plan) ---
+const plotPlanData = {
+    'site': [
+        { src: 'images/image_1.jpg', title: 'Plot and Site Plans Gallery - View 1 (Overall Layout)' },
+        { src: 'images/image_2.jpg', title: 'Plot and Site Plans Gallery - View 2 (Tower A & B)' },
+        { src: 'images/image_3.jpg', title: 'Plot and Site Plans Gallery - View 3 (Amenities Location)' },
+        { src: 'images/image_4.jpg', title: 'Plot and Site Plans Gallery - View 4 (Parking Layout)' },
+        { src: 'images/image_5.jpg', title: 'Plot and Site Plans Gallery - View 5 (Detailed Building View)' }
+    ]
+};
+
+// Central function to render the carousel into the container
+function renderPlotPlan(planId, planTitle, containerId, shouldScroll = false) {
+    const container = document.getElementById(containerId);
+    const images = plotPlanData[planId];
+    const carouselId = `planCarousel-${planId}`; // Unique ID for the carousel
+
+    // 1. Check for data and handle empty case
+    if (!images || images.length === 0) {
+        container.innerHTML = `<h4 class="text-center mb-3 text-danger">${planTitle}</h4><div class="text-center p-5">No plans available for this unit type.</div>`;
+        return;
+    }
+
+    // 2. Build the Carousel Inner HTML
+    let carouselInnerHTML = '';
+    let indicatorsHTML = '';
+    images.forEach((img, index) => {
+        const isActive = index === 0 ? ' active' : '';
+        carouselInnerHTML += `
+                    <div class="carousel-item${isActive} text-center">
+                        <img class="d-block mx-auto img-fluid" src="${img.src}" alt="${img.title}">
+                        <div class="mt-3 mb-2">
+                            <p class="mb-0 text-muted">${img.title}</p>
+                            <span class="badge bg-primary">Image ${index + 1} of ${images.length}</span>
+                        </div>
+                    </div>
+                `;
+        indicatorsHTML += `
+            <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" 
+                    class="${isActive}" aria-current="${isActive ? 'true' : 'false'}" 
+                    aria-label="Slide ${index + 1}"></button>
+        `;
+    });
+
+    // 3. Construct the full Carousel structure
+    const fullCarouselHTML = `
+                <h4 class="text-center mb-3">${planTitle}</h4>
+                <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-indicators">${indicatorsHTML}</div>
+                    <div class="carousel-inner">${carouselInnerHTML}</div>
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </div>
+            `;
+
+    // 4. Inject Content
+    container.innerHTML = fullCarouselHTML;
+
+    // 5. Scroll (if triggered by a button click)
+    if (shouldScroll) {
+        container.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const plotPlanViewerContainer = document.getElementById('plotPlanViewerContainer');
+    const viewPlanButtons = document.querySelectorAll('.show-plan-btn');
+
+    // === 1. Load Default Plan (Site Plan) on page load ===
+    if (plotPlanViewerContainer) {
+        renderPlotPlan('site', 'Plot and Site Plans Gallery (Default View)', 'plotPlanViewerContainer', false);
+    }
+
+    // === 2. Set up button event listeners ===
+    viewPlanButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const planId = this.getAttribute('data-plan-id');
+            const planTitle = this.getAttribute('data-plan-title');
+
+            // Render the selected plan and scroll to it
+            renderPlotPlan(planId, planTitle, 'plotPlanViewerContainer', true);
+        });
+    });
+});
+
+// --- EMI CALCULATOR LOGIC (Kept as is - pure JS functions) ---
 function calculateEMI(P, R, N) {
     const r = (R / 12) / 100;
     const n = N * 12;
@@ -463,95 +1003,9 @@ function displayEmiDetails() {
     emiSummaryElement.innerHTML = `For ${formatCurrency(P)} @ ${R.toFixed(2)}% over ${N} years.<br>Total Interest: ${formatCurrency(totalInterest.toFixed(0))}`;
 }
 
-$('#emiModal').on('show.bs.modal', function () {
-    if (!document.getElementById('loanAmountInput').value) document.getElementById('loanAmountInput').value = 1500000;
-    displayEmiDetails();
-});
-
 /*
  * Schedule Site Visit via WhatsApp Script
  * File: js/schedule-visit.js
+ * * NOTE: All remaining jQuery/conflicting code for EMI and Schedule Visit 
+ * has been moved to main.js for proper execution within the jQuery environment.
  */
-
-// --- SCHEDULE VISIT PRE-FILL LOGIC (ADDED) ---
-
-/**
- * Gets the current date and time formatted for HTML input types 'date' and 'time'.
- */
-function getCurrentDateTime() {
-    const now = new Date();
-    // Get date in YYYY-MM-DD format (required by HTML <input type="date">)
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const currentDate = `${year}-${month}-${day}`;
-
-    // Get time in HH:MM format (24-hour, required by HTML <input type="time">)
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const currentTime = `${hours}:${minutes}`;
-
-    return { currentDate, currentTime };
-}
-
-// Use the Bootstrap Modal 'show' event to set the current date/time
-$('#scheduleVisitModal').on('show.bs.modal', function () {
-    const { currentDate, currentTime } = getCurrentDateTime();
-
-    // Pre-fill the date and time inputs with current values
-    $('#visitDate').val(currentDate);
-    $('#visitTime').val(currentTime);
-});
-
-
-$(document).ready(function () {
-    const SALES_TEAM_NUMBER = '918807344264'; // Replace with your sales team's WhatsApp number (country code + number, no spaces or symbols)
-    const PROJECT_NAME = 'Fair Land - Ayyankottai, Madurai';
-    // Removed the problematic line that was calling getCurrentDateTime() here.
-    
-    $('#scheduleVisitForm').on('submit', function (e) {
-        e.preventDefault();
-
-        // 1. Get form data
-        const name = $('#visitorName').val().trim();
-        const phone = $('#visitorPhone').val().trim();
-        const date = $('#visitDate').val();
-        const time = $('#visitTime').val();
-
-        // 2. Simple Validation
-        if (!name || !phone) {
-            alert('Please enter your Full Name and WhatsApp Phone Number.');
-            return;
-        }
-
-        // 3. Construct the message
-        let whatsappMessage = `*New Site Visit Request (Fair Land)*\n\n`;
-        whatsappMessage += `*Project:* ${PROJECT_NAME}\n`;
-        whatsappMessage += `*Visitor Name:* ${name}\n`;
-        whatsappMessage += `*Contact No.:* ${phone}\n`;
-
-        if (date || time) {
-            whatsappMessage += `\n*Preferred Schedule:*\n`;
-            whatsappMessage += `  - Date: ${date ? date : 'Not Specified'}\n`;
-            whatsappMessage += `  - Time: ${time ? time : 'Not Specified'}\n`;
-        } else {
-            whatsappMessage += `\n_The visitor is flexible. Please contact them to schedule._\n`;
-        }
-
-        whatsappMessage += `\n*Source:* Website - Fair Land Project Page`;
-
-
-        // 4. Encode the message and create the WhatsApp link
-        const encodedMessage = encodeURIComponent(whatsappMessage);
-        const whatsappLink = `https://wa.me/${SALES_TEAM_NUMBER}?text=${encodedMessage}`;
-
-        // 5. Open the link in a new tab (or the current tab on mobile)
-        window.open(whatsappLink, '_blank');
-
-        // Optional: Close the modal after submission attempt
-        $('#scheduleVisitModal').modal('hide');
-
-        // Optional: Show a confirmation message (can be refined with a better UI/Toast)
-        // alert('Thank you! Your request is being sent on WhatsApp. Please check your app.');
-    });
-});

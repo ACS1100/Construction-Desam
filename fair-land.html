@@ -9,17 +9,39 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/animate.css">
+
   <link rel="stylesheet" href="css/owl.carousel.min.css">
   <link rel="stylesheet" href="css/owl.theme.default.min.css">
   <link rel="stylesheet" href="css/magnific-popup.css">
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="css/jquery.timepicker.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/fair-land-project.css">
+  <link rel="stylesheet" href="css/apartment.css">
 
   <style>
+    /* ... existing styles ... */
+    /* --- NEW: Image Viewer Modal Styling --- */
+    .plot-image-modal-img {
+      height: 70vh;
+      /* Set a large height for the image in the viewer */
+      object-fit: contain;
+      /* Use 'contain' to ensure the full image is visible, or 'cover' for full fill */
+      width: 100%;
+      background-color: #f8f9fa;
+      /* Light background for 'contain' mode */
+      border-radius: 8px;
+    }
+
+    @media (max-width: 767px) {
+      .plot-image-modal-img {
+        height: 50vh;
+        /* Shorter height on mobile */
+      }
+    }
+
     .btn-whatsapp:hover {
       background-color: #1FAF59 !important;
       border-color: #1FAF59 !important;
@@ -34,43 +56,62 @@
     #floating-actions-container {
       position: fixed;
       /* Increased to 100px for clearance from Tawk.to chat widget */
-      bottom: 100px; 
+      bottom: 100px;
       right: 20px;
       z-index: 1050;
       display: flex;
-      flex-direction: column-reverse; /* Stacks icons from bottom up */
+      flex-direction: column-reverse;
+      /* Stacks icons from bottom up */
       align-items: flex-end;
-      gap: 15px; /* 15px vertical space between each icon */
+      gap: 15px;
+      /* 15px vertical space between each icon */
     }
-    
+
     /* **FLOATING ICON STYLING (MODIFIED FOR CIRCULAR CHATBOT SIZE)** */
     .btn-schedule-fixed {
       /* New fixed size for a circular icon */
-      width: 55px; 
-      height: 55px; 
-      padding: 0; /* Remove padding */
-      border-radius: 50%; /* Make it a perfect circle */
-      
-      display: flex; 
-      justify-content: center; /* Center icon horizontally */
-      align-items: center; /* Center icon vertically */
-      
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
-      font-size: 1.5rem; /* Increase icon size */
+      width: 55px;
+      height: 55px;
+      padding: 0;
+      /* Remove padding */
+      border-radius: 50%;
+      /* Make it a perfect circle */
+
+      display: flex;
+      justify-content: center;
+      /* Center icon horizontally */
+      align-items: center;
+      /* Center icon vertically */
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      font-size: 1.5rem;
+      /* Increase icon size */
       font-weight: 700;
       animation: pulse 2s infinite;
     }
 
     /* Remove margin on the icon since there is no text */
     .btn-schedule-fixed .fa-solid {
-      margin-right: 0; 
+      margin-right: 0;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7); }
-      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(249, 109, 0, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0); }
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7);
+      }
+
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(249, 109, 0, 0);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0);
+      }
     }
+
     /* General Font Visibility */
     body {
       font-family: 'Poppins', sans-serif;
@@ -240,7 +281,7 @@
       margin: 0;
       font-weight: 700;
       color: #F96D00;
-      /* Keeps Plot No. in brand color */
+      /* Keeps plot No. in brand color */
       font-size: 1.25rem;
     }
 
@@ -344,6 +385,408 @@
     .btn-whatsapp .fa-whatsapp {
       margin-right: 5px;
     }
+
+    /* Ensure the grid is responsive on all screens */
+    #view-container-grid {
+      display: flex;
+      /* Ensure the row is a flex container */
+    }
+
+    /* Style for the action buttons in the table to align them nicely */
+    .plot-inventory-table-custom td:last-child {
+      min-width: 200px;
+      /* Ensure enough space for the two buttons */
+    }
+
+    /* --- NEW: FIX PROJECT MEDIA CAROUSEL HEIGHT AND RESPONSIVENESS --- */
+    #project-media-carousel .item img {
+      /* Sets a minimum height for all carousel images */
+      min-height: 250px;
+      /* Ensures the image covers the box without distortion */
+      object-fit: cover;
+      /* Makes sure the image fills the entire width available */
+      width: 100%;
+      /* Improves transition/display */
+      display: block;
+    }
+
+    /* On larger screens, increase the minimum height */
+    @media (min-width: 992px) {
+      #project-media-carousel .item img {
+        min-height: 250px;
+        /* Increase to 350px for desktop/large view */
+      }
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* General Font Visibility */
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #444;
+    }
+
+    /* Footer Social Icons (existing) */
+    .ftco-footer-social li {
+      list-style: none;
+    }
+
+    .ftco-footer-social a {
+      background: none !important;
+      border: none !important;
+      margin: 0 10px;
+      display: inline-block !important;
+    }
+
+    .ftco-footer-social a span.fa-brands {
+      font-size: 32px;
+      transition: color 0.3s ease;
+    }
+
+    .fa-square-x-twitter {
+      color: #000;
+    }
+
+    .fa-square-facebook {
+      color: #1877F2;
+    }
+
+    .fa-square-instagram {
+      color: #E4405F;
+    }
+
+    .fa-google {
+      color: #4285F4;
+    }
+
+    .fa-square-youtube {
+      color: #FF0000;
+    }
+
+    /* Amenity Card (existing) */
+    .amenity-card {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      min-height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .amenity-card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border: 1px solid #F96D00;
+    }
+
+    .amenity-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    /* UPI & Video (existing) */
+    #upi-desktop-qr {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      #upi-mobile-link {
+        display: none !important;
+      }
+
+      #upi-desktop-qr {
+        display: block !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #upi-mobile-link {
+        display: block !important;
+      }
+
+      #desktop-qr-container {
+        display: none !important;
+      }
+    }
+
+    .upi-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #5d50c6;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .video-responsive {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+      width: 100%;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .video-responsive iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+
+    /* --- ENHANCED GRID VIEW STYLES (EXISTING) --- */
+    .plot-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .plot-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border-color: #F96D00;
+    }
+
+    /* ADDED: Status-based border color for the entire card */
+    .plot-card.plot-card-active {
+      border-left: 5px solid #28a745;
+      /* Green side border for Active */
+    }
+
+    .plot-card.plot-card-sold {
+      border-left: 5px solid #dc3545;
+      /* Red side border for Sold */
+    }
+
+    /* CHANGED: Header to neutral light grey */
+    .plot-card-header {
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .plot-card-header h5 {
+      margin: 0;
+      font-weight: 700;
+      color: #F96D00;
+      /* Keeps plot No. in brand color */
+      font-size: 1.25rem;
+    }
+
+    .plot-card-body {
+      padding: 20px;
+    }
+
+    /* Detail Row Styling with Icons (FACING & AREA) */
+    .plot-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 5px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .plot-label {
+      color: #888;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    /* CHANGED: Icon color to neutral dark grey */
+    .plot-label i {
+      color: #6c757d;
+      margin-right: 8px;
+      font-size: 1.1em;
+    }
+
+    .plot-value {
+      color: #333;
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    /* Status Badge Colors (UNCHANGED: Already Green/Red) */
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-active {
+      background-color: #e6f7ee;
+      color: #28a745;
+      border: 1px solid #28a74540;
+    }
+
+    .status-sold {
+      background-color: #fcebeb;
+      color: #dc3545;
+      border: 1px solid #dc354540;
+    }
+
+
+    /* View Toggle Buttons (existing) */
+    .view-toggle-btn {
+      cursor: pointer;
+      padding: 5px 15px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #555;
+    }
+
+    .view-toggle-btn.active {
+      background-color: #F96D00;
+      color: #fff;
+      border-color: #F96D00;
+    }
+
+    .view-toggle-btn:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .view-toggle-btn:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    /* New WhatsApp Button Style */
+    .btn-whatsapp {
+      background-color: #25D366 !important;
+      /* Official WhatsApp Green */
+      border-color: #1FAF59 !important;
+      color: white !important;
+      font-weight: 600;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #1FAF59 !important;
+      border-color: #1FAF59 !important;
+      color: white !important;
+    }
+
+    .btn-whatsapp .fa-whatsapp {
+      margin-right: 5px;
+    }
+
+    /* **FLOATING ICON CONTAINER STYLING** */
+    #floating-actions-container {
+      position: fixed;
+      /* Increased to 100px for clearance from Tawk.to chat widget */
+      bottom: 100px;
+      right: 20px;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column-reverse;
+      /* Stacks icons from bottom up */
+      align-items: flex-end;
+      gap: 15px;
+      /* 15px vertical space between each icon */
+    }
+
+    /* **FLOATING ACTION BUTTON STYLING (MODIFIED FOR TEXT LABEL) ** */
+    .btn-schedule-fixed {
+      width: auto;
+      /* Allow width to expand to fit text */
+      height: 55px;
+      padding: 0 15px;
+      /* Add horizontal padding */
+      border-radius: 30px;
+      /* Make it a rounded rectangle */
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      /* Space between icon and text */
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      font-size: 1.1rem;
+      font-weight: 700;
+      animation: pulse 2s infinite;
+    }
+
+    /* Style for the icon */
+    .btn-schedule-fixed .fa-solid {
+      margin-right: 0;
+      /* No external margin */
+      font-size: 1.5rem;
+      /* Maintain large icon size */
+    }
+
+    /* Style for the text label - always visible */
+    .schedule-text-visible {
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    /* Optional: Tweak icon size for mobile */
+    @media (max-width: 767px) {
+      .btn-schedule-fixed {
+        font-size: 1rem;
+        /* Slightly smaller font on mobile */
+      }
+
+      .btn-schedule-fixed .fa-solid {
+        font-size: 1.3rem;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7);
+      }
+
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(249, 109, 0, 0);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0);
+      }
+    }
+
+    /* Custom style for the carousel images within the on-page viewer */
+    #plotPlanViewerContainer .carousel-item img {
+      max-height: 70vh;
+      /* Limit height to 70% of viewport height */
+      width: auto;
+      /* Maintain aspect ratio */
+      margin: 0 auto;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 15px;
+    }
+
+    /* The old .gallery-scroll-container CSS was removed here to enable Owl Carousel. 
+       Owl Carousel handles the responsive display and scrolling automatically. */
   </style>
 </head>
 
@@ -371,35 +814,6 @@
     </div>
   </nav>
 
-  <!-- <section class="hero-wrap hero-wrap-slider" id="hero-slider">
-    <div class="owl-carousel owl-theme" id="project-hero-carousel">
-      <div class="slider-item" style="background-image: url('images/bg_1.jpg');">
-        <div class="overlay"></div>
-      </div>
-      <div class="slider-item" style="background-image: url('images/bg_2.jpg');">
-        <div class="overlay"></div>
-      </div>
-      <div class="slider-item" style="background-image: url('images/bg_3.jpg');">
-        <div class="overlay"></div>
-      </div>
-    </div>
-    <div class="container d-flex align-items-center justify-content-center h-100 position-absolute"
-      style="top:0; left:0; right:0;">
-      <div class="row no-gutters slider-text align-items-center justify-content-center w-100">
-        <div class="col-md-9 ftco-animate text-center">
-          <h1 class="mb-2 bread" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">Fair Land
-          </h1>
-          <p class="breadcrumbs">
-            <span class="mr-2"><a href="index.html" style="color: rgba(255,255,255,0.8);">Home <i
-                  class="fa-solid fa-chevron-right"></i></a></span>
-            <span class="mr-2"><a href="projects.html" style="color: rgba(255,255,255,0.8);">Projects <i
-                  class="fa-solid fa-chevron-right"></i></a></span>
-            <span style="color: #F96D00;">Fair Land <i class="fa-solid fa-chevron-right"></i></span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section> -->
   <section class="ftco-section">
     <div class="container">
       <div class="row">
@@ -428,13 +842,18 @@
                 </a></div>
             </div>
           </div>
-          <p>Fair Land is a prestigious residential project located on the ECR coast in Chennai. Our team
+          <p>Fair Land is a prestigious residential project located on the AyyanKottai in Madurai. Our team
             handled the complete lifecycle of this project, from architectural design and structural
             engineering to interior finishing.</p>
           <p>The goal was to create a modern, sustainable community that maximized natural light and coastal
             views. This involved using locally sourced, eco-friendly materials and incorporating rainwater
             harvesting systems.</p>
 
+          <div class="ftco-animate mb-5">
+            <div id="plotPlanViewerContainer" class="mt-4 p-3 shadow-sm"
+              style="min-height: 400px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+            </div>
+          </div>
           <div class="ftco-animate mb-4">
             <h3 class="mb-4 text-center">Project Amenities</h3>
             <div class="row amenities-grid">
@@ -536,7 +955,7 @@
           </div>
           <div class="sidebar-box ftco-animate">
             <h3>Download Brochure (PDF)</h3>
-            <p>Get the complete details, floor plans, and pricing for the Fair Land project instantly.</p>
+            <p>Get the complete details, plot plans, and pricing for the Fair Land project instantly.</p>
             <p><a href="FairLand_Brochure.pdf" target="_blank" class="btn btn-warning py-2 px-3"><span
                   class="fa-solid fa-download"></span> Download Now</a></p>
           </div>
@@ -544,7 +963,7 @@
             <h3>Contact for Bookings</h3>
             <p>Interested in learning more about available units in the Fair Land project? Get in touch with
               our sales team.</p>
-            <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
+            <p><a href="tel://+918807344264" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
             <p><button type="button" class="btn btn-info py-2 px-3" data-toggle="modal" data-target="#emiModal"><span
                   class="fa-solid fa-calculator"></span> EMI Calculator</button></p>
           </div>
@@ -574,76 +993,89 @@
           <div class="ftco-animate mt-5">
 
             <div class="d-flex justify-content-between align-items-center mb-3">
+
               <h3 class="mb-0">Fair Land Plot Inventory</h3>
               <div class="btn-group">
                 <button class="view-toggle-btn active" id="btn-view-list"><i class="fa-solid fa-list"></i> List</button>
-                <button class="view-toggle-btn" id="btn-view-grid"><i class="fa-solid fa-th-large"></i> Grid</button>
+                <button class="view-toggle-btn" id="btn-view-grid"><i class="fa-solid fa-th-large"></i>
+                  Grid</button>
               </div>
             </div>
-
-            <p>A total of **<span id="total-initial-plots"></span> Plots** are available.</p>
-
-            <div class="row mb-4">
-              <div class="col-md-3 col-sm-6">
-                <label for="plot-no-filter">Filter by Plot No:</label>
-                <input type="number" class="form-control" id="plot-no-filter" placeholder="Enter plot number">
-              </div>
-              <div class="col-md-3 col-sm-6">
-                <label for="plot-facing-filter">Filter by Facing:</label>
-                <select id="plot-facing-filter" class="form-control">
-                  <option value="all">All Facings</option>
-                </select>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                <label for="plot-status-filter">Filter by Status:</label>
-                <select id="plot-status-filter" class="form-control">
-                  <option value="all">All Statuses</option>
-                </select>
-              </div>
-              <div class="col-md-3 col-sm-6 d-flex align-items-end">
-                <button id="reset-filters" class="btn btn-primary w-100 mt-2">Reset Filters</button>
-              </div>
-            </div>
-
-            <div class="table-responsive" id="view-container-table">
-              <table class="table table-bordered table-striped table-hover plot-inventory-table-custom"
-                id="plot-inventory-table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Plot No.</th>
-                    <th scope="col">Facing</th>
-                    <th scope="col">Sqft Size</th>
-                    <th scope="col">Status</th>
-                    <th class="text-center">Whatsapp</th>
-                  </tr>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="row d-none" id="view-container-grid">
-            </div>
-
-            <p class="text-center mt-3"><small>Showing plots <span id="plot-count"></span> of <span
-                  id="total-filtered-plots"></span> plots.</small>
+            <p class="col-md-12 text-muted">Total Inventory:
+              <span id="total-initial-plots" class="fw-bold">0</span> plots | Showing
+              <span id="plot-count">0-0</span> of
+              <span id="total-filtered-plots" class="fw-bold">0</span> results
             </p>
+          </div>
 
-            <div class="row mt-4">
-              <div class="col-md-12">
-                <ul class="pagination justify-content-center" id="plot-pagination">
-                </ul>
-              </div>
+          <div class="row mb-5 filter-controls p-3">
+            <div class="col-md-3 mb-3">
+              <label for="plot-no-filter" class="form-label">Plot No. Search</label>
+              <input type="text" id="plot-no-filter" class="form-control" placeholder="E.g., A-101">
+            </div>
+
+            <div class="col-md-3 mb-3">
+              <label for="plot-facing-filter" class="form-label">Facing</label>
+              <select id="plot-facing-filter" class="form-control">
+                <option value="all">All Types</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+              <label for="plot-price-filter" class="form-label">Price</label>
+              <select id="plot-price-filter" class="form-control">
+                <option value="all">All Prices</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+              <label for="plot-status-filter" class="form-label">Status</label>
+              <select id="plot-status-filter" class="form-control">
+                <option value="all">All Status</option>
+              </select>
+            </div>
+
+
+
+            <div class="col-12 text-right">
+              <button id="reset-filters" class="btn btn-sm btn-outline-secondary"><i
+                  class="fa-solid fa-rotate-right"></i>
+                Reset Filters</button>
+            </div>
+          </div>
+
+
+          <div class="table-responsive" id="view-container-table">
+            <table class="table table-bordered table-striped table-hover plot-inventory-table-custom"
+              id="plot-inventory-table">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Plot No.</th>
+                  <th>Facing</th>
+                  <th>Area (Sq.ft)</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row d-none" id="view-container-grid">
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <ul class="pagination justify-content-center" id="plot-pagination">
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  </section>
 
-  
   <footer class="footer">
     <div class="container">
       <div class="row">
@@ -744,15 +1176,14 @@
     </div>
   </div>
 
-  <div class="modal fade" id="scheduleVisitModal" tabindex="-1" role="dialog" aria-labelledby="scheduleVisitModalLabel"
+  <div class="modal fade" id="scheduleVisitModal" tabindex="-1" aria-labelledby="scheduleVisitModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-warning text-white">
-          <h5 class="modal-title" id="scheduleVisitModalLabel"><i class="fa-solid fa-calendar-check"></i> Book Your Site Visit</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="scheduleVisitModalLabel"><i class="fa-solid fa-calendar-check"></i> Book Your Site
+            Visit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>Fill in your details and preferred time, and we will send the details to our sales team on WhatsApp.</p>
@@ -773,9 +1204,11 @@
               <label for="visitTime">Preferred Time</label>
               <input type="time" class="form-control" id="visitTime">
             </div>
-            <button type="submit" class="btn btn-whatsapp w-100 mt-3"><i class="fa-brands fa-whatsapp"></i> Send Visit Request via WhatsApp</button>
+            <button type="submit" class="btn btn-whatsapp w-100 mt-3"><i class="fa-brands fa-whatsapp"></i> Send Visit
+              Request via WhatsApp</button>
           </form>
-          <small class="text-muted mt-2 d-block text-center">Your privacy is important to us. This opens your WhatsApp app.</small>
+          <small class="text-muted mt-2 d-block text-center">Your privacy is important to us. This opens your WhatsApp
+            app.</small>
         </div>
       </div>
     </div>
@@ -796,14 +1229,50 @@
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
   <script>
     $(document).ready(function () {
-      $('#project-hero-carousel').owlCarousel({ loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true, autoplayTimeout: 5000, autoplayHoverPause: true, animateOut: 'fadeOut', animateIn: 'fadeIn', });
-      $('#project-media-carousel').owlCarousel({ loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 3000, autoplayHoverPause: true, responsive: { 0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 } } });
-      $('.gallery-popup').magnificPopup({ delegate: 'a.img-zoom', type: 'image', gallery: { enabled: true }, zoom: { enabled: true, duration: 300, easing: 'ease-in-out', opener: function (openerElement) { return openerElement.is('img') ? openerElement : openerElement.find('img'); } } });
+      // Hero Carousel (The banner at the top)
+      $('#project-hero-carousel').owlCarousel({
+        loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true,
+        autoplayTimeout: 5000, autoplayHoverPause: true, animateOut: 'fadeOut',
+        animateIn: 'fadeIn'
+      });
+
+      // Project Media Carousel (The gallery the user is having trouble with)
+      $('#project-media-carousel').owlCarousel({
+        loop: true, margin: 20, nav: true, dots: false, autoplay: true,
+        autoplayTimeout: 3000, autoplayHoverPause: true,
+        responsive: { 0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 } }
+      });
+
+      // Magnific Popup Initialization for the Gallery
+      $('.gallery-popup').magnificPopup({
+        delegate: 'a.img-zoom', type: 'image', gallery: { enabled: true },
+        zoom: {
+          enabled: true, duration: 300, easing: 'ease-in-out',
+          opener: function (openerElement) {
+            return openerElement.is('img') ? openerElement : openerElement.find('img');
+          }
+        }
+      });
     });
   </script>
   <script src="js/fair-land.js"></script>
+
+  <script>
+    // Initialize tooltips everywhere on the page
+    document.addEventListener('DOMContentLoaded', function () {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    });
+  </script>
+
   <script type="text/javascript">
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     (function () {
@@ -815,13 +1284,50 @@
       s0.parentNode.insertBefore(s1, s0);
     })();
   </script>
-  
+
   <div id="floating-actions-container">
-    <button type="button" class="btn btn-warning btn-schedule-fixed" data-toggle="modal"
-      data-target="#scheduleVisitModal">
-      <span class="fa-solid fa-bell text-white"></span> 
+    <button type="button" class="btn btn-warning btn-schedule-fixed" data-bs-toggle="modal"
+      data-bs-target="#scheduleVisitModal">
+      <span class="fa-solid fa-calendar-check text-white"></span>
+      <span class="schedule-text-visible text-white">Schedule Site Visit</span>
     </button>
+  </div>
+  <div class="modal fade" id="plotImageViewerModal" tabindex="-1" aria-labelledby="plotImageViewerModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="plot-image-viewer-title">Plot Images</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+
+          <div id="plotImageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+            </div>
+
+            <div class="carousel-inner" id="plot-image-carousel-inner">
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#plotImageCarousel"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#plotImageCarousel"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>
