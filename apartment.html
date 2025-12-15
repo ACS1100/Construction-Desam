@@ -37,7 +37,332 @@
             height: 50vh; /* Shorter height on mobile */
         }
     }
+   
+    .btn-whatsapp:hover {
+      background-color: #1FAF59 !important;
+      border-color: #1FAF59 !important;
+      color: white !important;
+    }
+
+    .btn-whatsapp .fa-whatsapp {
+      margin-right: 5px;
+    }
+
+    /* **FLOATING ICON CONTAINER STYLING** */
+    #floating-actions-container {
+      position: fixed;
+      /* Increased to 100px for clearance from Tawk.to chat widget */
+      bottom: 100px; 
+      right: 20px;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column-reverse; /* Stacks icons from bottom up */
+      align-items: flex-end;
+      gap: 15px; /* 15px vertical space between each icon */
+    }
     
+    /* **FLOATING ICON STYLING (MODIFIED FOR CIRCULAR CHATBOT SIZE)** */
+    .btn-schedule-fixed {
+      /* New fixed size for a circular icon */
+      width: 55px; 
+      height: 55px; 
+      padding: 0; /* Remove padding */
+      border-radius: 50%; /* Make it a perfect circle */
+      
+      display: flex; 
+      justify-content: center; /* Center icon horizontally */
+      align-items: center; /* Center icon vertically */
+      
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+      font-size: 1.5rem; /* Increase icon size */
+      font-weight: 700;
+      animation: pulse 2s infinite;
+    }
+
+    /* Remove margin on the icon since there is no text */
+    .btn-schedule-fixed .fa-solid {
+      margin-right: 0; 
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(249, 109, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0); }
+    }
+    /* General Font Visibility */
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #444;
+    }
+
+    /* Footer Social Icons (existing) */
+    .ftco-footer-social li {
+      list-style: none;
+    }
+
+    .ftco-footer-social a {
+      background: none !important;
+      border: none !important;
+      margin: 0 10px;
+      display: inline-block !important;
+    }
+
+    .ftco-footer-social a span.fa-brands {
+      font-size: 32px;
+      transition: color 0.3s ease;
+    }
+
+    .fa-square-x-twitter {
+      color: #000;
+    }
+
+    .fa-square-facebook {
+      color: #1877F2;
+    }
+
+    .fa-square-instagram {
+      color: #E4405F;
+    }
+
+    .fa-google {
+      color: #4285F4;
+    }
+
+    .fa-square-youtube {
+      color: #FF0000;
+    }
+
+    /* Amenity Card (existing) */
+    .amenity-card {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      min-height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .amenity-card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border: 1px solid #F96D00;
+    }
+
+    .amenity-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    /* UPI & Video (existing) */
+    #upi-desktop-qr {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      #upi-mobile-link {
+        display: none !important;
+      }
+
+      #upi-desktop-qr {
+        display: block !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #upi-mobile-link {
+        display: block !important;
+      }
+
+      #desktop-qr-container {
+        display: none !important;
+      }
+    }
+
+    .upi-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #5d50c6;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .video-responsive {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+      width: 100%;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .video-responsive iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+
+    #project-media-carousel .item img {
+      height: 250px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    /* --- ENHANCED GRID VIEW STYLES --- */
+    .flat-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .flat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border-color: #F96D00;
+    }
+
+    /* ADDED: Status-based border color for the entire card */
+    .flat-card.flat-card-active {
+      border-left: 5px solid #28a745;
+      /* Green side border for Active */
+    }
+
+    .flat-card.flat-card-sold {
+      border-left: 5px solid #dc3545;
+      /* Red side border for Sold */
+    }
+
+    /* CHANGED: Header to neutral light grey */
+    .flat-card-header {
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .flat-card-header h5 {
+      margin: 0;
+      font-weight: 700;
+      color: #F96D00;
+      /* Keeps flat No. in brand color */
+      font-size: 1.25rem;
+    }
+
+    .flat-card-body {
+      padding: 20px;
+    }
+
+    /* Detail Row Styling with Icons (FACING & AREA) */
+    .flat-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 5px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .flat-label {
+      color: #888;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    /* CHANGED: Icon color to neutral dark grey */
+    .flat-label i {
+      color: #6c757d;
+      margin-right: 8px;
+      font-size: 1.1em;
+    }
+
+    .flat-value {
+      color: #333;
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    /* Status Badge Colors (UNCHANGED: Already Green/Red) */
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-active {
+      background-color: #e6f7ee;
+      color: #28a745;
+      border: 1px solid #28a74540;
+    }
+
+    .status-sold {
+      background-color: #fcebeb;
+      color: #dc3545;
+      border: 1px solid #dc354540;
+    }
+
+
+    /* View Toggle Buttons (existing) */
+    .view-toggle-btn {
+      cursor: pointer;
+      padding: 5px 15px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #555;
+    }
+
+    .view-toggle-btn.active {
+      background-color: #F96D00;
+      color: #fff;
+      border-color: #F96D00;
+    }
+
+    .view-toggle-btn:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .view-toggle-btn:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    /* New WhatsApp Button Style */
+    .btn-whatsapp {
+      background-color: #25D366 !important;
+      /* Official WhatsApp Green */
+      border-color: #1FAF59 !important;
+      color: white !important;
+      font-weight: 600;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #1FAF59 !important;
+      border-color: #1FAF59 !important;
+      color: white !important;
+    }
+
+    .btn-whatsapp .fa-whatsapp {
+      margin-right: 5px;
+    }
+
     /* Ensure the grid is responsive on all screens */
     #view-container-grid {
         display: flex; /* Ensure the row is a flex container */
@@ -232,7 +557,7 @@
       margin: 0;
       font-weight: 700;
       color: #F96D00;
-      /* Keeps Plot No. in brand color */
+      /* Keeps Flat No. in brand color */
       font-size: 1.25rem;
     }
 
@@ -241,7 +566,7 @@
     }
 
     /* Detail Row Styling with Icons (FACING & AREA) */
-    .plot-detail-row {
+    .flat-detail-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -250,7 +575,7 @@
       border-bottom: 1px dashed #eee;
     }
 
-    .plot-label {
+    .flat-label {
       color: #888;
       font-weight: 500;
       display: flex;
@@ -258,13 +583,13 @@
     }
 
     /* CHANGED: Icon color to neutral dark grey */
-    .plot-label i {
+    .flat-label i {
       color: #6c757d;
       margin-right: 8px;
       font-size: 1.1em;
     }
 
-    .plot-value {
+    .flat-value {
       color: #333;
       font-weight: 700;
       font-size: 1.1em;
@@ -448,7 +773,7 @@
         <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
         <div class="ui-hidden lg-ui-block md-ui-block">Kathir's <span>Developers</span></div>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav"
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="fa-solid fa-bars"></span> Menu
       </button>
@@ -463,93 +788,43 @@
       </div>
     </div>
   </nav>
-  <section class="hero-wrap hero-wrap-slider" id="hero-slider">
-    <div class="owl-carousel owl-theme" id="project-hero-carousel">
-      <div class="slider-item" style="background-image: url('images/bg_1.jpg');">
-        <div class="overlay"></div>
-      </div>
-      <div class="slider-item" style="background-image: url('images/bg_2.jpg');">
-        <div class="overlay"></div>
-      </div>
-      <div class="slider-item" style="background-image: url('images/bg_3.jpg');">
-        <div class="overlay"></div>
-      </div>
-    </div>
-    <div class="container d-flex align-items-center justify-content-center h-100 position-absolute"
-      style="top:0; left:0; right:0;">
-      <div class="row no-gutters slider-text align-items-center justify-content-center w-100">
-        <div class="col-md-9 ftco-animate text-center">
-          <h1 class="mb-2 bread" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">Apartment
-          </h1>
-          <p class="breadcrumbs">
-            <span class="mr-2"><a href="index.html" style="color: rgba(255,255,255,0.8);">Home <i
-                  class="fa-solid fa-chevron-right"></i></a></span>
-            <span class="mr-2"><a href="projects.html" style="color: rgba(255,255,255,0.8);">Projects <i
-                  class="fa-solid fa-chevron-right"></i></a></span>
-            <span style="color: #F96D00;">Apartment <i class="fa-solid fa-chevron-right"></i></span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="ftco-section">
     <div class="container">
       <div class="row">
 
-        <div class="col-lg-8 order-lg-1 order-1 ftco-animate">
-          <h2 class="mb-3">Apartment - Coastal Residential Development</h2>
+<div class="col-lg-8 order-lg-1 order-1 ftco-animate">
+          <h2 class="mb-3">Temple Residency - Coastal Residential Development</h2>
 
           <div class="ftco-animate mb-5">
             <h3 class="mb-3">Project Gallery & Walkthrough</h3>
-
             <div id="project-media-carousel" class="owl-carousel owl-theme mb-4 gallery-popup">
-
-              <div class="item">
-                <a href="images/gallery-2.jpg" class="img-zoom" title="Apartment Image 1">
-                  <img src="images/gallery-2.jpg" alt="Apartment Image 1" class="img-fluid rounded">
+              <div class="item"><a href="images/gallery-2.jpg" class="img-zoom" title="Temple Residency Image 1"><img
+                    src="images/gallery-2.jpg" alt="Temple Residency Image 1" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-
-              <div class="item">
-                <a href="images/gallery-3.jpg" class="img-zoom" title="Apartment Image 2">
-                  <img src="images/gallery-3.jpg" alt="Apartment Image 2" class="img-fluid rounded">
+                </a></div>
+              <div class="item"><a href="images/gallery-3.jpg" class="img-zoom" title="Temple Residency Image 2"><img
+                    src="images/gallery-3.jpg" alt="Temple Residency Image 2" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-
-              <div class="item">
-                <a href="images/gallery-4.jpg" class="img-zoom" title="Apartment Image 3">
-                  <img src="images/gallery-4.jpg" alt="Apartment Image 3" class="img-fluid rounded">
+                </a></div>
+              <div class="item"><a href="images/gallery-4.jpg" class="img-zoom" title="Temple Residency Image 3"><img
+                    src="images/gallery-4.jpg" alt="Temple Residency Image 3" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-
-              <div class="item">
-                <a href="images/gallery-5.jpg" class="img-zoom" title="Apartment Image 4">
-                  <img src="images/gallery-5.jpg" alt="Apartment Image 4" class="img-fluid rounded">
+                </a></div>
+              <div class="item"><a href="images/gallery-5.jpg" class="img-zoom" title="Temple Residency Image 4"><img
+                    src="images/gallery-5.jpg" alt="Temple Residency Image 4" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-
-              <div class="item">
-                <a href="images/gallery-6.jpg" class="img-zoom" title="Apartment Image 5">
-                  <img src="images/gallery-6.jpg" alt="Apartment Image 5" class="img-fluid rounded">
-                  <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
-                </a>
-              </div>
-
+                </a></div>
             </div>
           </div>
-          <p>Apartment is a prestigious residential project located on the ECR coast in Chennai. Our team
+          <p>Temple Residency is a prestigious residential project located on the ECR coast in Chennai. Our team
             handled the complete lifecycle of this project, from architectural design and structural
             engineering to interior finishing.</p>
           <p>The goal was to create a modern, sustainable community that maximized natural light and coastal
             views. This involved using locally sourced, eco-friendly materials and incorporating rainwater
             harvesting systems.</p>
 
-          <div class="ftco-animate mb-5">
+            <div class="ftco-animate mb-5">
             <h3 class="mb-4">Apartment Floor Plans</h3>
             <p>Explore the layouts and dimensions for our different unit types. Click the buttons below to view the
               image gallery.</p>
@@ -580,7 +855,6 @@
               style="min-height: 400px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
             </div>
           </div>
-
           <div class="ftco-animate mb-4">
             <h3 class="mb-4 text-center">Project Amenities</h3>
             <div class="row amenities-grid">
@@ -663,6 +937,7 @@
 
 
         </div>
+
         <div class="col-lg-4 sidebar order-lg-2 order-2 ftco-animate">
           <div class="sidebar-box ftco-animate">
             <h3>Project Information</h3>
@@ -681,20 +956,17 @@
           </div>
           <div class="sidebar-box ftco-animate">
             <h3>Download Brochure (PDF)</h3>
-            <p>Get the complete details, floor plans, and pricing for the Apartment project instantly.</p>
+            <p>Get the complete details, floor plans, and pricing for the Temple Residency project instantly.</p>
             <p><a href="FairLand_Brochure.pdf" target="_blank" class="btn btn-warning py-2 px-3"><span
                   class="fa-solid fa-download"></span> Download Now</a></p>
           </div>
           <div class="sidebar-box ftco-animate">
             <h3>Contact for Bookings</h3>
-            <p>Interested in learning more about available flats in the Apartment project? Get in touch with
+            <p>Interested in learning more about available units in the Temple Residency project? Get in touch with
               our sales team.</p>
             <p><a href="contact.html" class="btn btn-secondary py-2 px-3">Enquire Now</a></p>
-            <p>
-        <button type="button" class="btn btn-info py-2 px-3" data-bs-toggle="modal" data-bs-target="#emiCalculatorModal">
-    <i class="fa-solid fa-calculator"></i> Calculate My EMI
-</button>
-        </p>
+            <p><button type="button" class="btn btn-info py-2 px-3" data-toggle="modal" data-target="#emiModal"><span
+                  class="fa-solid fa-calculator"></span> EMI Calculator</button></p>
           </div>
           <div class="sidebar-box ftco-animate">
             <h3 class="mb-3">Secure Your Flat Now</h3>
@@ -717,7 +989,6 @@
             </div>
           </div>
         </div>
-
 
         <div class="col-12 order-lg-3 order-3 ftco-animate">
           <div class="ftco-animate mt-5">
@@ -829,15 +1100,15 @@
             Brick by brick, we build trust
           </p>
           <ul class="ftco-footer-social p-0">
-            <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="X (Twitter)"><span class="fa-brands fa-square-x-twitter"></span></a></li>
-            <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><span
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="X (Twitter)"><span
+                  class="fa-brands fa-square-x-twitter"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span
                   class="fa-brands fa-square-facebook"></span></a></li>
-            <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="Instagram"><span class="fa-brands fa-square-instagram"></span></a></li>
-            <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="Google Page"><span class="fa-brands fa-google"></span></a></li>
-            <li class="ftco-animate"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="YouTube"><span
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span
+                  class="fa-brands fa-square-instagram"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Google Page"><span
+                  class="fa-brands fa-google"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="YouTube"><span
                   class="fa-brands fa-square-youtube"></span></a></li>
           </ul>
         </div>
@@ -854,8 +1125,7 @@
           <h2 class="footer-heading">Have a Questions?</h2>
           <div class="block-23 mb-3">
             <ul>
-              <li><span class="icon fa-solid fa-map"></span><span class="text">Hanuman Kovil Padithurai,
-                  Simmakkal,
+              <li><span class="icon fa-solid fa-map"></span><span class="text">Hanuman Kovil Padithurai, Simmakkal,
                   Madurai,
                   Tamilnadu 625002</span></li>
               <li><a href="tel://+918807344264"><span class="icon fa-solid fa-phone"></span><span class="text">+91-88073
@@ -871,8 +1141,7 @@
 
           <p class="copyright">
             Copyright &copy;
-            <script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by SKG
-            Consulting
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by ACS
             Pvt Ltd
           </p>
         </div>
@@ -885,6 +1154,41 @@
       <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
         stroke="#F96D00" />
     </svg></div>
+
+      <div class="modal fade" id="emiModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-compact" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">💰 EMI Calculator</h5>
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Loan Amount (₹):</label>
+            <input type="number" class="form-control" id="loanAmountInput" value="1500000"
+              onkeyup="displayEmiDetails()">
+          </div>
+          <div class="form-group">
+            <label>Tenure (Years): <span id="tenureValue">15</span></label>
+            <input type="range" class="form-control-range" id="loanTenureInput" value="15" min="1" max="30"
+              oninput="document.getElementById('tenureValue').textContent=this.value; displayEmiDetails();">
+          </div>
+          <div class="form-group mb-4">
+            <label>Interest Rate (%): <span id="rateValue">8.50</span>%</label>
+            <input type="range" class="form-control-range" id="interestRateInput" value="8.50" min="5" max="20"
+              step="0.05"
+              oninput="document.getElementById('rateValue').textContent=parseFloat(this.value).toFixed(2); displayEmiDetails();">
+          </div>
+          <div id="emiDetailsContainer">
+            <div class="result-box">
+              <h5>Estimated EMI</h5>
+              <p class="emi-value" id="emiResult">₹0</p><small id="emiSummary">Enter details above.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="scheduleVisitModal" tabindex="-1" aria-labelledby="scheduleVisitModalLabel"
     aria-hidden="true">
@@ -924,20 +1228,24 @@
     </div>
   </div>
 
-  <script src="js/jquery.min.js"></script>
+ <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
 
-  <script defer src="js/main.js"></script>
-  <script defer src="js/apartment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
 
   <script>
     $(document).ready(function () {
@@ -967,6 +1275,7 @@
       });
     });
   </script>
+  <script src="js/apartment.js"></script>
 
 <script>
     // Initialize tooltips everywhere on the page
@@ -997,74 +1306,6 @@
       <span class="schedule-text-visible text-white">Schedule Site Visit</span>
     </button>
   </div>
-  <div class="modal fade" id="emiCalculatorModal" tabindex="-1" aria-labelledby="emiCalculatorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="emiCalculatorModalLabel">💰 EMI Calculation Details</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 border-end">
-                            <h4 class="mb-3 text-center text-primary">Loan Parameters</h4>
-                            
-                            <div class="mb-3">
-                                <label for="loanAmount" class="form-label">Loan Amount (P)</label>
-                                <input type="number" class="form-control" id="loanAmount" value="500000" min="1000" oninput="calculateEMI()">
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="interestRate" class="form-label">Interest Rate (R) - Annually</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="interestRate" value="10" min="0.1" max="50" step="0.1" oninput="calculateEMI()">
-                                    <span class="input-group-text">%</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="loanTenure" class="form-label">Loan Tenure (N) - In Years</label>
-                                <input type="number" class="form-control" id="loanTenure" value="5" min="1" max="30" oninput="calculateEMI()">                            
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <h4 class="mb-3 text-center text-success">Calculation Results</h4>
-                            <table class="table table-bordered text-center">
-                                <tbody>
-                                    <tr class="table-success">
-                                        <th>Monthly EMI</th>
-                                        <td id="emiResult" class="fw-bold fs-5">₹0</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Interest Payable</th>
-                                        <td id="interestResult">₹0</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Payment (P + I)</th>
-                                        <td id="totalPaymentResult" class="fw-bold">₹0</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            
-                            <!-- <p class="text-info mt-3">
-                                **Auto-Calculation:** Values update automatically as you type.
-                            </p> -->
-                            
-
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="flatImageViewerModal" tabindex="-1" aria-labelledby="flatImageViewerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">

@@ -168,6 +168,39 @@
         carousel();
         counter();
         contentWayPoint();
+
+        // --- FIX: ADD EMI MODAL BIND (MOVED FROM apartment.js) ---
+        $('#emiModal').on('show.bs.modal', function () {
+            // displayEmiDetails is defined in apartment.js, which must be loaded first
+            if (!document.getElementById('loanAmountInput').value) document.getElementById('loanAmountInput').value = 1500000;
+            // Check if the function is available before calling it
+            if (typeof displayEmiDetails === 'function') {
+                displayEmiDetails();
+            }
+        });
+        
+        // --- FIX: ADD SCHEDULE VISIT PRE-FILL BIND (MOVED FROM apartment.js) ---
+        // Helper function for date/time pre-fill
+        function getCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const currentDate = `${year}-${month}-${day}`;
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const currentTime = `${hours}:${minutes}`;
+            return { currentDate, currentTime };
+        }
+        
+        // Bind modal show event to pre-fill inputs
+        $('#scheduleVisitModal').on('show.bs.modal', function () {
+            const { currentDate, currentTime } = getCurrentDateTime();
+
+            // Pre-fill the date and time inputs with current values
+            $('#visitDate').val(currentDate);
+            $('#visitTime').val(currentTime);
+        });
     });
 
 })(jQuery); // End of JQuery IIFE
