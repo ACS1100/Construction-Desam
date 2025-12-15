@@ -1,14 +1,14 @@
 // =========================================================================
 // *** APARTMENT FLAT INVENTORY DATA ***
 const customerFlatData = [
-    { "flatNo": "A-101", "floor": 1, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active", "price": 75 },
-    { "flatNo": "A-102", "floor": 1, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Sold", "price": 90 },
-    { "flatNo": "A-201", "floor": 2, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active", "price": 78 },
-    { "flatNo": "A-202", "floor": 2, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Active", "price": 92 },
-    { "flatNo": "B-301", "floor": 3, "type": "1 BHK", "sqft": 800, "facing": "South", "status": "Hold", "price": 45 },
-    { "flatNo": "B-302", "floor": 3, "type": "2 BHK", "sqft": 1200, "facing": "West", "status": "Active", "price": 72 },
-    { "flatNo": "C-401", "floor": 4, "type": "3 BHK", "sqft": 1450, "facing": "East", "status": "Active", "price": 88 },
-    { "flatNo": "C-402", "floor": 4, "type": "1 BHK", "sqft": 750, "facing": "North", "status": "Sold", "price": 42 },
+    { "flatNo": "A-101", "floor": 1, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active", "price": 7500000 },
+    { "flatNo": "A-102", "floor": 1, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Sold", "price": 9000000 },
+    { "flatNo": "A-201", "floor": 2, "type": "2 BHK", "sqft": 1250, "facing": "East", "status": "Active", "price": 780000 },
+    { "flatNo": "A-202", "floor": 2, "type": "3 BHK", "sqft": 1500, "facing": "North", "status": "Active", "price": 9200000 },
+    { "flatNo": "B-301", "floor": 3, "type": "1 BHK", "sqft": 800, "facing": "South", "status": "Hold", "price": 4500000 },
+    { "flatNo": "B-302", "floor": 3, "type": "2 BHK", "sqft": 1200, "facing": "West", "status": "Active", "price": 7200000 },
+    { "flatNo": "C-401", "floor": 4, "type": "3 BHK", "sqft": 1450, "facing": "East", "status": "Active", "price": 8800000 },
+    { "flatNo": "C-402", "floor": 4, "type": "1 BHK", "sqft": 750, "facing": "North", "status": "Sold", "price": 4200000 },
 ];
 
 // =========================================================================
@@ -39,7 +39,7 @@ const flatImages = {
 };
 // =========================================================================
 // *** CONFIGURATION & STATE ***
-const itemsPerPage = 12;
+const itemsPerPage = 5; // FIX: Changed from 12 to 5 so pagination appears with the current 8-flat dataset
 let currentPage = 1;
 let totalPages = 0;
 let filteredData = [];
@@ -776,11 +776,11 @@ function handleScheduleVisitSubmit() {
         { src: 'images/floorplans/4bhk_plan_5.jpg', title: '4 BHK Floor Plan - View 5 (Terrace/Rooftop)' }
       ],
       'site': [
-        { src: 'images/floorplans/site_plan_1.jpg', title: 'Floor and Site Plan - View 1 (Overall Layout)' },
-        { src: 'images/floorplans/site_plan_2.jpg', title: 'Floor and Site Plan - View 2 (Tower A & B)' },
-        { src: 'images/floorplans/site_plan_3.jpg', title: 'Floor and Site Plan - View 3 (Amenities Location)' },
-        { src: 'images/floorplans/site_plan_4.jpg', title: 'Floor and Site Plan - View 4 (Parking Layout)' },
-        { src: 'images/floorplans/site_plan_5.jpg', title: 'Floor and Site Plan - View 5 (Detailed Building View)' }
+        { src: 'images/floorplans/site_plan_1.jpg', title: 'Floor and Site Plans Gallery - View 1 (Overall Layout)' },
+        { src: 'images/floorplans/site_plan_2.jpg', title: 'Floor and Site Plans Gallery - View 2 (Tower A & B)' },
+        { src: 'images/floorplans/site_plan_3.jpg', title: 'Floor and Site Plans Gallery - View 3 (Amenities Location)' },
+        { src: 'images/floorplans/site_plan_4.jpg', title: 'Floor and Site Plans Gallery - View 4 (Parking Layout)' },
+        { src: 'images/floorplans/site_plan_5.jpg', title: 'Floor and Site Plans Gallery - View 5 (Detailed Building View)' }
       ]
     };
 

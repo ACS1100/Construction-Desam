@@ -25,19 +25,23 @@
     /* ... existing styles ... */
     /* --- NEW: Image Viewer Modal Styling --- */
     .flat-image-modal-img {
-        height: 70vh; /* Set a large height for the image in the viewer */
-        object-fit: contain; /* Use 'contain' to ensure the full image is visible, or 'cover' for full fill */
-        width: 100%;
-        background-color: #f8f9fa; /* Light background for 'contain' mode */
-        border-radius: 8px;
+      height: 70vh;
+      /* Set a large height for the image in the viewer */
+      object-fit: contain;
+      /* Use 'contain' to ensure the full image is visible, or 'cover' for full fill */
+      width: 100%;
+      background-color: #f8f9fa;
+      /* Light background for 'contain' mode */
+      border-radius: 8px;
     }
 
     @media (max-width: 767px) {
-        .flat-image-modal-img {
-            height: 50vh; /* Shorter height on mobile */
-        }
+      .flat-image-modal-img {
+        height: 50vh;
+        /* Shorter height on mobile */
+      }
     }
-   
+
     .btn-whatsapp:hover {
       background-color: #1FAF59 !important;
       border-color: #1FAF59 !important;
@@ -52,43 +56,62 @@
     #floating-actions-container {
       position: fixed;
       /* Increased to 100px for clearance from Tawk.to chat widget */
-      bottom: 100px; 
+      bottom: 100px;
       right: 20px;
       z-index: 1050;
       display: flex;
-      flex-direction: column-reverse; /* Stacks icons from bottom up */
+      flex-direction: column-reverse;
+      /* Stacks icons from bottom up */
       align-items: flex-end;
-      gap: 15px; /* 15px vertical space between each icon */
+      gap: 15px;
+      /* 15px vertical space between each icon */
     }
-    
+
     /* **FLOATING ICON STYLING (MODIFIED FOR CIRCULAR CHATBOT SIZE)** */
     .btn-schedule-fixed {
       /* New fixed size for a circular icon */
-      width: 55px; 
-      height: 55px; 
-      padding: 0; /* Remove padding */
-      border-radius: 50%; /* Make it a perfect circle */
-      
-      display: flex; 
-      justify-content: center; /* Center icon horizontally */
-      align-items: center; /* Center icon vertically */
-      
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
-      font-size: 1.5rem; /* Increase icon size */
+      width: 55px;
+      height: 55px;
+      padding: 0;
+      /* Remove padding */
+      border-radius: 50%;
+      /* Make it a perfect circle */
+
+      display: flex;
+      justify-content: center;
+      /* Center icon horizontally */
+      align-items: center;
+      /* Center icon vertically */
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      font-size: 1.5rem;
+      /* Increase icon size */
       font-weight: 700;
       animation: pulse 2s infinite;
     }
 
     /* Remove margin on the icon since there is no text */
     .btn-schedule-fixed .fa-solid {
-      margin-right: 0; 
+      margin-right: 0;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7); }
-      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(249, 109, 0, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0); }
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7);
+      }
+
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(249, 109, 0, 0);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0);
+      }
     }
+
     /* General Font Visibility */
     body {
       font-family: 'Poppins', sans-serif;
@@ -365,12 +388,14 @@
 
     /* Ensure the grid is responsive on all screens */
     #view-container-grid {
-        display: flex; /* Ensure the row is a flex container */
+      display: flex;
+      /* Ensure the row is a flex container */
     }
 
     /* Style for the action buttons in the table to align them nicely */
     .flat-inventory-table-custom td:last-child {
-        min-width: 200px; /* Ensure enough space for the two buttons */
+      min-width: 200px;
+      /* Ensure enough space for the two buttons */
     }
 
     /* --- NEW: FIX PROJECT MEDIA CAROUSEL HEIGHT AND RESPONSIVENESS --- */
@@ -793,7 +818,7 @@
     <div class="container">
       <div class="row">
 
-<div class="col-lg-8 order-lg-1 order-1 ftco-animate">
+        <div class="col-lg-8 order-lg-1 order-1 ftco-animate">
           <h2 class="mb-3">Temple Residency - Coastal Residential Development</h2>
 
           <div class="ftco-animate mb-5">
@@ -824,7 +849,7 @@
             views. This involved using locally sourced, eco-friendly materials and incorporating rainwater
             harvesting systems.</p>
 
-            <div class="ftco-animate mb-5">
+          <div class="ftco-animate mb-5">
             <h3 class="mb-4">Apartment Floor Plans</h3>
             <p>Explore the layouts and dimensions for our different unit types. Click the buttons below to view the
               image gallery.</p>
@@ -1002,9 +1027,9 @@
                   Grid</button>
               </div>
             </div>
-            <p class="col-md-12 text-muted">Total Inventory: 
-              <span id="total-initial-flats" class="fw-bold">0</span> flats | Showing 
-              <span id="flat-count">0-0</span> of 
+            <p class="col-md-12 text-muted">Total Inventory:
+              <span id="total-initial-flats" class="fw-bold">0</span> flats | Showing
+              <span id="flat-count">0-0</span> of
               <span id="total-filtered-flats" class="fw-bold">0</span> results
             </p>
           </div>
@@ -1043,7 +1068,7 @@
               </select>
             </div>
 
-            
+
 
             <div class="col-12 text-right">
               <button id="reset-filters" class="btn btn-sm btn-outline-secondary"><i
@@ -1062,7 +1087,7 @@
                   <th>Floor</th>
                   <th>Type</th>
                   <th>Area (Sq.ft)</th>
-                                    <th>Price</th>
+                  <th>Price</th>
                   <th>Status</th>
                   <th class="text-center">Actions</th>
                 </tr>
@@ -1074,11 +1099,6 @@
 
           <div class="row d-none" id="view-container-grid">
           </div>
-
-          <p class="text-center mt-3"><small>Showing flats <span id="flat-count"></span> of <span
-                id="total-filtered-flats"></span> flats.</small>
-          </p>
-
           <div class="row mt-4">
             <div class="col-md-12">
               <ul class="pagination justify-content-center" id="flat-pagination">
@@ -1155,7 +1175,7 @@
         stroke="#F96D00" />
     </svg></div>
 
-      <div class="modal fade" id="emiModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade" id="emiModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-compact" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -1228,7 +1248,7 @@
     </div>
   </div>
 
- <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -1243,8 +1263,8 @@
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
   <script>
@@ -1277,15 +1297,15 @@
   </script>
   <script src="js/apartment.js"></script>
 
-<script>
+  <script>
     // Initialize tooltips everywhere on the page
     document.addEventListener('DOMContentLoaded', function () {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
     });
-</script>
+  </script>
 
   <script type="text/javascript">
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
@@ -1306,39 +1326,42 @@
       <span class="schedule-text-visible text-white">Schedule Site Visit</span>
     </button>
   </div>
-    <div class="modal fade" id="flatImageViewerModal" tabindex="-1" aria-labelledby="flatImageViewerModalLabel" aria-hidden="true">
+  <div class="modal fade" id="flatImageViewerModal" tabindex="-1" aria-labelledby="flatImageViewerModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="flat-image-viewer-title">Flat Images</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                
-                <div id="flatImageCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        </div>
-
-                    <div class="carousel-inner" id="flat-image-carousel-inner">
-                        </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#flatImageCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#flatImageCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="flat-image-viewer-title">Flat Images</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body p-0">
+
+          <div id="flatImageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+            </div>
+
+            <div class="carousel-inner" id="flat-image-carousel-inner">
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#flatImageCarousel"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#flatImageCarousel"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </body>
 
 </html>
