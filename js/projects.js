@@ -11,7 +11,7 @@
         // IMPORTANT: The 'id' field MUST match the 'data-id' attribute in the HTML templates above.
         const projectData = [
             // Original 8 Projects
-            { "id": "proj-1", "project": "OMR Vista", "category": "ongoing", "location": "chennai", "area": "omr", "link": "apartment.html", "description": "Apartment - Building tomorrow's skyline." },
+            { "id": "proj-1", "project": "Crown Residency", "category": "ongoing", "location": "chennai", "area": "omr", "link": "apartment.html", "description": "Apartment - Building tomorrow's skyline." },
             { "id": "proj-2", "project": "Fair Land", "category": "ongoing", "location": "madurai", "area": "ayyankottai", "link": "fair-land.html", "description": "Madurai (Ayyankottai) - Contemporary commercial space.", "is_link": true },
             { "id": "proj-3", "project": "ECR Heights", "category": "ongoing", "location": "chennai", "area": "ecr", "link": "work-single.html", "description": "Chennai (ECR) - Classic brick architecture." },
             { "id": "proj-4", "project": "Velachery Square", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Coastal living with serene ocean views." },
