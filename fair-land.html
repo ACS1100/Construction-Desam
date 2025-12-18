@@ -21,773 +21,195 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/apartment.css">
 
-  <style>
-    /* ... existing styles ... */
-    /* --- NEW: Image Viewer Modal Styling --- */
-    .plot-image-modal-img {
-      height: 70vh;
-      /* Set a large height for the image in the viewer */
-      object-fit: contain;
-      /* Use 'contain' to ensure the full image is visible, or 'cover' for full fill */
-      width: 100%;
-      background-color: #f8f9fa;
-      /* Light background for 'contain' mode */
-      border-radius: 8px;
-    }
-
-    @media (max-width: 767px) {
-      .plot-image-modal-img {
-        height: 50vh;
-        /* Shorter height on mobile */
-      }
-    }
-
-    .btn-whatsapp:hover {
-      background-color: #1FAF59 !important;
-      border-color: #1FAF59 !important;
-      color: white !important;
-    }
-
-    .btn-whatsapp .fa-whatsapp {
-      margin-right: 5px;
-    }
-
-    /* **FLOATING ICON CONTAINER STYLING** */
-    #floating-actions-container {
-      position: fixed;
-      /* Increased to 100px for clearance from Tawk.to chat widget */
-      bottom: 100px;
-      right: 20px;
-      z-index: 1050;
-      display: flex;
-      flex-direction: column-reverse;
-      /* Stacks icons from bottom up */
-      align-items: flex-end;
-      gap: 15px;
-      /* 15px vertical space between each icon */
-    }
-
-    /* **FLOATING ICON STYLING (MODIFIED FOR CIRCULAR CHATBOT SIZE)** */
-    .btn-schedule-fixed {
-      /* New fixed size for a circular icon */
-      width: 55px;
-      height: 55px;
-      padding: 0;
-      /* Remove padding */
-      border-radius: 50%;
-      /* Make it a perfect circle */
-
-      display: flex;
-      justify-content: center;
-      /* Center icon horizontally */
-      align-items: center;
-      /* Center icon vertically */
-
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      font-size: 1.5rem;
-      /* Increase icon size */
-      font-weight: 700;
-      animation: pulse 2s infinite;
-    }
-
-    /* Remove margin on the icon since there is no text */
-    .btn-schedule-fixed .fa-solid {
-      margin-right: 0;
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7);
-      }
-
-      70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(249, 109, 0, 0);
-      }
-
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0);
-      }
-    }
-
-    /* General Font Visibility */
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: #444;
-    }
-
-    /* Footer Social Icons (existing) */
-    .ftco-footer-social li {
-      list-style: none;
-    }
-
-    .ftco-footer-social a {
-      background: none !important;
-      border: none !important;
-      margin: 0 10px;
-      display: inline-block !important;
-    }
-
-    .ftco-footer-social a span.fa-brands {
-      font-size: 32px;
-      transition: color 0.3s ease;
-    }
-
-    .fa-square-x-twitter {
-      color: #000;
-    }
-
-    .fa-square-facebook {
-      color: #1877F2;
-    }
-
-    .fa-square-instagram {
-      color: #E4405F;
-    }
-
-    .fa-google {
-      color: #4285F4;
-    }
-
-    .fa-square-youtube {
-      color: #FF0000;
-    }
-
-    /* Amenity Card (existing) */
-    .amenity-card {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      border-radius: 10px;
-      min-height: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3s;
-    }
-
-    .amenity-card:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-      border: 1px solid #F96D00;
-    }
-
-    .amenity-card h4 {
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0;
-    }
-
-    /* UPI & Video (existing) */
-    #upi-desktop-qr {
-      display: none;
-    }
-
-    @media (min-width: 768px) {
-      #upi-mobile-link {
-        display: none !important;
-      }
-
-      #upi-desktop-qr {
-        display: block !important;
-      }
-    }
-
-    @media (max-width: 767px) {
-      #upi-mobile-link {
-        display: block !important;
-      }
-
-      #desktop-qr-container {
-        display: none !important;
-      }
-    }
-
-    .upi-button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #5d50c6;
-      color: white;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-
-    .video-responsive {
-      overflow: hidden;
-      padding-bottom: 56.25%;
-      position: relative;
-      height: 0;
-      width: 100%;
-      max-width: 750px;
-      margin: 0 auto;
-    }
-
-    .video-responsive iframe {
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-    }
-
-    #project-media-carousel .item img {
-      height: 250px;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    /* --- ENHANCED GRID VIEW STYLES --- */
-    .plot-card {
-      background: #fff;
-      border: 1px solid #f0f0f0;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      height: 100%;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .plot-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-      border-color: #F96D00;
-    }
-
-    /* ADDED: Status-based border color for the entire card */
-    .plot-card.plot-card-active {
-      border-left: 5px solid #28a745;
-      /* Green side border for Active */
-    }
-
-    .plot-card.plot-card-sold {
-      border-left: 5px solid #dc3545;
-      /* Red side border for Sold */
-    }
-
-    /* CHANGED: Header to neutral light grey */
-    .plot-card-header {
-      background-color: #f8f9fa;
-      color: #333;
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .plot-card-header h5 {
-      margin: 0;
-      font-weight: 700;
-      color: #F96D00;
-      /* Keeps plot No. in brand color */
-      font-size: 1.25rem;
-    }
-
-    .plot-card-body {
-      padding: 20px;
-    }
-
-    /* Detail Row Styling with Icons (FACING & AREA) */
-    .plot-detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      padding: 5px 0;
-      border-bottom: 1px dashed #eee;
-    }
-
-    .plot-label {
-      color: #888;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-    }
-
-    /* CHANGED: Icon color to neutral dark grey */
-    .plot-label i {
-      color: #6c757d;
-      margin-right: 8px;
-      font-size: 1.1em;
-    }
-
-    .plot-value {
-      color: #333;
-      font-weight: 700;
-      font-size: 1.1em;
-    }
-
-    /* Status Badge Colors (UNCHANGED: Already Green/Red) */
-    .status-badge {
-      padding: 5px 12px;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .status-active {
-      background-color: #e6f7ee;
-      color: #28a745;
-      border: 1px solid #28a74540;
-    }
-
-    .status-sold {
-      background-color: #fcebeb;
-      color: #dc3545;
-      border: 1px solid #dc354540;
-    }
-
-
-    /* View Toggle Buttons (existing) */
-    .view-toggle-btn {
-      cursor: pointer;
-      padding: 5px 15px;
-      border: 1px solid #ddd;
-      background: #fff;
-      color: #555;
-    }
-
-    .view-toggle-btn.active {
-      background-color: #F96D00;
-      color: #fff;
-      border-color: #F96D00;
-    }
-
-    .view-toggle-btn:first-child {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
-
-    .view-toggle-btn:last-child {
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
-
-    /* New WhatsApp Button Style */
-    .btn-whatsapp {
-      background-color: #25D366 !important;
-      /* Official WhatsApp Green */
-      border-color: #1FAF59 !important;
-      color: white !important;
-      font-weight: 600;
-    }
-
-    .btn-whatsapp:hover {
-      background-color: #1FAF59 !important;
-      border-color: #1FAF59 !important;
-      color: white !important;
-    }
-
-    .btn-whatsapp .fa-whatsapp {
-      margin-right: 5px;
-    }
-
-    /* Ensure the grid is responsive on all screens */
-    #view-container-grid {
-      display: flex;
-      /* Ensure the row is a flex container */
-    }
-
-    /* Style for the action buttons in the table to align them nicely */
-    .plot-inventory-table-custom td:last-child {
-      min-width: 200px;
-      /* Ensure enough space for the two buttons */
-    }
-
-    /* --- NEW: FIX PROJECT MEDIA CAROUSEL HEIGHT AND RESPONSIVENESS --- */
-    #project-media-carousel .item img {
-      /* Sets a minimum height for all carousel images */
-      min-height: 250px;
-      /* Ensures the image covers the box without distortion */
-      object-fit: cover;
-      /* Makes sure the image fills the entire width available */
-      width: 100%;
-      /* Improves transition/display */
-      display: block;
-    }
-
-    /* On larger screens, increase the minimum height */
-    @media (min-width: 992px) {
-      #project-media-carousel .item img {
-        min-height: 250px;
-        /* Increase to 350px for desktop/large view */
-      }
-    }
-
-    /* ---------------------------------------------------------------- */
-    /* General Font Visibility */
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: #444;
-    }
-
-    /* Footer Social Icons (existing) */
-    .ftco-footer-social li {
-      list-style: none;
-    }
-
-    .ftco-footer-social a {
-      background: none !important;
-      border: none !important;
-      margin: 0 10px;
-      display: inline-block !important;
-    }
-
-    .ftco-footer-social a span.fa-brands {
-      font-size: 32px;
-      transition: color 0.3s ease;
-    }
-
-    .fa-square-x-twitter {
-      color: #000;
-    }
-
-    .fa-square-facebook {
-      color: #1877F2;
-    }
-
-    .fa-square-instagram {
-      color: #E4405F;
-    }
-
-    .fa-google {
-      color: #4285F4;
-    }
-
-    .fa-square-youtube {
-      color: #FF0000;
-    }
-
-    /* Amenity Card (existing) */
-    .amenity-card {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      border-radius: 10px;
-      min-height: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3s;
-    }
-
-    .amenity-card:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-      border: 1px solid #F96D00;
-    }
-
-    .amenity-card h4 {
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0;
-    }
-
-    /* UPI & Video (existing) */
-    #upi-desktop-qr {
-      display: none;
-    }
-
-    @media (min-width: 768px) {
-      #upi-mobile-link {
-        display: none !important;
-      }
-
-      #upi-desktop-qr {
-        display: block !important;
-      }
-    }
-
-    @media (max-width: 767px) {
-      #upi-mobile-link {
-        display: block !important;
-      }
-
-      #desktop-qr-container {
-        display: none !important;
-      }
-    }
-
-    .upi-button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #5d50c6;
-      color: white;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-
-    .video-responsive {
-      overflow: hidden;
-      padding-bottom: 56.25%;
-      position: relative;
-      height: 0;
-      width: 100%;
-      max-width: 750px;
-      margin: 0 auto;
-    }
-
-    .video-responsive iframe {
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-    }
-
-    /* --- ENHANCED GRID VIEW STYLES (EXISTING) --- */
-    .plot-card {
-      background: #fff;
-      border: 1px solid #f0f0f0;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      height: 100%;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .plot-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-      border-color: #F96D00;
-    }
-
-    /* ADDED: Status-based border color for the entire card */
-    .plot-card.plot-card-active {
-      border-left: 5px solid #28a745;
-      /* Green side border for Active */
-    }
-
-    .plot-card.plot-card-sold {
-      border-left: 5px solid #dc3545;
-      /* Red side border for Sold */
-    }
-
-    /* CHANGED: Header to neutral light grey */
-    .plot-card-header {
-      background-color: #f8f9fa;
-      color: #333;
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .plot-card-header h5 {
-      margin: 0;
-      font-weight: 700;
-      color: #F96D00;
-      /* Keeps plot No. in brand color */
-      font-size: 1.25rem;
-    }
-
-    .plot-card-body {
-      padding: 20px;
-    }
-
-    /* Detail Row Styling with Icons (FACING & AREA) */
-    .plot-detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      padding: 5px 0;
-      border-bottom: 1px dashed #eee;
-    }
-
-    .plot-label {
-      color: #888;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-    }
-
-    /* CHANGED: Icon color to neutral dark grey */
-    .plot-label i {
-      color: #6c757d;
-      margin-right: 8px;
-      font-size: 1.1em;
-    }
-
-    .plot-value {
-      color: #333;
-      font-weight: 700;
-      font-size: 1.1em;
-    }
-
-    /* Status Badge Colors (UNCHANGED: Already Green/Red) */
-    .status-badge {
-      padding: 5px 12px;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .status-active {
-      background-color: #e6f7ee;
-      color: #28a745;
-      border: 1px solid #28a74540;
-    }
-
-    .status-sold {
-      background-color: #fcebeb;
-      color: #dc3545;
-      border: 1px solid #dc354540;
-    }
-
-
-    /* View Toggle Buttons (existing) */
-    .view-toggle-btn {
-      cursor: pointer;
-      padding: 5px 15px;
-      border: 1px solid #ddd;
-      background: #fff;
-      color: #555;
-    }
-
-    .view-toggle-btn.active {
-      background-color: #F96D00;
-      color: #fff;
-      border-color: #F96D00;
-    }
-
-    .view-toggle-btn:first-child {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
-
-    .view-toggle-btn:last-child {
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
-
-    /* New WhatsApp Button Style */
-    .btn-whatsapp {
-      background-color: #25D366 !important;
-      /* Official WhatsApp Green */
-      border-color: #1FAF59 !important;
-      color: white !important;
-      font-weight: 600;
-    }
-
-    .btn-whatsapp:hover {
-      background-color: #1FAF59 !important;
-      border-color: #1FAF59 !important;
-      color: white !important;
-    }
-
-    .btn-whatsapp .fa-whatsapp {
-      margin-right: 5px;
-    }
-
-    /* **FLOATING ICON CONTAINER STYLING** */
-    #floating-actions-container {
-      position: fixed;
-      /* Increased to 100px for clearance from Tawk.to chat widget */
-      bottom: 100px;
-      right: 20px;
-      z-index: 1050;
-      display: flex;
-      flex-direction: column-reverse;
-      /* Stacks icons from bottom up */
-      align-items: flex-end;
-      gap: 15px;
-      /* 15px vertical space between each icon */
-    }
-
-    /* **FLOATING ACTION BUTTON STYLING (MODIFIED FOR TEXT LABEL) ** */
-    .btn-schedule-fixed {
-      width: auto;
-      /* Allow width to expand to fit text */
-      height: 55px;
-      padding: 0 15px;
-      /* Add horizontal padding */
-      border-radius: 30px;
-      /* Make it a rounded rectangle */
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      /* Space between icon and text */
-
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      font-size: 1.1rem;
-      font-weight: 700;
-      animation: pulse 2s infinite;
-    }
-
-    /* Style for the icon */
-    .btn-schedule-fixed .fa-solid {
-      margin-right: 0;
-      /* No external margin */
-      font-size: 1.5rem;
-      /* Maintain large icon size */
-    }
-
-    /* Style for the text label - always visible */
-    .schedule-text-visible {
-      display: inline-block;
-      font-weight: 600;
-    }
-
-    /* Optional: Tweak icon size for mobile */
-    @media (max-width: 767px) {
-      .btn-schedule-fixed {
-        font-size: 1rem;
-        /* Slightly smaller font on mobile */
-      }
-
-      .btn-schedule-fixed .fa-solid {
-        font-size: 1.3rem;
-      }
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7);
-      }
-
-      70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(249, 109, 0, 0);
-      }
-
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(249, 109, 0, 0);
-      }
-    }
-
-    /* Custom style for the carousel images within the on-page viewer */
-    #plotPlanViewerContainer .carousel-item img {
-      max-height: 70vh;
-      /* Limit height to 70% of viewport height */
-      width: auto;
-      /* Maintain aspect ratio */
-      margin: 0 auto;
-      object-fit: contain;
-      border-radius: 5px;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      padding: 15px;
-    }
-
-    /* The old .gallery-scroll-container CSS was removed here to enable Owl Carousel. 
-       Owl Carousel handles the responsive display and scrolling automatically. */
-  </style>
+<style>
+  /* --- 1. GLOBAL & BASE STYLES --- */
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: #444;
+  }
+
+  /* --- 2. FLOATING ACTION BUTTON (Schedule Site Visit) --- */
+  #floating-actions-container {
+    position: fixed;
+    bottom: 100px; /* Clearance for Tawk.to widget */
+    right: 20px;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 15px;
+  }
+
+  .btn-schedule-fixed {
+    width: auto;
+    height: 55px;
+    padding: 0 15px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    font-size: 1.1rem;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+  }
+
+  .btn-schedule-fixed .fa-solid {
+    font-size: 1.5rem;
+  }
+
+  .schedule-text-visible {
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(249, 109, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 109, 0, 0); }
+  }
+
+  @media (max-width: 767px) {
+    .btn-schedule-fixed { font-size: 1rem; }
+    .btn-schedule-fixed .fa-solid { font-size: 1.3rem; }
+  }
+
+  /* --- 3. PROJECT MEDIA & MODAL VIEWERS --- */
+  #project-media-carousel .item img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (min-width: 992px) {
+    #project-media-carousel .item img { min-height: 250px; }
+  }
+
+  .plot-image-modal-img {
+    height: 70vh;
+    object-fit: contain;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 767px) {
+    .plot-image-modal-img { height: 50vh; }
+  }
+
+  #plotPlanViewerContainer .carousel-item img {
+    max-height: 70vh;
+    width: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    border-radius: 5px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 15px;
+  }
+
+  /* --- 4. PLOT INVENTORY (GRID & LIST) --- */
+  .plot-card {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .plot-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: #F96D00;
+  }
+
+  .plot-card.plot-card-active { border-left: 5px solid #28a745; }
+  .plot-card.plot-card-sold { border-left: 5px solid #dc3545; }
+
+  .plot-card-header {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .plot-card-header h5 { font-weight: 700; color: #F96D00; font-size: 1.25rem; margin: 0; }
+
+  .plot-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+  }
+
+  .plot-label { color: #888; font-weight: 500; display: flex; align-items: center; }
+  .plot-label i { color: #6c757d; margin-right: 8px; font-size: 1.1em; }
+  .plot-value { color: #333; font-weight: 700; font-size: 1.1em; }
+
+  .status-badge { padding: 5px 12px; border-radius: 5px; font-size: 14px; font-weight: 600; text-transform: uppercase; }
+  .status-active { background-color: #e6f7ee; color: #28a745; border: 1px solid #28a74540; }
+  .status-sold { background-color: #fcebeb; color: #dc3545; border: 1px solid #dc354540; }
+
+  .view-toggle-btn {
+    cursor: pointer;
+    padding: 5px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+  }
+
+  .view-toggle-btn.active { background-color: #F96D00; color: #fff; border-color: #F96D00; }
+
+  /* --- 5. AMENITIES & BUTTONS --- */
+  .amenity-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+
+  .amenity-card:hover { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); border: 1px solid #F96D00; }
+  .amenity-card h4 { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 0; }
+
+  .btn-whatsapp { background-color: #25D366 !important; border-color: #1FAF59 !important; color: white !important; font-weight: 600; }
+  .btn-whatsapp:hover { background-color: #1FAF59 !important; }
+
+  /* --- 6. UPI & VIDEO --- */
+  .video-responsive { overflow: hidden; padding-bottom: 56.25%; position: relative; height: 0; width: 100%; max-width: 750px; margin: 0 auto; }
+  .video-responsive iframe { left: 0; top: 0; height: 100%; width: 100%; position: absolute; }
+
+  .upi-button { display: inline-block; padding: 10px 20px; background-color: #5d50c6; color: white; border-radius: 5px; font-weight: bold; }
+
+  #upi-desktop-qr { display: none; }
+  @media (min-width: 768px) {
+    #upi-mobile-link { display: none !important; }
+    #upi-desktop-qr { display: block !important; }
+  }
+
+  /* --- 7. FOOTER SOCIAL ICONS --- */
+  .ftco-footer-social a span.fa-brands { font-size: 32px; transition: color 0.3s ease; }
+  .fa-square-x-twitter { color: #000; }
+  .fa-square-facebook { color: #1877F2; }
+  .fa-square-instagram { color: #E4405F; }
+  .fa-google { color: #4285F4; }
+  .fa-square-youtube { color: #FF0000; }
+</style>
 </head>
 
 <body>
