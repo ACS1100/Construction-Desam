@@ -642,6 +642,35 @@ function initialSetup() {
             renderCurrentPage();
         });
     }
+    // =========================================================================
+// *** PROJECT AMENITIES DATA ***
+const projectAmenities = [
+    { id: 1, title: "24/7 Security & Gated Community", icon: "fa-shield" },
+    { id: 2, title: "CCTV Surveillance", icon: "fa-video" },
+    { id: 3, title: "Black Top Roads", icon: "fa-road" },
+    { id: 4, title: "Street Lights", icon: "fa-lightbulb" },
+    { id: 5, title: "Potable Water Supply", icon: "fa-faucet-drip" },
+    { id: 6, title: "Children's Play Area", icon: "fa-child-reaching" }
+];
+
+function renderAmenities() {
+    const amenitiesContainer = document.getElementById('amenities-grid-container');
+    if (!amenitiesContainer) return;
+
+    let amenitiesHtml = '';
+    projectAmenities.forEach(item => {
+        amenitiesHtml += `
+            <div class="col-12 col-sm-6 col-lg-4 text-center ftco-animate fadeInUp ftco-animated">
+                <div class="amenity-card p-3 mb-3">
+                    <span class="fa-solid ${item.icon} fa-3x mb-2" style="color: #F96D00;"></span>
+                    <h4>${item.id}. ${item.title}</h4>
+                </div>
+            </div>`;
+    });
+    amenitiesContainer.innerHTML = amenitiesHtml;
+}
+
+renderAmenities();
 
     // 6. Initial load of data
     filterAndRender();
