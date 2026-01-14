@@ -1038,3 +1038,100 @@ function displayEmiDetails() {
  * * NOTE: All remaining jQuery/conflicting code for EMI and Schedule Visit 
  * has been moved to main.js for proper execution within the jQuery environment.
  */
+
+// --- COMPLETE CHATBOT LOGIC ---
+
+const realEstateData = {
+    "price": "Fair Land plots start from ₹45 Lakhs. We have various dimensions ranging from 1200 to 5000 sq.ft.",
+    "location": "Our project is located at Ayyankottai, Madurai, near the main highway for easy accessibility.",
+    "amenities": "The project includes 30ft blacktop roads, 24/7 security, park areas, and individual water connections.",
+    "visit": "Excellent! Please provide your contact details below, and our site manager will arrange a visit for you."
+};
+
+function toggleChatWindow() {
+    const box = document.getElementById('chat-box');
+    box.style.display = (box.style.display === 'none') ? 'flex' : 'none';
+}
+
+function addMessage(text, type) {
+    const chatContent = document.getElementById('chat-content');
+    const div = document.createElement('div');
+    div.className = `chat-msg ${type}`;
+    div.innerText = text;
+    chatContent.appendChild(div);
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+function handleQuickAction(action) {
+    if (action === 'Visit') {
+        addMessage("I'd like to book a site visit.", 'user');
+        renderVisitForm();
+    } else {
+        processUserText(action);
+    }
+}
+
+function renderVisitForm() {
+    const chatContent = document.getElementById('chat-content');
+    const formDiv = document.createElement('div');
+    formDiv.className = "visit-form";
+    formDiv.innerHTML = `
+        <input type="text" id="v-name" placeholder="Full Name">
+        <input type="tel" id="v-phone" placeholder="Phone Number">
+        <button onclick="sendVisitLead()">Confirm Site Visit</button>
+    `;
+    chatContent.appendChild(formDiv);
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+function sendVisitLead() {
+    const name = document.getElementById('v-name').value;
+    const phone = document.getElementById('v-phone').value;
+
+    if (!name || !phone) return alert("Please fill in both fields.");
+
+    // Replace YOUR_ID with your Formspree ID
+    fetch("https://formspree.io/f/YOUR_ID", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, project: "Fair Land Plot Inquiry" })
+    });
+
+    addMessage(`Thanks ${name}! We'll contact you at ${phone} to confirm your site visit.`, 'bot');
+    document.querySelector('.visit-form').remove();
+}
+
+function processUserText(manualText = null) {
+    const inputField = document.getElementById('chat-user-input');
+    const text = manualText || inputField.value;
+    if (!text) return;
+
+    if (!manualText) addMessage(text, 'user');
+    inputField.value = '';
+
+    setTimeout(() => {
+        let response = "I'm not sure, but our sales team at +91 88073 44264 can definitely help!";
+        const query = text.toLowerCase();
+        for (let key in realEstateData) {
+            if (query.includes(key)) { response = realEstateData[key]; break; }
+        }
+        addMessage(response, 'bot');
+    }, 500);
+}
+
+// Sound & Auto-Popup Logic
+function playNotificationSound() {
+    const sound = document.getElementById('chat-notification-sound');
+    if (sound) sound.play().catch(() => {});
+}
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const box = document.getElementById('chat-box');
+        if (box.style.display === 'none') {
+            toggleChatWindow(); 
+            playNotificationSound();
+            setTimeout(() => addMessage("👋 Welcome! Need help finding the right plot in Fair Land?", 'bot'), 400);
+        }
+    }, 5000); // 5-second popup timer
+});

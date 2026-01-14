@@ -229,7 +229,80 @@
   .fa-square-instagram { color: #E4405F; }
   .fa-google { color: #4285F4; }
   .fa-square-youtube { color: #FF0000; }
+/* FIXED POSITIONING: This keeps the bot visible wherever you scroll */
+#chat-circle {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #F96D00; /* Fair Land Orange */
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 10000; /* Ensures it stays above all content */
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.floating-chat-box {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    width: 320px;
+    height: 450px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+.chat-header {
+    background: #00204a; /* Fair Land Dark Blue */
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
+.chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #fdfdfd; display: flex; flex-direction: column; gap: 10px; }
+
+.chat-msg { padding: 10px; border-radius: 8px; font-size: 13px; max-width: 85%; line-height: 1.4; }
+.bot { background: #e9ecef; align-self: flex-start; color: #333; }
+.user { background: #F96D00; color: white; align-self: flex-end; }
+
+.chat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+.chat-chips button {
+    background: white;
+    border: 1px solid #F96D00;
+    color: #F96D00;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.chat-chips button:hover { background: #F96D00; color: white; }
+
+.chat-footer { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px; }
+.chat-footer input { flex: 1; border: 1px solid #ddd; padding: 8px; border-radius: 4px; outline: none; }
+.chat-footer button { background: #F96D00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+
+/* Inline Booking Form */
+.visit-form { background: #fff; border: 1px solid #00204a; padding: 12px; border-radius: 8px; margin-top: 5px; }
+.visit-form input { width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+.visit-form button { width: 100%; background: #28a745; color: white; border: none; padding: 8px; border-radius: 4px; font-weight: bold; }
 </style>
 </head>
 
@@ -674,7 +747,7 @@ function updateInventoryDashboard() {
 updateInventoryDashboard();
   </script>
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     (function () {
       var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
@@ -684,7 +757,7 @@ updateInventoryDashboard();
       s1.setAttribute('crossorigin', '*');
       s0.parentNode.insertBefore(s1, s0);
     })();
-  </script>
+  </script> -->
 
   <div id="floating-actions-container">
     <button type="button" class="btn btn-warning btn-schedule-fixed" data-bs-toggle="modal"
@@ -729,6 +802,34 @@ updateInventoryDashboard();
       </div>
     </div>
   </div>
+  <audio id="chat-notification-sound" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3" type="audio/mpeg">
+</audio>
+
+<div id="chatbot-wrapper">
+    <button id="chat-circle" onclick="toggleChatWindow()">
+        <i class="fa-solid fa-house-chimney-user"></i>
+    </button>
+
+    <div id="chat-box" class="floating-chat-box" style="display: none;">
+        <div class="chat-header">
+            <span>Fair Land Assistant</span>
+            <button onclick="toggleChatWindow()" class="close-btn">&times;</button>
+        </div>
+        <div id="chat-content" class="chat-body">
+            <div class="chat-msg bot">Welcome to Fair Land! Looking for a plot in Madurai?</div>
+            <div class="chat-chips">
+                <button onclick="handleQuickAction('Price')">💰 Pricing</button>
+                <button onclick="handleQuickAction('Location')">📍 Location</button>
+                <button onclick="handleQuickAction('Visit')">📅 Book Visit</button>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-user-input" placeholder="Ask a question..." onkeypress="if(event.key === 'Enter') processUserText()">
+            <button onclick="processUserText()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
