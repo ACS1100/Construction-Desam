@@ -251,6 +251,7 @@ function filterGalleryItems(category, page = 1) {
 
 // --- MAIN INITIALIZATION & EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', function () {
+    if (!projectGalleryRow || !locationDropdown || !areaDropdown) return;
 
     populateLocationFilter();
 

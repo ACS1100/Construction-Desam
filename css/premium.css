@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Desam Brand Colors (extracted from your uploaded logo) */
+    --brand-green: #0a4c25;
+    --brand-green-bright: #147a3e;
+    --brand-saffron: #f26b21;
+    --brand-gold: #d97706;
+
+    /* Premium Light Tones */
+    --light-bg: #ffffff;
+    --light-surface: #f8f9fa;
+    --light-border: rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+
+    /* Typography */
+    --text-dark: #1a1a1a;
+    --text-muted: #64748b;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    background-color: var(--light-bg) !important;
+    color: var(--text-dark) !important;
+    overflow-x: hidden;
+}
+
+/* -------------------------------------
+   TYPOGRAPHY
+-------------------------------------- */
+h1, h2, h3, h4, h5, h6, 
+.heading-section h2, 
+.footer-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: var(--brand-green) !important;
+    font-weight: 700 !important;
+}
+
+p, span.subheading, .plot-label, .text, .nav-link {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: var(--text-muted) !important;
+}
+
+span.subheading {
+    color: var(--brand-saffron) !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+}
+
+.plot-value {
+    color: var(--text-dark) !important;
+    font-weight: 600;
+}
+
+/* -------------------------------------
+   NAVIGATION - GLASSMORPHISM
+-------------------------------------- */
+.ftco_navbar {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--light-border) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+.navbar-brand {
+    color: var(--brand-green) !important;
+    font-weight: 800 !important;
+}
+
+.ftco_navbar .nav-item.active > a {
+    color: var(--brand-saffron) !important;
+}
+
+.ftco_navbar .nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease !important;
+}
+
+.ftco_navbar .nav-link:hover {
+    color: var(--brand-green-bright) !important;
+}
+
+/* -------------------------------------
+   BUTTONS (Emerald Gradient & Saffron)
+-------------------------------------- */
+.btn-primary, .btn-whatsapp {
+    background: linear-gradient(135deg, var(--brand-green), var(--brand-green-bright)) !important;
+    border: none !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(10, 76, 37, 0.2) !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary:hover, .btn-whatsapp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(10, 76, 37, 0.35) !important;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--brand-green) !important;
+    color: var(--brand-green) !important;
+    background: transparent !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-outline-primary:hover, 
+.btn-outline-primary.active,
+.gallery-tab-project.active {
+    background: var(--brand-green) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(10, 76, 37, 0.2) !important;
+}
+
+/* -------------------------------------
+   LUXURY CARDS & ELEVATION
+-------------------------------------- */
+.project-info, 
+.services-wrap, 
+.testimony-wrap, 
+.plot-card, 
+.amenity-card {
+    background-color: #ffffff !important;
+    border: 1px solid var(--light-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.gallery-item-project:hover .project-info, 
+.services-wrap:hover, 
+.plot-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--brand-green) !important;
+    box-shadow: 0 15px 40px rgba(10, 76, 37, 0.1) !important;
+}
+
+.project-info h4 a, 
+.services-wrap h2, 
+.plot-card-header h5 {
+    color: var(--text-dark) !important;
+}
+
+.project-info h4 a:hover {
+    color: var(--brand-saffron) !important;
+}
+
+/* -------------------------------------
+   FORMS & INPUTS
+-------------------------------------- */
+.form-control, .contact-form input, .contact-form textarea {
+    background: #ffffff !important;
+    border: 1px solid var(--light-border) !important;
+    color: var(--text-dark) !important;
+    border-radius: 8px !important;
+}
+
+.form-control:focus {
+    border-color: var(--brand-green) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 0.2rem rgba(10, 76, 37, 0.1) !important;
+}
+
+/* -------------------------------------
+   BACKGROUND OVERRIDES 
+-------------------------------------- */
+.bg-light, 
+.ftco-section, 
+.ftco-no-pt, 
+.hero-wrap,
+section {
+    background-color: transparent !important;
+}
+
+/* Ensure alternating sections have slight contrast */
+.ftco-section:nth-child(even) {
+    background-color: var(--light-surface) !important;
+}
+
+/* -------------------------------------
+   ICONS & HIGHLIGHTS
+-------------------------------------- */
+.icon span, .services-wrap .icon span {
+    color: var(--brand-saffron) !important;
+}
+
+.number {
+    color: var(--brand-green-bright) !important;
+    text-shadow: none !important;
+}
+
+/* Footer Fixes */
+.ftco-footer {
+    background-color: var(--brand-green) !important;
+    color: #ffffff !important;
+    padding-top: 4rem !important;
+}
+
+.ftco-footer .footer-heading, .ftco-footer p, .ftco-footer .text {
+    color: #ffffff !important;
+}
+
+.ftco-footer ul li a {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.ftco-footer ul li a:hover {
+    color: var(--brand-saffron) !important;
+}
+
+.ftco-footer .icon span {
+    color: #ffffff !important;
+}

@@ -1,281 +1,220 @@
-  // --- CONFIGURATION & DATA ---
-        const PROJECTS_PER_PAGE = 8; 
-        
-        // Maps locations to their respective areas (used for dropdown population)
-        const locationAreaMap = {
-            "chennai": ["omr", "ecr", "tambaram"],
-            "madurai": ["ayyankottai", "gomatipuram", "tirupalai"]
-        };
+let locationDropdown, areaDropdown, ongoingFiltersDiv, galleryTabs, projectCards, paginationContainer;
+let currentSelectedLocation = "";
+let currentSelectedArea = "";
+let currentCategory = 'all';
+const PROJECTS_PER_PAGE = 8;
+const locationAreaMap = {
+    "chennai": ["omr", "ecr", "tambaram"],
+    "madurai": ["ayyankottai", "gomatipuram", "tirupalai"]
+};
 
-        // Project Data Array (Expanded to 12 projects)
-        // IMPORTANT: The 'id' field MUST match the 'data-id' attribute in the HTML templates above.
-        const projectData = [
-            // Original 8 Projects
-            { "id": "proj-1", "project": "Crown Residency", "category": "ongoing", "location": "chennai", "area": "omr", "link": "apartment.html", "description": "Apartment - Building tomorrow's skyline." },
-            { "id": "proj-2", "project": "Fair Land", "category": "ongoing", "location": "madurai", "area": "ayyankottai", "link": "fair-land.html", "description": "Madurai (Ayyankottai) - Contemporary commercial space.", "is_link": true },
-            { "id": "proj-3", "project": "ECR Heights", "category": "ongoing", "location": "chennai", "area": "ecr", "link": "work-single.html", "description": "Chennai (ECR) - Classic brick architecture." },
-            { "id": "proj-4", "project": "Velachery Square", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Coastal living with serene ocean views." },
-            { "id": "proj-5", "project": "Gomatipuram Plaza", "category": "ongoing", "location": "madurai", "area": "gomatipuram", "link": "work-single.html", "description": "Madurai (Gomatipuram) - Spacious industrial facility." },
-            { "id": "proj-6", "project": "Anna Nagar", "category": "ongoing", "location": "chennai", "area": "omr", "link": "work-single.html", "description": "Chennai (OMR) - Bright educational spaces." },
-            { "id": "proj-7", "project": "KK Nagar", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Elegant residential complex with lush gardens." },
-            { "id": "proj-8", "project": "Pasumalai Heights", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Sophisticated gallery space." },
-            // 4 New Placeholder Projects
-            { "id": "proj-9", "project": "Tambaram Gardens", "category": "ongoing", "location": "chennai", "area": "tambaram", "link": "work-single.html", "description": "Chennai (Tambaram) - Luxurious residential villas." },
-            { "id": "proj-10", "project": "Tirupalai Towers", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "Madurai (Tirupalai) - Modern IT park infrastructure." },
-            { "id": "proj-11", "project": "Ambattur Logistics", "category": "ongoing", "location": "chennai", "area": "omr", "link": "work-single.html", "description": "Chennai (OMR) - High-capacity warehouse and logistics center." },
-            { "id": "proj-12", "project": "Kovai Residency", "category": "completed", "location": "", "area": "", "link": "work-single.html", "description": "A successful residential project in Coimbatore." }
-        ];
+function populateLocationFilter() {
+    if (!locationDropdown) return;
+    const locations = Object.keys(locationAreaMap);
+    locationDropdown.innerHTML = '<option value="">-- Select Location --</option>';
+    locations.forEach(locationKey => {
+        const option = document.createElement('option');
+        option.value = locationKey;
+        option.textContent = locationKey.charAt(0).toUpperCase() + locationKey.slice(1);
+        locationDropdown.appendChild(option);
+    });
+}
 
+function updateAreaFilterAndGallery() {
+    if (!locationDropdown || !areaDropdown) return;
+    const selectedLocation = locationDropdown.value;
+    areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
+    areaDropdown.disabled = true;
 
-        // --- DOM Elements & State ---
-        const locationDropdown = document.getElementById('location-filter');
-        const areaDropdown = document.getElementById('area-filter');
-        const ongoingFiltersDiv = document.getElementById('ongoing-filters');
-        // Selects all filter buttons
-        const galleryTabs = document.querySelectorAll('.gallery-tab-project'); 
-        const projectGalleryRow = document.getElementById('project-gallery-row'); 
-        const paginationContainer = document.getElementById('pagination-container');
-        const projectTemplates = document.getElementById('project-templates'); 
+    if (selectedLocation) {
+        const areas = locationAreaMap[selectedLocation] || [];
+        areaDropdown.disabled = areas.length === 0;
+        areas.forEach(area => {
+            const option = document.createElement('option');
+            option.value = area;
+            option.textContent = area.charAt(0).toUpperCase() + area.slice(1);
+            areaDropdown.appendChild(option);
+        });
+    }
+    areaDropdown.value = "";
+    currentSelectedLocation = selectedLocation;
+    currentSelectedArea = "";
+    applyFilters(currentCategory, 1);
+}
 
-        let currentSelectedLocation = "";
-        let currentSelectedArea = "";
-        let currentCategory = 'all'; 
-
-
-        // --- FUNCTION 0: Renders the filtered and paginated items to the DOM ---
-        function renderGalleryItems(itemsToDisplay) {
-            projectGalleryRow.innerHTML = '';
-            
-            itemsToDisplay.forEach(project => {
-                // 1. Find the static HTML template using the project's ID
-                const template = projectTemplates.querySelector(`[data-id="${project.id}"]`);
-                
-                if (template) {
-                    // 2. Clone the template (true for deep clone)
-                    const projectCard = template.cloneNode(true);
-                    
-                    // 3. Inject dynamic data from the JS array into the cloned HTML
-                    const nameLink = projectCard.querySelector('.project-name-placeholder a');
-                    nameLink.textContent = project.project;
-                    nameLink.setAttribute('href', project.link);
-
-                    projectCard.querySelector('.project-description-placeholder').textContent = project.description;
-
-                    // 4. Update the main image link for details/popup
-                    const imageLink = projectCard.querySelector('.work a');
-                    // Check if it's a direct link or an image popup (using the template's existing href attribute for the image popup)
-                    if(project.is_link) {
-                        imageLink.setAttribute('href', project.link);
-                    } else {
-                         // For image-popup links, use the existing image-popup href
-                         const currentImageLink = imageLink.getAttribute('href');
-                         imageLink.setAttribute('href', currentImageLink); 
-                    }
-                    
-                    // 5. Append the finalized card to the visible row
-                    projectGalleryRow.appendChild(projectCard);
-                }
-            });
-
-            // 6. Re-initialize Magnific Popup for newly added elements
-            if (typeof jQuery !== 'undefined' && typeof jQuery.fn.magnificPopup !== 'undefined') {
-                $('.image-popup').magnificPopup({
-                    type: 'image',
-                    closeOnContentClick: true,
-                    closeBtnInside: false,
-                    fixedContentPos: true,
-                    mainClass: 'mfp-no-margins mfp-with-zoom', 
-                    image: { verticalFit: true },
-                    zoom: { enabled: true, duration: 300 }
-                });
-            }
-        }
-        
-        // --- FUNCTION 1: Populates the Location dropdown ---
-        function populateLocationFilter() {
-            const locations = Object.keys(locationAreaMap);
-            locationDropdown.innerHTML = '<option value="">-- Select Location --</option>';
-            locations.forEach(locationKey => {
-                const option = document.createElement('option');
-                option.value = locationKey;
-                // Capitalize first letter for display
-                option.textContent = locationKey.charAt(0).toUpperCase() + locationKey.slice(1); 
-                locationDropdown.appendChild(option);
-            });
-        }
-
-
-        // --- FUNCTION 2: Updates Area dropdown and triggers re-filter (on location change) ---
-        function updateAreaFilterAndGallery() {
-            const selectedLocation = locationDropdown.value;
-            areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
-            areaDropdown.disabled = true;
-
-            if (selectedLocation) {
-                const areas = locationAreaMap[selectedLocation] || [];
-                areaDropdown.disabled = areas.length === 0;
-
-                areas.forEach(area => {
-                    const option = document.createElement('option');
-                    option.value = area;
-                    option.textContent = area.charAt(0).toUpperCase() + area.slice(1); 
-                    areaDropdown.appendChild(option);
-                });
-            }
-
-            areaDropdown.value = "";
-            currentSelectedLocation = selectedLocation;
-            currentSelectedArea = "";
-            filterGalleryItems(currentCategory, 1);
-        }
-
-        // --- FUNCTION 3: Creates the Pagination HTML ---
-        function createPaginationLinks(totalPages, currentPage, category) {
-            paginationContainer.innerHTML = '<div class="col text-center"><div class="block-27"></div></div>'; // Reset container
-            
-            if (totalPages <= 1) return;
-
-            const ul = document.createElement('ul');
-            // Previous button
-            const prevLi = document.createElement('li');
-            prevLi.innerHTML = `<a href="#">&lt;</a>`;
-            if (currentPage === 1) {
-                prevLi.classList.add('disabled');
-            } else {
-                prevLi.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    filterGalleryItems(category, currentPage - 1);
-                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            }
-            ul.appendChild(prevLi);
-
-            // Page links
-            for (let i = 1; i <= totalPages; i++) {
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="#">${i}</a>`;
-                if (i === currentPage) {
-                    li.classList.add('active');
-                } else {
-                    li.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        filterGalleryItems(category, i);
-                        document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    });
-                }
-                ul.appendChild(li);
-            }
-
-            // Next button
-            const nextLi = document.createElement('li');
-            nextLi.innerHTML = `<a href="#">&gt;</a>`;
-            if (currentPage === totalPages) {
-                nextLi.classList.add('disabled');
-            } else {
-                nextLi.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    filterGalleryItems(category, currentPage + 1);
-                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            }
-            ul.appendChild(nextLi);
-
-            // Append list to block-27 container
-            const block27 = paginationContainer.querySelector('.block-27');
-            if (block27) block27.appendChild(ul);
-        }
-
-
-        // --- FUNCTION 4: The main filtering and rendering logic ---
-        function filterGalleryItems(category, page = 1) {
-            currentCategory = category;
-            
-            // 1. Calculate All Counts and Update Buttons
-            const ongoingCount = projectData.filter(item => item.category === 'ongoing').length;
-            const completedCount = projectData.filter(item => item.category === 'completed').length;
-            const allCount = projectData.length;
-
-            document.getElementById('count-all').textContent = allCount;
-            document.getElementById('count-ongoing').textContent = ongoingCount;
-            document.getElementById('count-completed').textContent = completedCount;
-
-
-            // 2. Handle visibility of sub-filters and state reset
-            if (category === 'ongoing') {
-                ongoingFiltersDiv.style.display = 'flex';
-            } else {
-                ongoingFiltersDiv.style.display = 'none';
-                if (currentCategory !== 'ongoing') {
-                    // Reset sub-filter state when switching away from 'ongoing'
-                    currentSelectedLocation = "";
-                    currentSelectedArea = "";
-                    locationDropdown.value = "";
+function applyFilters(category, page = 1) {
+    currentCategory = category;
+    
+    // Reset secondary filters if not ongoing
+    if (ongoingFiltersDiv) {
+        if (category === 'ongoing') {
+            ongoingFiltersDiv.style.display = 'flex';
+        } else {
+            ongoingFiltersDiv.style.display = 'none';
+            if (currentCategory !== 'ongoing') {
+                currentSelectedLocation = "";
+                currentSelectedArea = "";
+                if (locationDropdown) locationDropdown.value = "";
+                if (areaDropdown) {
                     areaDropdown.innerHTML = '<option value="">-- Select Area --</option>';
                     areaDropdown.disabled = true;
                 }
             }
+        }
+    }
 
-            // 3. Filter the DATA array
-            let filteredData = projectData.filter(item => {
-                const matchesCategory = (category === 'all' || item.category === category);
-                let matchesSubFilter = true;
-                
-                if (category === 'ongoing') {
-                    if (currentSelectedLocation && item.location !== currentSelectedLocation) matchesSubFilter = false;
-                    if (matchesSubFilter && currentSelectedArea && item.area !== currentSelectedArea) matchesSubFilter = false;
-                }
+    let allCount = 0;
+    let ongoingCount = 0;
+    let completedCount = 0;
 
-                return matchesCategory && matchesSubFilter;
-            });
+    let matchingCards = [];
 
-            // 4. Apply Pagination Logic
-            const totalItems = filteredData.length;
-            const totalPages = Math.ceil(totalItems / PROJECTS_PER_PAGE);
-            let currentPage = Math.min(Math.max(1, page), totalPages || 1);
-            const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
-            const endIndex = startIndex + PROJECTS_PER_PAGE;
-            const itemsToDisplay = filteredData.slice(startIndex, endIndex);
+    // Filter logic
+    projectCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardLocation = card.getAttribute('data-location');
+        const cardArea = card.getAttribute('data-area');
+        
+        // Count totals
+        allCount++;
+        if (cardCategory === 'ongoing') ongoingCount++;
+        if (cardCategory === 'completed') completedCount++;
 
-            // 5. Render the items dynamically (using HTML templates)
-            renderGalleryItems(itemsToDisplay);
-
-            // 6. Generate Pagination Links
-            createPaginationLinks(totalPages, currentPage, category);
+        let matchesCategory = (category === 'all' || cardCategory === category);
+        let matchesSubFilter = true;
+        if (category === 'ongoing') {
+            if (currentSelectedLocation && cardLocation !== currentSelectedLocation) matchesSubFilter = false;
+            if (matchesSubFilter && currentSelectedArea && cardArea !== currentSelectedArea) matchesSubFilter = false;
         }
 
+        if (matchesCategory && matchesSubFilter) {
+            matchingCards.push(card);
+        } else {
+            card.style.setProperty('display', 'none', 'important');
+        }
+    });
 
-        // --- MAIN INITIALIZATION & EVENT LISTENERS ---
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            populateLocationFilter();
+    // Update counts
+    const countAllEl = document.getElementById('count-all');
+    if(countAllEl) countAllEl.textContent = allCount;
+    
+    const countOngoingEl = document.getElementById('count-ongoing');
+    if(countOngoingEl) countOngoingEl.textContent = ongoingCount;
+    
+    const countCompletedEl = document.getElementById('count-completed');
+    if(countCompletedEl) countCompletedEl.textContent = completedCount;
 
-            // --- Tab Click Listener (Primary filter) ---
-            galleryTabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    const category = this.getAttribute('data-category');
+    // Pagination
+    const totalItems = matchingCards.length;
+    const totalPages = Math.ceil(totalItems / PROJECTS_PER_PAGE);
+    let currentPage = Math.min(Math.max(1, page), totalPages || 1);
+    const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
+    const endIndex = startIndex + PROJECTS_PER_PAGE;
 
-                    galleryTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
+    matchingCards.forEach((card, index) => {
+        if (index >= startIndex && index < endIndex) {
+            card.style.setProperty('display', 'block', 'important');
+        } else {
+            card.style.setProperty('display', 'none', 'important');
+        }
+    });
 
-                    // Filter gallery items, always starting at page 1 for a new category
-                    filterGalleryItems(category, 1);
-                    document.getElementById('project-gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            });
-            
-            // --- Location Dropdown Listener ---
-            locationDropdown.addEventListener('change', updateAreaFilterAndGallery);
-            
-            // --- Area Dropdown Listener ---
-            areaDropdown.addEventListener('change', function () {
-                currentSelectedArea = this.value;
-                // Only re-filter if the 'Ongoing Projects' tab is active
-                if (document.querySelector('.gallery-tab-project.active').getAttribute('data-category') === 'ongoing') {
-                    // Filter, always starting at page 1 for a new sub-filter selection
-                    filterGalleryItems(currentCategory, 1); 
-                }
-            });
+    createPaginationLinks(totalPages, currentPage, category);
+}
 
-            // Initialize gallery (show 'all' items, page 1 and set counts)
-            filterGalleryItems('all', 1);
+function createPaginationLinks(totalPages, currentPage, category) {
+    if (!paginationContainer) return;
+    paginationContainer.innerHTML = '<div class="col text-center"><div class="block-27"></div></div>'; 
+    if (totalPages <= 1) return;
+
+    const ul = document.createElement('ul');
+    const prevLi = document.createElement('li');
+    prevLi.innerHTML = `<a href="#">&lt;</a>`;
+    if (currentPage === 1) {
+        prevLi.classList.add('disabled');
+    } else {
+        prevLi.addEventListener('click', (e) => {
+            e.preventDefault();
+            applyFilters(category, currentPage - 1);
+            const section = document.getElementById('project-gallery-section');
+            if(section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
+    }
+    ul.appendChild(prevLi);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#">${i}</a>`;
+        if (i === currentPage) {
+            li.classList.add('active');
+        } else {
+            li.addEventListener('click', (e) => {
+                e.preventDefault();
+                applyFilters(category, i);
+                const section = document.getElementById('project-gallery-section');
+                if(section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+        ul.appendChild(li);
+    }
+
+    const nextLi = document.createElement('li');
+    nextLi.innerHTML = `<a href="#">&gt;</a>`;
+    if (currentPage === totalPages) {
+        nextLi.classList.add('disabled');
+    } else {
+        nextLi.addEventListener('click', (e) => {
+            e.preventDefault();
+            applyFilters(category, currentPage + 1);
+            const section = document.getElementById('project-gallery-section');
+            if(section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    }
+    ul.appendChild(nextLi);
+
+    const block27 = paginationContainer.querySelector('.block-27');
+    if (block27) block27.appendChild(ul);
+}
+
+function initProjects() {
+    locationDropdown = document.getElementById('location-filter');
+    areaDropdown = document.getElementById('area-filter');
+    ongoingFiltersDiv = document.getElementById('ongoing-filters');
+    galleryTabs = document.querySelectorAll('.gallery-tab-project'); 
+    projectCards = document.querySelectorAll('.gallery-item-project'); 
+    paginationContainer = document.getElementById('pagination-container');
+
+    if (!projectCards || projectCards.length === 0) return; // Silent abort if no cards
+    
+    populateLocationFilter();
+
+    if (galleryTabs) {
+        galleryTabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                const category = this.getAttribute('data-category');
+                galleryTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                applyFilters(category, 1);
+            });
+        });
+    }
+    
+    if (locationDropdown) locationDropdown.addEventListener('change', updateAreaFilterAndGallery);
+    if (areaDropdown) {
+        areaDropdown.addEventListener('change', function () {
+            currentSelectedArea = this.value;
+            const activeTab = document.querySelector('.gallery-tab-project.active');
+            if (activeTab && activeTab.getAttribute('data-category') === 'ongoing') {
+                applyFilters(currentCategory, 1); 
+            }
+        });
+    }
+
+    applyFilters('all', 1);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProjects);
+} else {
+    initProjects();
+}

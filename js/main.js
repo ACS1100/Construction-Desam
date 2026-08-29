@@ -1,300 +1,187 @@
-// --- 1. JQUERY IIFE (Immediate Invoked Function Expression) ---
-// This is the standard, safe way to run all jQuery-dependent code ($).
-// It ensures jQuery is loaded and available before running plugins.
-(function($) {
-
+function initMain() {
     "use strict";
-    
-    // --- JQUERY PLUGINS & FUNCTIONS ---
-    
-    // Stellar Parallax (Often run immediately as it's window-based)
-    $(window).stellar({
-        responsive: true,
-        parallaxBackgrounds: true,
-        parallaxElements: true,
-        horizontalScrolling: false,
-        hideDistantElements: false,
-        scrollProperty: 'scroll'
-    });
 
-    // Full Height Section (Uses jQuery)
-    var fullHeight = function() {
-        $('.js-fullheight').css('height', $(window).height());
-        $(window).resize(function(){
-            $('.js-fullheight').css('height', $(window).height());
-        });
-    };
-    
-    // Loader Removal (jQuery version)
-    var loader = function() {
-        setTimeout(function() {
-            if($('#ftco-loader').length > 0) {
-                $('#ftco-loader').removeClass('show');
-            }
+    // 1. Loader Removal
+    const loader = document.getElementById('ftco-loader');
+    if (loader) {
+        setTimeout(() => {
+            loader.classList.remove('show');
         }, 1);
-    };
-    
-    // ⭐️ CAROUSEL INITIALIZATION (OWL CAROUSEL)
-    var carousel = function() {
-        $('.carousel-testimony').owlCarousel({
-            center: true,
-            loop: true,
-            items:1,
-            margin: 30,
-            stagePadding: 0,
-            nav: false,
-            dots: true, // Ensured dots are enabled
-            navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-            responsive:{
-                0:{
-                    items: 1
-                },
-                600:{
-                    items: 2
-                },
-                1000:{
-                    items: 3
-                }
-            }
+    }
+
+    // 2. Full Height Section
+    const setFullHeight = () => {
+        const elements = document.querySelectorAll('.js-fullheight');
+        elements.forEach(el => {
+            el.style.height = window.innerHeight + 'px';
         });
     };
+    setFullHeight();
+    window.addEventListener('resize', setFullHeight);
 
-    // Dropdown Hover Effect (Bootstrap/jQuery)
-    $('nav .dropdown').hover(function(){
-        var $this = $(this);
-        $this.addClass('show');
-        $this.find('> a').attr('aria-expanded', true);
-        $this.find('.dropdown-menu').addClass('show');
-    }, function(){
-        var $this = $(this);
-        $this.removeClass('show');
-        $this.find('> a').attr('aria-expanded', false);
-        $this.find('.dropdown-menu').removeClass('show');
-    });
-
-    // ⭐️ MAGNIFIC POPUP (Image Zoom for static content)
-    $('.image-popup').magnificPopup({
-        type: 'image',
-        closeOnContentClick: true,
-        closeBtnInside: false,
-        fixedContentPos: true,
-        mainClass: 'mfp-no-margins mfp-with-zoom',
-        gallery: {
-            enabled: true,
-            navigateByImgClick: true,
-            preload: [0,1]
-        },
-        image: {
-            verticalFit: true
-        },
-        zoom: {
-            enabled: true,
-            duration: 300
-        }
-    });
-
-    // MAGNIFIC POPUP (Video/Iframe)
-    $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-        disableOn: 700,
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
-        fixedContentPos: false
-    });
-
-
-    // Counter Animation (Waypoints and AnimateNumber)
-    var counter = function() {
-        $('#section-counter').waypoint( function( direction ) {
-            if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
-                var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
-                $('.number').each(function(){
-                    var $this = $(this),
-                        num = $this.data('number');
-                        $this.animateNumber(
-                        {
-                            number: num,
-                            numberStep: comma_separator_number_step
-                        }, 7000
-                    );
-                });
-            }
-        } , { offset: '95%' } );
-    };
-
-    // Content Animation (Waypoints)
-    var contentWayPoint = function() {
-        var i = 0;
-        $('.ftco-animate').waypoint( function( direction ) {
-            if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
-                i++;
-                $(this.element).addClass('item-animate');
-                setTimeout(function(){
-                    $('body .ftco-animate.item-animate').each(function(k){
-                        var el = $(this);
-                        setTimeout( function () {
-                            var effect = el.data('animate-effect');
-                            if ( effect === 'fadeIn') {
-                                el.addClass('fadeIn ftco-animated');
-                            } else if ( effect === 'fadeInLeft') {
-                                el.addClass('fadeInLeft ftco-animated');
-                            } else if ( effect === 'fadeInRight') {
-                                el.addClass('fadeInRight ftco-animated');
-                            } else {
-                                el.addClass('fadeInUp ftco-animated');
-                            }
-                            el.removeClass('item-animate');
-                        }, k * 50, 'easeInOutExpo' );
-                    });
-                }, 100);
-            }
-        } , { offset: '95%' } );
-    };
-
-    // Datepicker and Timepicker (jQuery plugins)
-    $('.appointment_date').datepicker({
-        'format': 'm/d/yyyy',
-        'autoclose': true
-    });
-
-    $('.appointment_time').timepicker();
-    
-    
-    // --- JQUERY INITIALIZATION (Run these functions after DOM is ready) ---
-    $(document).ready(function() {
-        fullHeight();
-        loader();
-        carousel();
-        counter();
-        contentWayPoint();
-
-        // --- FIX: ADD EMI MODAL BIND (MOVED FROM apartment.js) ---
-        $('#emiModal').on('show.bs.modal', function () {
-            // displayEmiDetails is defined in apartment.js, which must be loaded first
-            if (!document.getElementById('loanAmountInput').value) document.getElementById('loanAmountInput').value = 1500000;
-            // Check if the function is available before calling it
-            if (typeof displayEmiDetails === 'function') {
-                displayEmiDetails();
-            }
+    // 3. Navbar Dropdown Hover
+    const dropdowns = document.querySelectorAll('nav .dropdown');
+    dropdowns.forEach(dropdown => {
+        dropdown.addEventListener('mouseenter', () => {
+            dropdown.classList.add('show');
+            const link = dropdown.querySelector('> a');
+            if (link) link.setAttribute('aria-expanded', 'true');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            if (menu) menu.classList.add('show');
         });
-        
-        // --- FIX: ADD SCHEDULE VISIT PRE-FILL BIND (MOVED FROM apartment.js) ---
-        // Helper function for date/time pre-fill
-        function getCurrentDateTime() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const currentDate = `${year}-${month}-${day}`;
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const currentTime = `${hours}:${minutes}`;
-            return { currentDate, currentTime };
-        }
-        
-        // Bind modal show event to pre-fill inputs
-        $('#scheduleVisitModal').on('show.bs.modal', function () {
-            const { currentDate, currentTime } = getCurrentDateTime();
-
-            // Pre-fill the date and time inputs with current values
-            $('#visitDate').val(currentDate);
-            $('#visitTime').val(currentTime);
+        dropdown.addEventListener('mouseleave', () => {
+            dropdown.classList.remove('show');
+            const link = dropdown.querySelector('> a');
+            if (link) link.setAttribute('aria-expanded', 'false');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            if (menu) menu.classList.remove('show');
         });
     });
 
-})(jQuery); // End of JQuery IIFE
-
-
-// --- 2. PURE JAVASCRIPT WRAPPER ---
-// This ensures your custom vanilla JS code runs safely once the DOM is ready.
-document.addEventListener('DOMContentLoaded', function() {
-
-    // --- PURE JS CODE (From your original main.js) ---
-
-    // 1. Navbar Scrolling Effect (ftco-navbar-light)
-    const navbar = document.getElementById('ftco-navbar');
+    // 3.5 Sticky Navbar
+    const navbar = document.querySelector('.ftco_navbar');
     if (navbar) {
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 70) {
-                navbar.classList.add('scrolled', 'sleep');
+        window.addEventListener('scroll', () => {
+            const st = window.scrollY;
+            if (st > 150) {
+                if (!navbar.classList.contains('scrolled')) navbar.classList.add('scrolled');
             } else {
-                if (navbar.classList.contains('scrolled')) {
-                    navbar.classList.remove('sleep');
-                    setTimeout(function () {
-                        navbar.classList.remove('scrolled');
-                    }, 500);
+                if (navbar.classList.contains('scrolled')) navbar.classList.remove('scrolled', 'sleep');
+            }
+            if (st > 350) {
+                if (!navbar.classList.contains('awake')) navbar.classList.add('awake');
+            } else {
+                if (navbar.classList.contains('awake')) {
+                    navbar.classList.remove('awake');
+                    navbar.classList.add('sleep');
                 }
             }
         });
     }
 
-    // 2. Simple Animation Helper (ftco-animate) using Intersection Observer
-    const animateElements = document.querySelectorAll('.ftco-animate');
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fadeInUp', 'ftco-animated');
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-
-    if (animateElements.length > 0 && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-        animateElements.forEach(el => {
-            observer.observe(el);
-        });
-    } else {
-        animateElements.forEach(el => {
-            el.classList.add('ftco-animated');
-        });
-    }
-    
-    // 3. Magnific Popup Bridge for dynamic content (Used by projects.js)
-    // We expose this function globally, but it still relies on jQuery for its core work.
-    window.initMagnificPopup = function() {
-        // Check if jQuery is loaded before trying to use it
-        if (typeof $.fn !== 'undefined' && typeof $.fn.magnificPopup !== 'undefined') {
-             $('.image-popup').magnificPopup({
-                type: 'image',
-                // ... (magnific popup options)
-                closeOnContentClick: true,
-                closeBtnInside: false,
-                fixedContentPos: true,
-                mainClass: 'mfp-no-indents mfp-with-zoom',
-                gallery: {
-                    enabled: true,
-                    navigateByImgClick: true,
-                    preload: [0, 1]
-                },
-                image: {
-                    verticalFit: true
-                },
-                zoom: {
-                    enabled: true,
-                    duration: 300
+    // 4. Counter Animation with IntersectionObserver
+    const counterSection = document.getElementById('section-counter');
+    if (counterSection) {
+        const animateNumbers = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !counterSection.classList.contains('ftco-animated')) {
+                    counterSection.classList.add('ftco-animated');
+                    const numbers = document.querySelectorAll('.number');
+                    
+                    numbers.forEach(num => {
+                        const target = parseInt(num.getAttribute('data-number'), 10);
+                        let current = 0;
+                        const increment = target / 100; // Animation steps
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                num.innerText = Math.ceil(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                num.innerText = target.toLocaleString();
+                            }
+                        };
+                        updateCounter();
+                    });
+                    observer.unobserve(entry.target);
                 }
             });
-        }
-    };
+        };
+        
+        const observer = new IntersectionObserver(animateNumbers, {
+            root: null, threshold: 0.5
+        });
+        observer.observe(counterSection);
+    }
 
-    // Initial call for static content on other pages (e.g., gallery.html)
-    // The main jQuery block already handles this, but this is a safe fallback/reinforcement.
-    if (typeof window.initMagnificPopup === 'function' && typeof $ !== 'undefined') {
-        window.initMagnificPopup();
+    // 5. Scroll Animations (.ftco-animate) with IntersectionObserver
+    const ftcoElements = document.querySelectorAll('.ftco-animate');
+    if (ftcoElements.length > 0) {
+        const animateContent = (entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && !entry.target.classList.contains('ftco-animated')) {
+                    entry.target.classList.add('item-animate');
+                    setTimeout(() => {
+                        const effect = entry.target.getAttribute('data-animate-effect');
+                        if (effect === 'fadeIn') {
+                            entry.target.classList.add('fadeIn', 'ftco-animated');
+                        } else if (effect === 'fadeInLeft') {
+                            entry.target.classList.add('fadeInLeft', 'ftco-animated');
+                        } else if (effect === 'fadeInRight') {
+                            entry.target.classList.add('fadeInRight', 'ftco-animated');
+                        } else {
+                            entry.target.classList.add('fadeInUp', 'ftco-animated');
+                        }
+                        entry.target.classList.remove('item-animate');
+                    }, 100); // Slight delay for stagger
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(animateContent, {
+            root: null,
+            threshold: 0.1
+        });
+
+        ftcoElements.forEach(el => observer.observe(el));
     }
-    
-    // 4. Tooltip Initialization (Bootstrap 5 native JS)
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    // We assume 'bootstrap' object exists if Bootstrap 5 JS is loaded
-    if (typeof bootstrap !== 'undefined') {
-        [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-    }
-});
+
+    // 6. Vanilla Lightbox (Replacing Magnific Popup)
+    // Create Lightbox Modal
+    const lightbox = document.createElement('div');
+    lightbox.id = 'vanilla-lightbox';
+    lightbox.innerHTML = `
+        <div class="lightbox-backdrop"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-close">&times;</button>
+            <img src="" alt="Lightbox Image">
+        </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    // Lightbox Styles
+    const style = document.createElement('style');
+    style.textContent = `
+        #vanilla-lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; justify-content: center; align-items: center; }
+        #vanilla-lightbox.active { display: flex; }
+        .lightbox-backdrop { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); cursor: pointer; }
+        .lightbox-content { position: relative; max-width: 90%; max-height: 90%; z-index: 10000; }
+        .lightbox-content img { max-width: 100%; max-height: 90vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .lightbox-close { position: absolute; top: -40px; right: 0; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; }
+
+        /* Vanilla Carousel Styles */
+        .vanilla-carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 20px; scroll-behavior: smooth; padding-bottom: 10px; }
+        .vanilla-carousel::-webkit-scrollbar { height: 8px; }
+        .vanilla-carousel::-webkit-scrollbar-thumb { background: #d97706; border-radius: 4px; }
+        .vanilla-carousel .item { flex: 0 0 30%; scroll-snap-align: start; min-width: 250px; }
+        @media (max-width: 992px) { .vanilla-carousel .item { flex: 0 0 45%; } }
+        @media (max-width: 768px) { .vanilla-carousel .item { flex: 0 0 90%; } }
+    `;
+    document.head.appendChild(style);
+
+    const lightboxImg = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const backdrop = lightbox.querySelector('.lightbox-backdrop');
+
+    const closeLightbox = () => lightbox.classList.remove('active');
+
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('.img-zoom, .image-popup');
+        if (link) {
+            e.preventDefault();
+            lightboxImg.src = link.getAttribute('href');
+            lightbox.classList.add('active');
+        }
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    backdrop.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMain);
+} else {
+    initMain();
+}

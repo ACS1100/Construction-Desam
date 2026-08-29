@@ -314,7 +314,7 @@
         <img src="images/logo.png" alt="Kathir's Developers" style="width: 100px; height: auto;">
         <div class="ui-hidden lg-ui-block md-ui-block">Kathir's <span>Developers</span></div>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav"
         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="fa-solid fa-bars"></span> Menu
       </button>
@@ -339,7 +339,7 @@
 
           <div class="ftco-animate mb-5">
             <h3 class="mb-3">Project Gallery & Walkthrough</h3>
-            <div id="project-media-carousel" class="owl-carousel owl-theme mb-4 gallery-popup">
+            <div id="project-media-carousel" class="vanilla-carousel mb-4 gallery-popup">
               <div class="item"><a href="images/gallery-2.jpg" class="img-zoom" title="Fair Land Image 1"><img
                     src="images/gallery-2.jpg" alt="Fair Land Image 1" class="img-fluid rounded">
                   <div class="zoom-icon"><i class="fa-solid fa-search-plus"></i></div>
@@ -657,51 +657,12 @@
     </div>
   </div>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-
   <script>
-    $(document).ready(function () {
-      // Hero Carousel (The banner at the top)
-      $('#project-hero-carousel').owlCarousel({
-        loop: true, margin: 0, nav: false, dots: false, items: 1, autoplay: true,
-        autoplayTimeout: 5000, autoplayHoverPause: true, animateOut: 'fadeOut',
-        animateIn: 'fadeIn'
-      });
-
-      // Project Media Carousel (The gallery the user is having trouble with)
-      $('#project-media-carousel').owlCarousel({
-        loop: true, margin: 20, nav: true, dots: false, autoplay: true,
-        autoplayTimeout: 3000, autoplayHoverPause: true,
-        responsive: { 0: { items: 1, nav: false }, 768: { items: 2 }, 992: { items: 3 } }
-      });
-
-      // Magnific Popup Initialization for the Gallery
-      $('.gallery-popup').magnificPopup({
-        delegate: 'a.img-zoom', type: 'image', gallery: { enabled: true },
-        zoom: {
-          enabled: true, duration: 300, easing: 'ease-in-out',
-          opener: function (openerElement) {
-            return openerElement.is('img') ? openerElement : openerElement.find('img');
-          }
-        }
-      });
+    document.addEventListener('DOMContentLoaded', function () {
+      // Vanilla JS initialization if needed (carousels are now pure CSS!)
     });
   </script>
   <script src="js/fair-land.js"></script>
